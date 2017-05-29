@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  ExpenseManager
-//
-//  Created by Hiroki Honda on 2017-05-29.
-//  Copyright © 2017 Hiroki Honda. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain

@@ -14,6 +14,8 @@
 		F51315761EDCC3A700EA9767 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F51315741EDCC3A700EA9767 /* LaunchScreen.storyboard */; };
 		F51315811EDCC3A700EA9767 /* ExpenseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51315801EDCC3A700EA9767 /* ExpenseManagerTests.swift */; };
 		F513158C1EDCC3A700EA9767 /* ExpenseManagerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F513158B1EDCC3A700EA9767 /* ExpenseManagerUITests.swift */; };
+		F513159D1EDCD11100EA9767 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F513159B1EDCD11100EA9767 /* Realm.framework */; };
+		F513159E1EDCD11100EA9767 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F513159C1EDCD11100EA9767 /* RealmSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		F51315871EDCC3A700EA9767 /* ExpenseManagerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExpenseManagerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F513158B1EDCC3A700EA9767 /* ExpenseManagerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseManagerUITests.swift; sourceTree = "<group>"; };
 		F513158D1EDCC3A700EA9767 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F513159B1EDCD11100EA9767 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
+		F513159C1EDCD11100EA9767 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F513159D1EDCD11100EA9767 /* Realm.framework in Frameworks */,
+				F513159E1EDCD11100EA9767 /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +87,7 @@
 				F513157F1EDCC3A700EA9767 /* ExpenseManagerTests */,
 				F513158A1EDCC3A700EA9767 /* ExpenseManagerUITests */,
 				F51315691EDCC3A700EA9767 /* Products */,
+				F513159A1EDCD11100EA9767 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,6 +132,15 @@
 			path = ExpenseManagerUITests;
 			sourceTree = "<group>";
 		};
+		F513159A1EDCD11100EA9767 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F513159B1EDCD11100EA9767 /* Realm.framework */,
+				F513159C1EDCD11100EA9767 /* RealmSwift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,6 +151,7 @@
 				F51315641EDCC3A700EA9767 /* Sources */,
 				F51315651EDCC3A700EA9767 /* Frameworks */,
 				F51315661EDCC3A700EA9767 /* Resources */,
+				F51315991EDCD02100EA9767 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -253,6 +270,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F51315991EDCD02100EA9767 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F51315641EDCC3A700EA9767 /* Sources */ = {
@@ -414,6 +449,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ExpenseManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ciccc.groupactivity.ExpenseManager;
@@ -426,6 +465,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ExpenseManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ciccc.groupactivity.ExpenseManager;
