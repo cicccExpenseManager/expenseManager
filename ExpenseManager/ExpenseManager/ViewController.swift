@@ -50,7 +50,7 @@ extension ViewController {
             print("new \(indexPath.row)")
             let newTableCell = UITableViewCell(style: .default, reuseIdentifier: "row")
             let expense = expenses[indexPath.row]
-            newTableCell.textLabel?.text = "\(expense.id) / \(expense.type?.name ?? "none") / \(expense.date.description)"
+            newTableCell.textLabel?.text = "\(expense.id) / \(expense.type?.name ?? "none") / \(expense.date.description) test"
             return newTableCell
         }
     }
