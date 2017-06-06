@@ -41,7 +41,7 @@ class ExpenseDao {
     }
 
     func findAllExpenses() -> Results<Expense> {
-        let realm = try! Realm()
+      
         return realm.objects(Expense.self)
     }
 }
