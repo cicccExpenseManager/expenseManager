@@ -16,6 +16,11 @@
 		F513158C1EDCC3A700EA9767 /* ExpenseManagerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F513158B1EDCC3A700EA9767 /* ExpenseManagerUITests.swift */; };
 		F513159D1EDCD11100EA9767 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F513159B1EDCD11100EA9767 /* Realm.framework */; };
 		F513159E1EDCD11100EA9767 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F513159C1EDCD11100EA9767 /* RealmSwift.framework */; };
+		F51315A11EDCDFD200EA9767 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51315A01EDCDFD200EA9767 /* Expense.swift */; };
+		F51315A31EDCE07200EA9767 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51315A21EDCE07200EA9767 /* Category.swift */; };
+		F51315A61EDCE8F400EA9767 /* ExpenseDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51315A51EDCE8F400EA9767 /* ExpenseDao.swift */; };
+		F5A5F1C31EE64A760074CF37 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A5F1C21EE64A760074CF37 /* Option.swift */; };
+		F5A5F1C51EE64C620074CF37 /* CategoryDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A5F1C41EE64C620074CF37 /* CategoryDao.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +56,11 @@
 		F513158D1EDCC3A700EA9767 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F513159B1EDCD11100EA9767 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 		F513159C1EDCD11100EA9767 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
+		F51315A01EDCDFD200EA9767 /* Expense.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
+		F51315A21EDCE07200EA9767 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		F51315A51EDCE8F400EA9767 /* ExpenseDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpenseDao.swift; sourceTree = "<group>"; };
+		F5A5F1C21EE64A760074CF37 /* Option.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
+		F5A5F1C41EE64C620074CF37 /* CategoryDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryDao.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +114,9 @@
 		F513156A1EDCC3A700EA9767 /* ExpenseManager */ = {
 			isa = PBXGroup;
 			children = (
+				F5A5F1C11EE64A5D0074CF37 /* Util */,
+				F51315A41EDCE8DE00EA9767 /* Dao */,
+				F513159F1EDCDFAA00EA9767 /* Model */,
 				F513156B1EDCC3A700EA9767 /* AppDelegate.swift */,
 				F513156D1EDCC3A700EA9767 /* ViewController.swift */,
 				F513156F1EDCC3A700EA9767 /* Main.storyboard */,
@@ -139,6 +152,32 @@
 				F513159C1EDCD11100EA9767 /* RealmSwift.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F513159F1EDCDFAA00EA9767 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F51315A01EDCDFD200EA9767 /* Expense.swift */,
+				F51315A21EDCE07200EA9767 /* Category.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		F51315A41EDCE8DE00EA9767 /* Dao */ = {
+			isa = PBXGroup;
+			children = (
+				F51315A51EDCE8F400EA9767 /* ExpenseDao.swift */,
+				F5A5F1C41EE64C620074CF37 /* CategoryDao.swift */,
+			);
+			name = Dao;
+			sourceTree = "<group>";
+		};
+		F5A5F1C11EE64A5D0074CF37 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				F5A5F1C21EE64A760074CF37 /* Option.swift */,
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,7 +334,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F513156E1EDCC3A700EA9767 /* ViewController.swift in Sources */,
+				F51315A61EDCE8F400EA9767 /* ExpenseDao.swift in Sources */,
+				F51315A11EDCDFD200EA9767 /* Expense.swift in Sources */,
+				F5A5F1C31EE64A760074CF37 /* Option.swift in Sources */,
+				F5A5F1C51EE64C620074CF37 /* CategoryDao.swift in Sources */,
 				F513156C1EDCC3A700EA9767 /* AppDelegate.swift in Sources */,
+				F51315A31EDCE07200EA9767 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,6 +594,7 @@
 				F51315921EDCC3A700EA9767 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F51315931EDCC3A700EA9767 /* Build configuration list for PBXNativeTarget "ExpenseManagerTests" */ = {
 			isa = XCConfigurationList;
@@ -558,6 +603,7 @@
 				F51315951EDCC3A700EA9767 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F51315961EDCC3A700EA9767 /* Build configuration list for PBXNativeTarget "ExpenseManagerUITests" */ = {
 			isa = XCConfigurationList;
@@ -566,6 +612,7 @@
 				F51315981EDCC3A700EA9767 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
