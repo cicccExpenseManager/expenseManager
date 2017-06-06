@@ -36,11 +36,12 @@ class ExpenseDao {
     }
 
     func generateId() -> Int {
-        return (findAllExpenses().sorted(byKeyPath: "expense.id").last?.id).map{ $0 + 1 } ?? 1
+        return (findAllExpenses().last?.id).map{ $0 + 1 } ?? 1
+//        return (findAllExpenses().sorted(byKeyPath: "expense.id").last?.id).map{ $0 + 1 } ?? 1
     }
 
     func findAllExpenses() -> Results<Expense> {
-        let realm = try! Realm()
+      
         return realm.objects(Expense.self)
     }
 }
