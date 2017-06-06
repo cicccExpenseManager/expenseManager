@@ -8,6 +8,10 @@ class CategoryDao {
     func findAllCategories() -> Results<Category> {
         return realm.objects(Category.self)
     }
+    
+    func checkPrimary() -> Bool {
+        
+    }
 
     /**
      * Put default categories if the Category Table does not have any record.

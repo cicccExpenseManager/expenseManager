@@ -4,7 +4,7 @@ import RealmSwift
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var tableView: UITableView!
-    var words: Array<Expense> = []
+    var expenses: Array<Expense> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +19,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 extension ViewController {
     func initializeData() {
         let expenseDao = ExpenseDao()
-        words = Array(expenseDao.findAllExpenses())
+        expenses = Array(expenseDao.findAllExpenses())
     }
     
     func initializeView() {
@@ -49,14 +49,15 @@ extension ViewController {
         } else {
             print("new \(indexPath.row)")
             let newTableCell = UITableViewCell(style: .default, reuseIdentifier: "row")
-            newTableCell.textLabel?.text = words[indexPath.row].date.description
+            let expense = expenses[indexPath.row]
+            newTableCell.textLabel?.text = "\(expense.id) / \(expense.type?.name ?? "none") / \(expense.date.description)"
             return newTableCell
         }
     }
     
     // getCount
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return words.count
+        return expenses.count
     }
 }
 
