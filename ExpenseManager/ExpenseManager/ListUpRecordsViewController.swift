@@ -1,7 +1,7 @@
 import UIKit
 import FSCalendar
 
-class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FSCalendarDataSource, FSCalendarDelegate, UIGestureRecognizerDelegate {
+class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance, UIGestureRecognizerDelegate {
     
     var expenses: Array<Expense> = []
     
@@ -26,6 +26,12 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
     fileprivate lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
+        return formatter
+    }()
+    
+    fileprivate lazy var dateFormatter2: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
 
@@ -70,44 +76,11 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
         self.view.layoutIfNeeded()
     }
     
-    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print("did select date \(self.dateFormatter.string(from: date))")
-        let selectedDates = calendar.selectedDates.map({self.dateFormatter.string(from: $0)})
-        print("selected dates is \(selectedDates)")
-        if monthPosition == .next || monthPosition == .previous {
-            calendar.setCurrentPage(date, animated: true)
-        }
-    }
-    
-    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
-        print("\(self.dateFormatter.string(from: calendar.currentPage))")
-    }
-    
     // MARK:- UITableViewDataSource
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return [2,20][section]
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 2
 //    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if indexPath.section == 0 {
-//            let identifier = ["cell_month", "cell_week"][indexPath.row]
-//            let cell = tableView.dequeueReusableCell(withIdentifier: identifier)!
-//            return cell
-//        } else {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-//            return cell
-//        }
-//    }
-    
-    
-    // MARK:- UITableViewDelegate
-    
-
 }
 
 /**
@@ -120,24 +93,67 @@ extension ListUpRecordsViewController {
     }
     
     func initializeView() {
-        
+        // Note : All delegates are set in view controller
+
+        // set calendar height if the device is iPad
         if UIDevice.current.model.hasPrefix("iPad") {
             self.calendarHeightConstraint.constant = 400
         }
-        
+
+        // select today to calendar
         self.calendar.select(Date())
         print("### aaa")
-        
+
+        // set gesture recognizer to view
         self.view.addGestureRecognizer(self.scopeGesture)
+
+        // 
         self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
-        self.calendar.scope = .week
+        self.calendar.scope = .month
         
         // For UITest
         self.calendar.accessibilityIdentifier = "calendar"
-        
-        // set interfaces
-        tableView.delegate = self
-        tableView.dataSource = self
+    }
+}
+
+/**
+ * Implementation methods for FSCalendar
+ */
+extension ListUpRecordsViewController {
+    // getCount for event per day cell
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        print("calendar event count")
+//        let dateString = self.dateFormatter2.string(from: date)
+        return 2
+    }
+    
+    // getView for event color per day cell
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
+        print("calendar color unselected")
+//        let key = self.dateFormatter2.string(from: date)
+        return [UIColor.red, appearance.eventDefaultColor]
+    }
+    
+    // getView for event selected color per day cell
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventSelectionColorsFor date: Date) -> [UIColor]? {
+        print("calendar color selected")
+        //        let key = self.dateFormatter2.string(from: date)
+        return [UIColor.red, appearance.eventDefaultColor]
+    }
+
+    // onClick event when the user touched
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        print("did select date \(self.dateFormatter.string(from: date))")
+        let selectedDates = calendar.selectedDates.map({self.dateFormatter.string(from: $0)})
+        print("selected dates is \(selectedDates)")
+        if monthPosition == .next || monthPosition == .previous {
+            calendar.setCurrentPage(date, animated: true)
+        }
+    }
+
+    // onChanged event when the user change view mode (Weekly / Monthly)
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        print("\(self.dateFormatter.string(from: calendar.currentPage))")
     }
 }
 
