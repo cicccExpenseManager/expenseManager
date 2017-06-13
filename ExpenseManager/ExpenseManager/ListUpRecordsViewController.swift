@@ -12,13 +12,14 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
     @IBAction func modeChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            self.calendar.setScope(.week, animated: true)
-        case 1:
             self.calendar.setScope(.month, animated: true)
+        case 1:
+            self.calendar.setScope(.week, animated: true)
         default:
             break;
         }
     }
+    @IBOutlet weak var todayButton: UIBarButtonItem!
 
     // for data table
     @IBOutlet weak var tableView: UITableView!
@@ -43,15 +44,16 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
         panGesture.maximumNumberOfTouches = 2
         return panGesture
     }()
-    
+}
+
+/**---------------------------------------------------------------
+ * Override methods
+ * --------------------------------------------------------------- */
+extension ListUpRecordsViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeData()
         initializeView()
-    }
-    
-    deinit {
-        print("\(#function)")
     }
 }
 
@@ -74,19 +76,16 @@ extension ListUpRecordsViewController {
 
         // select today to calendar
         self.calendar.select(Date())
-        print("### aaa")
 
         // set gesture recognizer to view
-        self.view.addGestureRecognizer(self.scopeGesture)
-
-        // set gesture recognizer to table view
-        self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
+//        self.view.addGestureRecognizer(self.scopeGesture)
+//
+//        // set gesture recognizer to table view
+//        self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
+        self.calendar.addGestureRecognizer(self.scopeGesture)
 
         // set calendar mode for default
         self.calendar.scope = .month
-        
-        // For UITest
-        self.calendar.accessibilityIdentifier = "calendar"
     }
 }
 
@@ -125,13 +124,14 @@ extension ListUpRecordsViewController {
         }
     }
 
-    // onChanged event when the user change view mode (Weekly / Monthly)
+    // onChanged event when the user change week or month by swipe
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
-        print("\(self.dateFormatter.string(from: calendar.currentPage))")
+        print("### \(self.dateFormatter.string(from: calendar.currentPage))")
     }
     
     // onChanged event when the calendar has changed the own height
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
+        print("### きてるー！ \(bounds.height)")
         // Adjust (shrink or make longer) the height
         self.calendarHeightConstraint.constant = bounds.height
         // Render
@@ -163,6 +163,7 @@ extension ListUpRecordsViewController {
         return expenses.count
     }
     
+    // when you tap the cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
@@ -171,9 +172,10 @@ extension ListUpRecordsViewController {
         }
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
-    }
+    // header size
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 10
+//    }
 }
 
 /**---------------------------------------------------------------
@@ -181,14 +183,17 @@ extension ListUpRecordsViewController {
  * --------------------------------------------------------------- */
 extension ListUpRecordsViewController {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        print("gestureRecognizerShouldBegin")
+        print("ListUpRecordsViewController")
         let shouldBegin = self.tableView.contentOffset.y <= -self.tableView.contentInset.top
         if shouldBegin {
             let velocity = self.scopeGesture.velocity(in: self.view)
+
             switch self.calendar.scope {
             case .month:
+                modeToggle.selectedSegmentIndex = 1 //Int(calendar.scope.rawValue)
                 return velocity.y < 0
             case .week:
+                modeToggle.selectedSegmentIndex = 0 //Int(calendar.scope.rawValue)
                 return velocity.y > 0
             }
         }
