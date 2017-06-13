@@ -6,36 +6,77 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--List Up Records View Controller-->
+        <!--Data Source-->
         <scene sceneID="Rva-CJ-rQB">
             <objects>
                 <viewController id="RUB-KF-dda" customClass="ListUpRecordsViewController" customModule="ExpenseManager" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="itr-GM-hwX"/>
-                        <viewControllerLayoutGuide type="bottom" id="eXS-fa-nBd"/>
+                        <viewControllerLayoutGuide type="top" id="MlR-mH-o2j"/>
+                        <viewControllerLayoutGuide type="bottom" id="aKj-z9-3np"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Qaz-mF-1Ae">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PHK-yH-aVI" customClass="FSCalendar">
-                                <rect key="frame" x="0.0" y="28" width="375" height="358"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PHK-yH-aVI" customClass="FSCalendar">
+                                <rect key="frame" x="0.0" y="75" width="375" height="300"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="Gnt-A5-uOq"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="RUB-KF-dda" id="25m-Zq-zXW"/>
+                                    <outlet property="delegate" destination="RUB-KF-dda" id="HLa-W6-sfh"/>
+                                </connections>
                             </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pmD-qa-de7">
+                                <rect key="frame" x="81" y="28" width="212" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="212" id="LWl-pw-Hyf"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Monthly"/>
+                                    <segment title="Weekly"/>
+                                </segments>
+                                <connections>
+                                    <action selector="modeChanged:" destination="RUB-KF-dda" eventType="valueChanged" id="ep6-Wh-ULZ"/>
+                                </connections>
+                            </segmentedControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lM3-AG-ymb">
+                                <rect key="frame" x="0.0" y="374" width="375" height="293"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="RUB-KF-dda" id="cTk-pP-83r"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="PHK-yH-aVI" firstAttribute="leading" secondItem="Qaz-mF-1Ae" secondAttribute="leadingMargin" constant="-16" id="6MV-IW-Isv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lM3-AG-ymb" secondAttribute="trailing" constant="-16" id="HAM-aK-oFy"/>
+                            <constraint firstItem="PHK-yH-aVI" firstAttribute="top" secondItem="pmD-qa-de7" secondAttribute="bottom" constant="19" id="Htl-DL-GWX"/>
+                            <constraint firstItem="lM3-AG-ymb" firstAttribute="top" secondItem="PHK-yH-aVI" secondAttribute="bottom" constant="-1" id="OPJ-zc-lTK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="PHK-yH-aVI" secondAttribute="trailing" constant="-16" id="S5v-J8-Vmf"/>
+                            <constraint firstItem="lM3-AG-ymb" firstAttribute="leading" secondItem="Qaz-mF-1Ae" secondAttribute="leadingMargin" constant="-16" id="WTH-Zy-mN7"/>
+                            <constraint firstItem="pmD-qa-de7" firstAttribute="top" secondItem="MlR-mH-o2j" secondAttribute="bottom" constant="8" id="Wmh-Wl-b3X"/>
+                            <constraint firstItem="aKj-z9-3np" firstAttribute="top" secondItem="lM3-AG-ymb" secondAttribute="bottom" id="Y8D-t7-jR0"/>
+                            <constraint firstItem="pmD-qa-de7" firstAttribute="centerX" secondItem="Qaz-mF-1Ae" secondAttribute="centerX" id="gQx-Ed-urf"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="calendar" destination="PHK-yH-aVI" id="QIv-At-25B"/>
+                        <outlet property="calendarHeightConstraint" destination="Gnt-A5-uOq" id="pMu-QC-Wg5"/>
+                        <outlet property="modeToggle" destination="pmD-qa-de7" id="V7u-7f-DiB"/>
+                        <outlet property="tableView" destination="lM3-AG-ymb" id="Pe3-gO-F5X"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hOZ-vy-2of" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="32.799999999999997" y="24.7376311844078"/>
+            <point key="canvasLocation" x="32.800000000000004" y="24.7376311844078"/>
         </scene>
     </scenes>
 </document>
