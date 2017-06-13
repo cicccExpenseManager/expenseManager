@@ -3,6 +3,11 @@ import FSCalendar
 
 class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance, UIGestureRecognizerDelegate {
     
+    // for Navigation Bar
+    @IBAction func todayButtonAction(_ sender: UIBarButtonItem) {
+        calendar.select(Date())
+    }
+    
     // for FSCalendar view
     @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var calendarHeightConstraint: NSLayoutConstraint!
@@ -19,7 +24,6 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
             break;
         }
     }
-    @IBOutlet weak var todayButton: UIBarButtonItem!
 
     // for data table
     @IBOutlet weak var tableView: UITableView!
@@ -131,7 +135,7 @@ extension ListUpRecordsViewController {
     
     // onChanged event when the calendar has changed the own height
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
-        print("### きてるー！ \(bounds.height)")
+        print("### きてるー！ \(bounds.height) \(calendar.scope.rawValue)")
         // Adjust (shrink or make longer) the height
         self.calendarHeightConstraint.constant = bounds.height
         // Render

@@ -69,14 +69,17 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Expenses" id="XyR-qe-2zX">
-                        <barButtonItem key="rightBarButtonItem" title="Today" id="mCv-gM-xNO"/>
+                        <barButtonItem key="rightBarButtonItem" title="Today" id="mCv-gM-xNO">
+                            <connections>
+                                <action selector="todayButtonAction:" destination="RUB-KF-dda" id="cIY-bk-hke"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="calendar" destination="PHK-yH-aVI" id="QIv-At-25B"/>
                         <outlet property="calendarHeightConstraint" destination="Gnt-A5-uOq" id="pMu-QC-Wg5"/>
                         <outlet property="modeToggle" destination="pmD-qa-de7" id="V7u-7f-DiB"/>
                         <outlet property="tableView" destination="lM3-AG-ymb" id="Pe3-gO-F5X"/>
-                        <outlet property="todayButton" destination="mCv-gM-xNO" id="J6T-F8-tTi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hOZ-vy-2of" userLabel="First Responder" sceneMemberID="firstResponder"/>
