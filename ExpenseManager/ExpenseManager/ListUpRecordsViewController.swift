@@ -107,8 +107,10 @@ extension ListUpRecordsViewController {
         // set gesture recognizer to view
         self.view.addGestureRecognizer(self.scopeGesture)
 
-        // 
+        // set gesture recognizer to table view
         self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
+
+        // set calendar mode for default
         self.calendar.scope = .month
         
         // For UITest
