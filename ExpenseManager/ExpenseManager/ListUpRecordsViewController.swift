@@ -3,12 +3,11 @@ import FSCalendar
 
 class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance, UIGestureRecognizerDelegate {
     
-    var expenses: Array<Expense> = []
-    
+    // for FSCalendar view
     @IBOutlet weak var calendar: FSCalendar!
-//    @IBOutlet weak var animationSwitch: UISwitch!
     @IBOutlet weak var calendarHeightConstraint: NSLayoutConstraint!
 
+    // for segmentedController
     @IBOutlet weak var modeToggle: UISegmentedControl!
     @IBAction func modeChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
@@ -21,20 +20,21 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
         }
     }
 
+    // for data table
     @IBOutlet weak var tableView: UITableView!
-
+    fileprivate lazy var expenses: Array<Expense> = []
     fileprivate lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
         return formatter
     }()
-    
     fileprivate lazy var dateFormatter2: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
 
+    // for gesture event
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
         [unowned self] in
         let panGesture = UIPanGestureRecognizer(target: self.calendar, action: #selector(self.calendar.handleScopeGesture(_:)))
@@ -53,39 +53,11 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
     deinit {
         print("\(#function)")
     }
-    
-    // MARK:- UIGestureRecognizerDelegate
-    
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        print("gestureRecognizerShouldBegin")
-        let shouldBegin = self.tableView.contentOffset.y <= -self.tableView.contentInset.top
-        if shouldBegin {
-            let velocity = self.scopeGesture.velocity(in: self.view)
-            switch self.calendar.scope {
-            case .month:
-                return velocity.y < 0
-            case .week:
-                return velocity.y > 0
-            }
-        }
-        return shouldBegin
-    }
-    
-    func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
-        self.calendarHeightConstraint.constant = bounds.height
-        self.view.layoutIfNeeded()
-    }
-    
-    // MARK:- UITableViewDataSource
-    
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 2
-//    }
 }
 
-/**
+/**---------------------------------------------------------------
  * Initializer
- */
+ * --------------------------------------------------------------- */
 extension ListUpRecordsViewController {
     func initializeData() {
         let expenseDao = ExpenseDao()
@@ -118,9 +90,9 @@ extension ListUpRecordsViewController {
     }
 }
 
-/**
+/**---------------------------------------------------------------
  * Implementation methods for FSCalendar
- */
+ * --------------------------------------------------------------- */
 extension ListUpRecordsViewController {
     // getCount for event per day cell
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
@@ -157,11 +129,19 @@ extension ListUpRecordsViewController {
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         print("\(self.dateFormatter.string(from: calendar.currentPage))")
     }
+    
+    // onChanged event when the calendar has changed the own height
+    func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
+        // Adjust (shrink or make longer) the height
+        self.calendarHeightConstraint.constant = bounds.height
+        // Render
+        self.view.layoutIfNeeded()
+    }
 }
 
-/**
+/**---------------------------------------------------------------
  * Implementation methods for table view
- */
+ * --------------------------------------------------------------- */
 extension ListUpRecordsViewController {
     // getView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -193,5 +173,25 @@ extension ListUpRecordsViewController {
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10
+    }
+}
+
+/**---------------------------------------------------------------
+ * Implementation methods for gesture event
+ * --------------------------------------------------------------- */
+extension ListUpRecordsViewController {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        print("gestureRecognizerShouldBegin")
+        let shouldBegin = self.tableView.contentOffset.y <= -self.tableView.contentInset.top
+        if shouldBegin {
+            let velocity = self.scopeGesture.velocity(in: self.view)
+            switch self.calendar.scope {
+            case .month:
+                return velocity.y < 0
+            case .week:
+                return velocity.y > 0
+            }
+        }
+        return shouldBegin
     }
 }
