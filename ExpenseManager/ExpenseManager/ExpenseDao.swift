@@ -19,16 +19,23 @@ class ExpenseDao {
 
                 // Put some expenses for debug
                 try! realm?.write {
-                    for _ in 0...20 {
-                        let expense = Expense()
-                        expense.id = generateId()
-                        expense.amount = 50.00
-                        let randomCategoryIndex =
-                            Int(arc4random_uniform(UInt32(categoryCounts)))
-                        expense.type = categoryArray[randomCategoryIndex]
-                        expense.date = NSDate()
-                        print(expense)
-                        realm.add(expense)
+                    for _ in 0...30 {
+                        Expense().apply {
+                            $0.id = generateId()
+                            $0.amount = 50.00
+                            let randomCategoryIndex =
+                                Int(arc4random_uniform(UInt32(categoryCounts)))
+                            $0.type = categoryArray[randomCategoryIndex]
+                            let newdate = Date(timeIntervalSinceNow: 100)
+                            $0.date = newdate as NSDate
+                            
+                            realm.add($0)
+                        }
+                        
+//                        let randomCategoryIndex =
+//                            Int(arc4random_uniform(UInt32(30)))
+//                        expense.date = NSDate()
+//                        NSCalendar.
                     }
                 }
             }

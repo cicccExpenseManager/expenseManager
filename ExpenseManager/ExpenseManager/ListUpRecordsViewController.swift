@@ -16,9 +16,9 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var modeToggle: UISegmentedControl!
     @IBAction func modeChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
-        case 0:
+        case 0: // SCOPE_MONTHLY
             self.calendar.setScope(.month, animated: true)
-        case 1:
+        case 1: // SCOPE_WEEKLY
             self.calendar.setScope(.week, animated: true)
         default:
             break;
@@ -27,27 +27,24 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
 
     // for data table
     @IBOutlet weak var tableView: UITableView!
-    fileprivate lazy var expenses: Array<Expense> = []
-    fileprivate lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
-        return formatter
-    }()
-    fileprivate lazy var dateFormatter2: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter
-    }()
+    fileprivate var expenses: Array<Expense> = []
+    fileprivate let dateFormatter: DateFormatter = {
+        return DateFormatter().applyRet {$0.dateFormat = "yyyy/MM/dd"}}()
+    fileprivate let dateFormatter2: DateFormatter = {
+        return DateFormatter().applyRet {$0.dateFormat = "yyyy-MM-dd"}}()
 
     // for gesture event
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
         [unowned self] in
-        let panGesture = UIPanGestureRecognizer(target: self.calendar, action: #selector(self.calendar.handleScopeGesture(_:)))
-        panGesture.delegate = self
-        panGesture.minimumNumberOfTouches = 1
-        panGesture.maximumNumberOfTouches = 2
-        return panGesture
+        return UIPanGestureRecognizer(target: self.calendar, action: #selector(self.calendar.handleScopeGesture(_:))).applyRet {
+            $0.delegate = self
+            $0.minimumNumberOfTouches = 1
+            $0.maximumNumberOfTouches = 2
+        }
     }()
+    
+    // for others
+    fileprivate var lastScope: UInt = 0
 }
 
 /**---------------------------------------------------------------
@@ -78,18 +75,19 @@ extension ListUpRecordsViewController {
             self.calendarHeightConstraint.constant = 400
         }
 
-        // select today to calendar
-        self.calendar.select(Date())
-
-        // set gesture recognizer to view
-//        self.view.addGestureRecognizer(self.scopeGesture)
-//
-//        // set gesture recognizer to table view
-//        self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
-        self.calendar.addGestureRecognizer(self.scopeGesture)
-
-        // set calendar mode for default
-        self.calendar.scope = .month
+        // set up calendar
+        self.calendar.apply {
+            // set gesture recognizer to table view
+            $0.addGestureRecognizer(self.scopeGesture)
+            
+            // select today to calendar
+            $0.select(Date())
+            
+            // set calendar mode for default
+            $0.scope = .month
+        }
+        
+        
     }
 }
 
@@ -135,11 +133,15 @@ extension ListUpRecordsViewController {
     
     // onChanged event when the calendar has changed the own height
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
-        print("### きてるー！ \(bounds.height) \(calendar.scope.rawValue)")
         // Adjust (shrink or make longer) the height
         self.calendarHeightConstraint.constant = bounds.height
         // Render
         self.view.layoutIfNeeded()
+        // set segment index if needed
+        if (calendar.scope.rawValue != lastScope) {
+            modeToggle.selectedSegmentIndex = Int(calendar.scope.rawValue)
+            lastScope = calendar.scope.rawValue
+        }
     }
 }
 
@@ -153,6 +155,7 @@ extension ListUpRecordsViewController {
         if let tableCell = tableView.cellForRow(at: indexPath) {
             print("recycle \(indexPath.row)")
             return tableCell
+
         } else {
             print("new \(indexPath.row)")
             let newTableCell = UITableViewCell(style: .default, reuseIdentifier: "row")
@@ -175,11 +178,6 @@ extension ListUpRecordsViewController {
             self.calendar.setScope(scope, animated: true)
         }
     }
-
-    // header size
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 10
-//    }
 }
 
 /**---------------------------------------------------------------
@@ -192,12 +190,11 @@ extension ListUpRecordsViewController {
         if shouldBegin {
             let velocity = self.scopeGesture.velocity(in: self.view)
 
+            self.lastScope = calendar.scope.rawValue
             switch self.calendar.scope {
             case .month:
-                modeToggle.selectedSegmentIndex = 1 //Int(calendar.scope.rawValue)
                 return velocity.y < 0
             case .week:
-                modeToggle.selectedSegmentIndex = 0 //Int(calendar.scope.rawValue)
                 return velocity.y > 0
             }
         }
