@@ -5,6 +5,10 @@ import SwiftDate
 class ExpenseDao {
 
     var realm: Realm!
+    
+    let sortProperties = [
+        SortDescriptor(keyPath: "date"),
+        SortDescriptor(keyPath: "typeId")]
 
     init() {
         realm = try! Realm()
@@ -53,7 +57,7 @@ class ExpenseDao {
         var dataComponents = DateComponents()
         dataComponents.year = date.year
         dataComponents.month = date.month
-        return realm.objects(Expense.self).sorted(byKeyPath: "date").filter("date BETWEEN %@", [
+        return realm.objects(Expense.self).sorted(by: sortProperties).filter("date BETWEEN %@", [
             DateInRegion(components: dataComponents)?.startOf(component: .month).absoluteDate,
             DateInRegion(components: dataComponents)?.endOf(component: .month).absoluteDate])
     }
@@ -63,7 +67,7 @@ class ExpenseDao {
         dataComponents.year = date.year
         dataComponents.month = date.month
         dataComponents.day = date.day
-        return realm.objects(Expense.self).sorted(byKeyPath: "date").filter("date BETWEEN %@", [
+        return realm.objects(Expense.self).sorted(by: sortProperties).filter("date BETWEEN %@", [
             DateInRegion(components: dataComponents)?.startWeek.absoluteDate,
             DateInRegion(components: dataComponents)?.endWeek.absoluteDate])
     }
@@ -73,12 +77,12 @@ class ExpenseDao {
         dataComponents.year = date.year
         dataComponents.month = date.month
         dataComponents.day = date.day
-        return realm.objects(Expense.self).filter("date BETWEEN %@", [
+        return realm.objects(Expense.self).sorted(by: sortProperties).filter("date BETWEEN %@", [
             DateInRegion(components: dataComponents)?.startOfDay.absoluteDate,
             DateInRegion(components: dataComponents)?.endOfDay.absoluteDate])
     }
     
     func findForDayOrderByType(date: Date) -> Results<Expense> {
-        return findForDay(date: date).sorted(byKeyPath: "typeId")
+        return findForDay(date: date).sorted(by: sortProperties)
     }
 }
