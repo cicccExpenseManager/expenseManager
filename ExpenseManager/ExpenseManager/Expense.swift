@@ -19,4 +19,11 @@ class Expense: Object {
     override static func primaryKey() -> String? {
         return "id"
     }
+    
+    func formatDate() -> String {
+        return dateFormatter.string(from: date as Date)
+    }
+    
+    fileprivate let dateFormatter: DateFormatter = {
+        return DateFormatter().applyRet {$0.dateFormat = "yyyy/MM/dd"}}()
 }

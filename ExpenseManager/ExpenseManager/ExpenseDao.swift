@@ -1,5 +1,6 @@
 import Foundation
 import RealmSwift
+import SwiftDate
 
 class ExpenseDao {
 
@@ -19,23 +20,22 @@ class ExpenseDao {
 
                 // Put some expenses for debug
                 try! realm?.write {
-                    for _ in 0...30 {
+                    for _ in 0...60 {
                         Expense().apply {
                             $0.id = generateId()
-                            $0.amount = 50.00
+                            $0.amount = 50.00 + Double(arc4random_uniform(500))
                             let randomCategoryIndex =
                                 Int(arc4random_uniform(UInt32(categoryCounts)))
                             $0.type = categoryArray[randomCategoryIndex]
-                            let newdate = Date(timeIntervalSinceNow: 100)
-                            $0.date = newdate as NSDate
+                            let dayDifference = Int(arc4random_uniform(UInt32(15))).day
+                            if (arc4random_uniform(2) == 0) {
+                                $0.date = (Date() + dayDifference) as NSDate
+                            } else {
+                                $0.date = (Date() - dayDifference) as NSDate
+                            }
                             
                             realm.add($0)
                         }
-                        
-//                        let randomCategoryIndex =
-//                            Int(arc4random_uniform(UInt32(30)))
-//                        expense.date = NSDate()
-//                        NSCalendar.
                     }
                 }
             }
@@ -48,7 +48,35 @@ class ExpenseDao {
     }
 
     func findAllExpenses() -> Results<Expense> {
-      
         return realm.objects(Expense.self)
+    }
+    
+    func findForMonth(date: Date) -> Results<Expense> {
+        var dataComponents = DateComponents()
+        dataComponents.year = date.year
+        dataComponents.month = date.month
+        return realm.objects(Expense.self).sorted(byKeyPath: "date").filter("date BETWEEN %@", [
+            DateInRegion(components: dataComponents)?.startOf(component: .month).absoluteDate,
+            DateInRegion(components: dataComponents)?.endOf(component: .month).absoluteDate])
+    }
+    
+    func findForWeek(date: Date) -> Results<Expense> {
+        var dataComponents = DateComponents()
+        dataComponents.year = date.year
+        dataComponents.month = date.month
+        dataComponents.day = date.day
+        return realm.objects(Expense.self).sorted(byKeyPath: "date").filter("date BETWEEN %@", [
+            DateInRegion(components: dataComponents)?.startWeek.absoluteDate,
+            DateInRegion(components: dataComponents)?.endWeek.absoluteDate])
+    }
+
+    func findForDay(date: Date) -> Results<Expense> {
+        var dataComponents = DateComponents()
+        dataComponents.year = date.year
+        dataComponents.month = date.month
+        dataComponents.day = date.day
+        return realm.objects(Expense.self).sorted(byKeyPath: "date").filter("date BETWEEN %@", [
+            DateInRegion(components: dataComponents)?.startOfDay.absoluteDate,
+            DateInRegion(components: dataComponents)?.endOfDay.absoluteDate])
     }
 }
