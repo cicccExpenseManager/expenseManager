@@ -65,12 +65,12 @@ extension ListUpRecordsViewController {
  * Initializer
  * --------------------------------------------------------------- */
 extension ListUpRecordsViewController {
-    func initializeData() {
+    fileprivate func initializeData() {
         let expenseDao = ExpenseDao()
         expenses = Array(expenseDao.findForMonth(date: Date()))
     }
     
-    func initializeView() {
+    fileprivate func initializeView() {
         // Note : All delegates are set in view controller
         // set table recycle identifer
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifer)
@@ -98,7 +98,7 @@ extension ListUpRecordsViewController {
  * Implementation methods for UISegmentedControl
  * --------------------------------------------------------------- */
 extension ListUpRecordsViewController {
-    func updateSegment() {
+    fileprivate func updateSegment() {
         modeToggle.selectedSegmentIndex = Int(calendar.scope.rawValue)
         lastScope = calendar.scope.rawValue
     }
@@ -222,7 +222,7 @@ extension ListUpRecordsViewController {
         calendar.select(expenses[indexPath.row].date as Date)
     }
     
-    func updateTable() {
+    fileprivate func updateTable() {
         // update table data
         let expenseDao = ExpenseDao()
         switch calendar.scope {
