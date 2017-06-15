@@ -35,7 +35,9 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
 
     // for gesture event
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
+        // put this to avoid retaion cycle
         [unowned self] in
+        // implement function
         return UIPanGestureRecognizer(target: self.calendar, action: #selector(self.calendar.handleScopeGesture(_:))).applyRet {
             $0.delegate = self
             $0.minimumNumberOfTouches = 1
@@ -86,8 +88,16 @@ extension ListUpRecordsViewController {
             // set calendar mode for default
             $0.scope = .month
         }
-        
-        
+    }
+}
+
+/**---------------------------------------------------------------
+ * Implementation methods for UISegmentedControl
+ * --------------------------------------------------------------- */
+extension ListUpRecordsViewController {
+    func updateSegment() {
+        modeToggle.selectedSegmentIndex = Int(calendar.scope.rawValue)
+        lastScope = calendar.scope.rawValue
     }
 }
 
@@ -128,7 +138,7 @@ extension ListUpRecordsViewController {
 
     // onChanged event when the user change week or month by swipe
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
-        print("### \(self.dateFormatter.string(from: calendar.currentPage))")
+        updateTable()
     }
     
     // onChanged event when the calendar has changed the own height
@@ -137,10 +147,10 @@ extension ListUpRecordsViewController {
         self.calendarHeightConstraint.constant = bounds.height
         // Render
         self.view.layoutIfNeeded()
-        // set segment index if needed
+        // set segment and table if needed
         if (calendar.scope.rawValue != lastScope) {
-            modeToggle.selectedSegmentIndex = Int(calendar.scope.rawValue)
-            lastScope = calendar.scope.rawValue
+            updateSegment()
+            updateTable()
         }
     }
 }
@@ -160,7 +170,7 @@ extension ListUpRecordsViewController {
             print("new \(indexPath.row)")
             let newTableCell = UITableViewCell(style: .default, reuseIdentifier: "row")
             let expense = expenses[indexPath.row]
-            newTableCell.textLabel?.text = "\(expense.id) / \(expense.type?.name ?? "none") / \(expense.date.description)"
+            newTableCell.textLabel?.text = "\(expense.id) / \(expense.formatDate()) / \(expense.type?.name ?? "none")"
             return newTableCell
         }
     }
@@ -178,6 +188,20 @@ extension ListUpRecordsViewController {
             self.calendar.setScope(scope, animated: true)
         }
     }
+    
+    func updateTable() {
+        // update table data
+        let expenseDao = ExpenseDao()
+        switch calendar.scope {
+        case .month:
+            expenses = Array(expenseDao.findForMonth(date: calendar.currentPage))
+        case .week:
+            expenses = Array(expenseDao.findForWeek(date: calendar.currentPage))
+        }
+        
+        // Render table again
+        tableView.reloadData()
+    }
 }
 
 /**---------------------------------------------------------------
@@ -185,7 +209,6 @@ extension ListUpRecordsViewController {
  * --------------------------------------------------------------- */
 extension ListUpRecordsViewController {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        print("ListUpRecordsViewController")
         let shouldBegin = self.tableView.contentOffset.y <= -self.tableView.contentInset.top
         if shouldBegin {
             let velocity = self.scopeGesture.velocity(in: self.view)
