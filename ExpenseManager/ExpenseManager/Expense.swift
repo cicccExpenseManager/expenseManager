@@ -8,14 +8,6 @@ class Expense: Object {
     dynamic var typeId = 1
     dynamic var date = NSDate()
     dynamic var name: String = ""
-    
-    //TODO
-//    var simpleDate: String {
-//        let dateFormatter = NSDateFormatter()
-//        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-//        dateFormatter.dateFormat = "dd MMM, yyyy"
-//        return dateFormatter.stringFromDate(date)
-//    }
 
     override static func primaryKey() -> String? {
         return "id"

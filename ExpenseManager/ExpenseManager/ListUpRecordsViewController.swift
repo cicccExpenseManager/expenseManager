@@ -124,7 +124,7 @@ extension ListUpRecordsViewController {
     }
     
     func generateColorArrayForDay(date: Date) -> [UIColor]? {
-        let result = Array(ExpenseDao().findForDayOrderByType(date: date))
+        let result = Array(ExpenseDao().findForDay(date: date))
         if (result.isEmpty) {
             return nil
         }

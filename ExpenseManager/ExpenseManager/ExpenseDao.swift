@@ -4,24 +4,22 @@ import SwiftDate
 
 class ExpenseDao {
 
-    var realm: Realm!
+    private let realm = try! Realm()
     
-    let sortProperties = [
+    private static let sortProperties = [
         SortDescriptor(keyPath: "date"),
         SortDescriptor(keyPath: "typeId")]
 
     init() {
-        realm = try! Realm()
-        
-        if (Option.DEBUG) {
-            if (findAllExpenses().isEmpty) {
-                let categoryDao = CategoryDao()
-                categoryDao.initializeIfNeeded();
-                let categoryCounts = categoryDao.findAllCategories().count
-                let categoryArray = Array(categoryDao.findAllCategories())
+        if (findAllExpenses().isEmpty) {
+            let categoryDao = CategoryDao()
+            categoryDao.initializeIfNeeded();
+            let categoryCounts = categoryDao.findAllCategories().count
+            let categoryArray = Array(categoryDao.findAllCategories())
 
+            if (Option.DEBUG) {
                 // Put some expenses for debug
-                try! realm?.write {
+                try! realm.write {
                     for _ in 0...60 {
                         Expense().apply {
                             $0.id = generateId()
@@ -45,44 +43,48 @@ class ExpenseDao {
     }
 
     func generateId() -> Int {
-        return (findAllExpenses().last?.id).map{ $0 + 1 } ?? 1
-//        return (findAllExpenses().sorted(byKeyPath: "expense.id").last?.id).map{ $0 + 1 } ?? 1
+        return (findAllExpenses().sorted(byKeyPath: "id").last?.id).map{ $0 + 1 } ?? 1
     }
 
     func findAllExpenses() -> Results<Expense> {
         return realm.objects(Expense.self)
     }
     
-    func findForMonth(date: Date) -> Results<Expense> {
+    private func findSortedAllExpenses() -> Results<Expense> {
+        return findAllExpenses().sorted(by: ExpenseDao.sortProperties)
+    }
+    
+    private func generateDataComponents(year: Int, month: Int) -> DateComponents {
         var dataComponents = DateComponents()
-        dataComponents.year = date.year
-        dataComponents.month = date.month
-        return realm.objects(Expense.self).sorted(by: sortProperties).filter("date BETWEEN %@", [
+        dataComponents.year = year
+        dataComponents.month = month
+        return dataComponents
+    }
+    
+    private func generateDataComponents(year: Int, month: Int, day: Int) -> DateComponents {
+        var dataComponents = generateDataComponents(year: year, month: month)
+        dataComponents.day = day
+        return dataComponents
+    }
+    
+    func findForMonth(date: Date) -> Results<Expense> {
+        let dataComponents = generateDataComponents(year: date.year, month: date.month)
+        return findSortedAllExpenses().filter("date BETWEEN %@", [
             DateInRegion(components: dataComponents)?.startOf(component: .month).absoluteDate,
             DateInRegion(components: dataComponents)?.endOf(component: .month).absoluteDate])
     }
     
     func findForWeek(date: Date) -> Results<Expense> {
-        var dataComponents = DateComponents()
-        dataComponents.year = date.year
-        dataComponents.month = date.month
-        dataComponents.day = date.day
-        return realm.objects(Expense.self).sorted(by: sortProperties).filter("date BETWEEN %@", [
+        let dataComponents = generateDataComponents(year: date.year, month: date.month, day: date.day)
+        return findSortedAllExpenses().filter("date BETWEEN %@", [
             DateInRegion(components: dataComponents)?.startWeek.absoluteDate,
             DateInRegion(components: dataComponents)?.endWeek.absoluteDate])
     }
 
     func findForDay(date: Date) -> Results<Expense> {
-        var dataComponents = DateComponents()
-        dataComponents.year = date.year
-        dataComponents.month = date.month
-        dataComponents.day = date.day
-        return realm.objects(Expense.self).sorted(by: sortProperties).filter("date BETWEEN %@", [
+        let dataComponents = generateDataComponents(year: date.year, month: date.month, day: date.day)
+        return findSortedAllExpenses().filter("date BETWEEN %@", [
             DateInRegion(components: dataComponents)?.startOfDay.absoluteDate,
             DateInRegion(components: dataComponents)?.endOfDay.absoluteDate])
-    }
-    
-    func findForDayOrderByType(date: Date) -> Results<Expense> {
-        return findForDay(date: date).sorted(by: sortProperties)
     }
 }

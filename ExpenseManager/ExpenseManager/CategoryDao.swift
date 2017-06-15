@@ -9,10 +9,6 @@ class CategoryDao {
     func findAllCategories() -> Results<Category> {
         return realm.objects(Category.self)
     }
-    
-//    func checkPrimary() -> Bool {
-//        
-//    }
 
     /**
      * Put default categories if the Category Table does not have any record.
@@ -69,6 +65,6 @@ class CategoryDao {
     }
     
     func generateId() -> Int {
-        return (findAllCategories().last?.id).map{ $0 + 1 } ?? 1
+        return (findAllCategories().sorted(byKeyPath: "id").last?.id).map{ $0 + 1 } ?? 1
     }
 }
