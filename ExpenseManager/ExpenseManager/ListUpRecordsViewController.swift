@@ -66,7 +66,7 @@ extension ListUpRecordsViewController {
 extension ListUpRecordsViewController {
     func initializeData() {
         let expenseDao = ExpenseDao()
-        expenses = Array(expenseDao.findAllExpenses())
+        expenses = Array(expenseDao.findForMonth(date: Date()))
     }
     
     func initializeView() {
@@ -107,23 +107,30 @@ extension ListUpRecordsViewController {
 extension ListUpRecordsViewController {
     // getCount for event per day cell
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        print("calendar event count")
-//        let dateString = self.dateFormatter2.string(from: date)
-        return 2
+        return ExpenseDao().findForDay(date: date).count
     }
     
     // getView for event color per day cell
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
-        print("calendar color unselected")
-//        let key = self.dateFormatter2.string(from: date)
-        return [UIColor.red, appearance.eventDefaultColor]
+        return generateColorArrayForDay(date: date)
     }
     
     // getView for event selected color per day cell
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventSelectionColorsFor date: Date) -> [UIColor]? {
-        print("calendar color selected")
-        //        let key = self.dateFormatter2.string(from: date)
-        return [UIColor.red, appearance.eventDefaultColor]
+        return generateColorArrayForDay(date: date)
+    }
+    
+    func generateColorArrayForDay(date: Date) -> [UIColor]? {
+        let result = Array(ExpenseDao().findForDayOrderByType(date: date))
+        if (result.isEmpty) {
+            return nil
+        }
+        
+        var retColor: Array<UIColor> = []
+        for expense in result {
+            retColor.append((expense.type?.getColor())!)
+        }
+        return retColor
     }
 
     // onClick event when the user touched

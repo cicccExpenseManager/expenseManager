@@ -23,6 +23,7 @@ class CategoryDao {
                 // Put some categories for debug
                 for i in 1..<10 {
                     Category().apply {
+                        $0.id = generateId()
                         let colorName: String
                         switch i {
                         case 1:
@@ -65,5 +66,9 @@ class CategoryDao {
                 }
             }
         }
+    }
+    
+    func generateId() -> Int {
+        return (findAllCategories().last?.id).map{ $0 + 1 } ?? 1
     }
 }

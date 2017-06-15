@@ -3,6 +3,7 @@ import RealmSwift
 import UIKit
 
 class Category: Object {
+    dynamic var id = 1
     dynamic var name = ""
     dynamic var colorRed: Float = 0
     dynamic var colorBlue: Float = 0
