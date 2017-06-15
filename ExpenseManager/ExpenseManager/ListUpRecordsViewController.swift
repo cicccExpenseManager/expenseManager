@@ -123,7 +123,7 @@ extension ListUpRecordsViewController {
         return generateColorArrayForDay(date: date)
     }
     
-    func generateColorArrayForDay(date: Date) -> [UIColor]? {
+    private func generateColorArrayForDay(date: Date) -> [UIColor]? {
         let result = Array(ExpenseDao().findForDay(date: date))
         if (result.isEmpty) {
             return nil
@@ -135,14 +135,49 @@ extension ListUpRecordsViewController {
         }
         return retColor
     }
+    
+    private func tableScrollTo(_ date: Date) {
+        // ignore if the date is out of month in calendar
+        if (date.month != calendar.currentPage.month) {
+            return
+        }
+        
+        // ignore if the date expense is empty
+        if (ExpenseDao().findForDay(date: date).isEmpty) {
+            return
+        }
+
+        // find out scroll index
+        var scrollTo = 0
+        for expense in expenses {
+            if (date.day <= (expense.date as Date).day) {
+                break
+            }
+            scrollTo += 1
+        }
+        
+        if scrollTo >= expenses.count {
+            // scroll to end as fail safe
+            let lastIndexPath = NSIndexPath(row: expenses.count - 1, section: 0) as IndexPath
+            tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
+            return
+        }
+
+        // scroll to the date index
+        let indexPath = NSIndexPath(row: scrollTo, section: 0) as IndexPath
+        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+    }
 
     // onClick event when the user touched
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print("did select date \(self.dateFormatter.string(from: date))")
-        let selectedDates = calendar.selectedDates.map({self.dateFormatter.string(from: $0)})
-        print("selected dates is \(selectedDates)")
-        if monthPosition == .next || monthPosition == .previous {
-            calendar.setCurrentPage(date, animated: true)
+        if (calendar.scope == .month) {
+            if (calendar.currentPage.month == date.month) {
+                tableScrollTo(date)
+            } else {
+                calendar.select(date)
+            }
+        } else {
+            tableScrollTo(date)
         }
     }
 
@@ -173,7 +208,7 @@ extension ListUpRecordsViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return tableView.dequeueReusableCell(withIdentifier: cellIdentifer, for: indexPath).applyRet {
             let expense = expenses[indexPath.row]
-            $0.textLabel?.text = "\(expense.id) / \(expense.formatDate()) / \(expense.type?.name ?? "none")"
+            $0.textLabel?.text = "\(indexPath.row) / \(expense.id) / \(expense.formatDate()) / \(expense.type?.name ?? "none")"
         }
     }
     
@@ -184,11 +219,7 @@ extension ListUpRecordsViewController {
     
     // when you tap the cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.section == 0 {
-            let scope: FSCalendarScope = (indexPath.row == 0) ? .month : .week
-            self.calendar.setScope(scope, animated: true)
-        }
+        calendar.select(expenses[indexPath.row].date as Date)
     }
     
     func updateTable() {
