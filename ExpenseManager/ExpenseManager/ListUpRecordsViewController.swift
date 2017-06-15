@@ -1,5 +1,6 @@
 import UIKit
 import FSCalendar
+import SwiftDate
 
 class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance, UIGestureRecognizerDelegate {
     
@@ -45,6 +46,52 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
             $0.maximumNumberOfTouches = 2
         }
     }()
+    
+    // for fotter controller
+    @IBAction func addExpenseAction(_ sender: Any) {
+        //TODO going to add expense
+    }
+    @IBAction func prevAction(_ sender: Any) {
+        let currentDate = calendar.currentPage
+        var dateConmonents = DateComponents()
+        dateConmonents.year = currentDate.year
+        
+        let moveTo: Date
+        switch calendar.scope {
+        case .month:
+            dateConmonents.month = (currentDate - 1.month).month
+            moveTo = (DateInRegion(components: dateConmonents)?.startOf(component: .month).absoluteDate)!
+        case .week:
+            dateConmonents.month = currentDate.month
+            let tmp = currentDate - 7.day
+            dateConmonents.month = tmp.month
+            dateConmonents.day = tmp.day
+            moveTo = (DateInRegion(components: dateConmonents)?.startWeek.absoluteDate)!
+        }
+        
+        calendar.select(moveTo)
+    }
+    @IBAction func nextAction(_ sender: Any) {
+        let currentDate = calendar.currentPage
+        var dateConmonents = DateComponents()
+        dateConmonents.year = currentDate.year
+        
+        let moveTo: Date
+        switch calendar.scope {
+        case .month:
+            dateConmonents.month = (currentDate + 1.month).month
+            moveTo = (DateInRegion(components: dateConmonents)?.startOf(component: .month).absoluteDate)!
+        case .week:
+            dateConmonents.month = currentDate.month
+            let tmp = currentDate + 7.day
+            dateConmonents.month = tmp.month
+            dateConmonents.day = tmp.day
+            moveTo = (DateInRegion(components: dateConmonents)?.startWeek.absoluteDate)!
+        }
+        
+        calendar.select(moveTo)
+    }
+    
     
     // for others
     fileprivate var lastScope: UInt = 0
