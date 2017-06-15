@@ -8,8 +8,6 @@ class ExpenseDao {
 
     init() {
         realm = try! Realm()
-        print(realm)
-        
         
         if (Option.DEBUG) {
             if (findAllExpenses().isEmpty) {

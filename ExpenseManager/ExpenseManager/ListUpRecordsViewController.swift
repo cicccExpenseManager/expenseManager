@@ -28,6 +28,7 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
     // for data table
     @IBOutlet weak var tableView: UITableView!
     fileprivate var expenses: Array<Expense> = []
+    fileprivate let cellIdentifer = "CalenderCell"
     fileprivate let dateFormatter: DateFormatter = {
         return DateFormatter().applyRet {$0.dateFormat = "yyyy/MM/dd"}}()
     fileprivate let dateFormatter2: DateFormatter = {
@@ -71,6 +72,8 @@ extension ListUpRecordsViewController {
     
     func initializeView() {
         // Note : All delegates are set in view controller
+        // set table recycle identifer
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifer)
 
         // set calendar height if the device is iPad
         if UIDevice.current.model.hasPrefix("iPad") {
@@ -168,17 +171,9 @@ extension ListUpRecordsViewController {
 extension ListUpRecordsViewController {
     // getView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // TODO recycle
-        if let tableCell = tableView.cellForRow(at: indexPath) {
-            print("recycle \(indexPath.row)")
-            return tableCell
-
-        } else {
-            print("new \(indexPath.row)")
-            let newTableCell = UITableViewCell(style: .default, reuseIdentifier: "row")
+        return tableView.dequeueReusableCell(withIdentifier: cellIdentifer, for: indexPath).applyRet {
             let expense = expenses[indexPath.row]
-            newTableCell.textLabel?.text = "\(expense.id) / \(expense.formatDate()) / \(expense.type?.name ?? "none")"
-            return newTableCell
+            $0.textLabel?.text = "\(expense.id) / \(expense.formatDate()) / \(expense.type?.name ?? "none")"
         }
     }
     
