@@ -72,6 +72,16 @@ extension ListUpRecordsViewController {
     
     fileprivate func initializeView() {
         // Note : All delegates are set in view controller
+        self.navigationController!.navigationBar.apply {
+            // Status bar white font
+            $0.barStyle = UIBarStyle.black
+            $0.tintColor = UIColor.white
+
+            // Navigation bar to alpha zero
+            $0.setBackgroundImage(UIImage(), for: .default)
+            $0.shadowImage = UIImage()
+        }
+        
         // set table recycle identifer
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifer)
 
@@ -90,6 +100,9 @@ extension ListUpRecordsViewController {
             
             // set calendar mode for default
             $0.scope = .month
+            
+            // disable border of top and bottom
+            $0.clipsToBounds = true
         }
     }
 }

@@ -22,12 +22,42 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gjo-sW-oaL">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="185"/>
+                                <color key="backgroundColor" red="0.46796089410000002" green="0.15759190919999999" blue="0.47574329380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="185" id="d65-CA-JmI"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PHK-yH-aVI" customClass="FSCalendar">
-                                <rect key="frame" x="4" y="118" width="406" height="300"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="118" width="414" height="300"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="Gnt-A5-uOq"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="selectionColor">
+                                        <color key="value" red="0.46796089410000002" green="0.15759190919999999" blue="0.47574329380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleTodayColor">
+                                        <color key="value" red="0.46796089410000002" green="0.15759190919999999" blue="0.47574329380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="todayColor">
+                                        <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="todaySelectionColor">
+                                        <color key="value" red="0.46796089410000002" green="0.15759190919999999" blue="0.47574329380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="headerTitleColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="headerTitleTextSize">
+                                        <real key="value" value="24"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="RUB-KF-dda" id="25m-Zq-zXW"/>
                                     <outlet property="delegate" destination="RUB-KF-dda" id="HLa-W6-sfh"/>
@@ -42,12 +72,13 @@
                                     <segment title="Monthly"/>
                                     <segment title="Weekly"/>
                                 </segments>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <action selector="modeChanged:" destination="RUB-KF-dda" eventType="valueChanged" id="ep6-Wh-ULZ"/>
                                 </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lM3-AG-ymb">
-                                <rect key="frame" x="4" y="417" width="406" height="319"/>
+                                <rect key="frame" x="0.0" y="418" width="414" height="318"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="RUB-KF-dda" id="GEx-fW-9at"/>
@@ -57,15 +88,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="PHK-yH-aVI" firstAttribute="leading" secondItem="Qaz-mF-1Ae" secondAttribute="leadingMargin" constant="-16" id="6MV-IW-Isv"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="lM3-AG-ymb" secondAttribute="trailing" constant="-16" id="HAM-aK-oFy"/>
+                            <constraint firstItem="Gjo-sW-oaL" firstAttribute="leading" secondItem="Qaz-mF-1Ae" secondAttribute="leading" id="BDt-1z-uC5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lM3-AG-ymb" secondAttribute="trailing" constant="-20" id="HAM-aK-oFy"/>
                             <constraint firstItem="PHK-yH-aVI" firstAttribute="top" secondItem="pmD-qa-de7" secondAttribute="bottom" constant="13" id="Htl-DL-GWX"/>
-                            <constraint firstItem="lM3-AG-ymb" firstAttribute="top" secondItem="PHK-yH-aVI" secondAttribute="bottom" constant="-1" id="OPJ-zc-lTK"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="PHK-yH-aVI" secondAttribute="trailing" constant="-16" id="S5v-J8-Vmf"/>
-                            <constraint firstItem="lM3-AG-ymb" firstAttribute="leading" secondItem="Qaz-mF-1Ae" secondAttribute="leadingMargin" constant="-16" id="WTH-Zy-mN7"/>
+                            <constraint firstItem="lM3-AG-ymb" firstAttribute="top" secondItem="PHK-yH-aVI" secondAttribute="bottom" id="OPJ-zc-lTK"/>
+                            <constraint firstItem="lM3-AG-ymb" firstAttribute="leading" secondItem="Qaz-mF-1Ae" secondAttribute="leadingMargin" constant="-20" id="WTH-Zy-mN7"/>
                             <constraint firstItem="pmD-qa-de7" firstAttribute="top" secondItem="MlR-mH-o2j" secondAttribute="bottom" constant="13" id="Wmh-Wl-b3X"/>
                             <constraint firstItem="aKj-z9-3np" firstAttribute="top" secondItem="lM3-AG-ymb" secondAttribute="bottom" id="Y8D-t7-jR0"/>
                             <constraint firstItem="pmD-qa-de7" firstAttribute="centerX" secondItem="Qaz-mF-1Ae" secondAttribute="centerX" id="gQx-Ed-urf"/>
+                            <constraint firstItem="PHK-yH-aVI" firstAttribute="leading" secondItem="Qaz-mF-1Ae" secondAttribute="leadingMargin" constant="-20" id="iZx-tt-LeJ"/>
+                            <constraint firstItem="PHK-yH-aVI" firstAttribute="trailing" secondItem="Qaz-mF-1Ae" secondAttribute="trailingMargin" constant="20" id="lNf-zh-C9u"/>
+                            <constraint firstAttribute="trailing" secondItem="Gjo-sW-oaL" secondAttribute="trailing" id="rty-vr-qA7"/>
+                            <constraint firstItem="Gjo-sW-oaL" firstAttribute="top" secondItem="Qaz-mF-1Ae" secondAttribute="top" id="xqh-Us-r0D"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Expenses" id="XyR-qe-2zX">
@@ -84,7 +118,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hOZ-vy-2of" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="972" y="24.7376311844078"/>
+            <point key="canvasLocation" x="971.01449275362324" y="24.456521739130437"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wlr-XN-01q">
