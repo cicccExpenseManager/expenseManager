@@ -85,6 +85,9 @@ class MainpageController: UIViewController {
         targetListButton.setImage(UIImage(named: "TargetIcon"), for: .normal)
         settingButton.setImage(UIImage(named: "settingIcon"), for: .normal)
         
+        calendarButton.addTarget(self, action: #selector(goNextPage), for: .touchUpInside)
+        expectedBalanceButton.addTarget(self, action: #selector(goNextInput), for: .touchUpInside)
+        
         let menuButtons = [calendarButton,expectedBalanceButton, targetListButton, settingButton]
         
         for button in menuButtons {
@@ -99,6 +102,18 @@ class MainpageController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    func goNextPage() {
+        let storyboard = UIStoryboard(name: "ListUpRecords", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ListUpRecordsViewController")
+        self.navigationController!.pushViewController(vc, animated: true)
+    }
+    
+    func goNextInput() {
+        let storyboard = UIStoryboard(name: "InputPage", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "inputPage")
+        self.navigationController!.pushViewController(vc, animated: true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
