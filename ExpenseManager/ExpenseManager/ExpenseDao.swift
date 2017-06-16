@@ -20,7 +20,7 @@ class ExpenseDao {
             if (Option.DEBUG) {
                 // Put some expenses for debug
                 try! realm.write {
-                    for _ in 0...60 {
+                    for i in 0...60 {
                         Expense().apply {
                             $0.id = generateId()
                             $0.amount = 50.00 + Double(arc4random_uniform(500))
@@ -33,6 +33,7 @@ class ExpenseDao {
                             } else {
                                 $0.date = (Date() - dayDifference) as NSDate
                             }
+                            $0.name = "Detail \(i + 1)"
                             
                             realm.add($0)
                         }

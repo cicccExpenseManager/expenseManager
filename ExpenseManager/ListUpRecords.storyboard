@@ -80,6 +80,57 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lM3-AG-ymb">
                                 <rect key="frame" x="0.0" y="418" width="414" height="258"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListUpRecordsCell" rowHeight="44" id="TUB-mw-e4v" customClass="ListUpRecordsCell" customModule="ExpenseManager" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TUB-mw-e4v" id="CJo-KM-549">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ 123,456,789" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h2o-PT-a2b">
+                                                    <rect key="frame" x="284" y="12" width="112" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ICU-Vt-nPm">
+                                                    <rect key="frame" x="28" y="14" width="16" height="16"/>
+                                                    <color key="backgroundColor" red="0.23457046439139451" green="0.24553916646302376" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="16" id="kDz-BE-aef"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="keyPath">
+                                                            <integer key="value" value="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJh-MS-hk7">
+                                                    <rect key="frame" x="54" y="12" width="44" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="sJh-MS-hk7" firstAttribute="baseline" secondItem="h2o-PT-a2b" secondAttribute="baseline" id="9dG-1i-BrA"/>
+                                                <constraint firstItem="sJh-MS-hk7" firstAttribute="leading" secondItem="ICU-Vt-nPm" secondAttribute="trailing" constant="10" id="JZs-Nh-DXE"/>
+                                                <constraint firstItem="ICU-Vt-nPm" firstAttribute="centerY" secondItem="sJh-MS-hk7" secondAttribute="centerY" id="QFd-6c-FWc"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="h2o-PT-a2b" secondAttribute="trailing" constant="10" id="cFa-1i-pDf"/>
+                                                <constraint firstItem="ICU-Vt-nPm" firstAttribute="centerY" secondItem="CJo-KM-549" secondAttribute="centerY" id="ca9-vz-EV6"/>
+                                                <constraint firstItem="ICU-Vt-nPm" firstAttribute="top" secondItem="CJo-KM-549" secondAttribute="topMargin" constant="6" id="qPa-CS-w6J"/>
+                                                <constraint firstItem="ICU-Vt-nPm" firstAttribute="leading" secondItem="CJo-KM-549" secondAttribute="leadingMargin" constant="20" id="xSK-uM-S9h"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="amountLabel" destination="h2o-PT-a2b" id="Uj8-yw-P5e"/>
+                                            <outlet property="categoryColor" destination="ICU-Vt-nPm" id="tDR-rh-LYK"/>
+                                            <outlet property="detailLabel" destination="sJh-MS-hk7" id="TPs-jC-NXu"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="RUB-KF-dda" id="GEx-fW-9at"/>
                                     <outlet property="delegate" destination="RUB-KF-dda" id="cTk-pP-83r"/>
