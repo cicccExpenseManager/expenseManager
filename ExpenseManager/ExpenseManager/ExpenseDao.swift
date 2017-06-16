@@ -41,7 +41,11 @@ class ExpenseDao {
     }
 
     func findAllExpenses() -> Results<Expense> {
-        let realm = try! Realm()
+      
         return realm.objects(Expense.self)
+    }
+    
+    func getTotalAmount() -> Double {
+        return realm.objects(Expense.self).sum(ofProperty: "amount")
     }
 }

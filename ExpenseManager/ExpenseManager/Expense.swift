@@ -6,6 +6,8 @@ class Expense: Object {
     dynamic var amount: Double = 0.0
     dynamic var type: Category?
     dynamic var date = NSDate()
+    dynamic var name: String = ""
+    
     //TODO
 //    var simpleDate: String {
 //        let dateFormatter = NSDateFormatter()
