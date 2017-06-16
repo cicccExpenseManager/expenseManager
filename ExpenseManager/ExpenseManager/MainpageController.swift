@@ -85,15 +85,22 @@ class MainpageController: UIViewController {
         targetListButton.setImage(UIImage(named: "TargetIcon"), for: .normal)
         settingButton.setImage(UIImage(named: "settingIcon"), for: .normal)
         
+        
+        /* Use functions to move to next page */
         calendarButton.addTarget(self, action: #selector(goNextPage), for: .touchUpInside)
-        expectedBalanceButton.addTarget(self, action: #selector(goNextInput), for: .touchUpInside)
+        //totalBalance.addTarget(self, action: #selector(goNextInput), for: .touchUpInside)
         
+        
+        /* Make UIlabel clickable */
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapFunction))
+        totalBalance.isUserInteractionEnabled = true
+        totalBalance.addGestureRecognizer(tap)
+        
+        
+        /* Adding buttons to menuImageView */
         let menuButtons = [calendarButton,expectedBalanceButton, targetListButton, settingButton]
-        
         for button in menuButtons {
-            
             menuImageView.addSubview(button!)
-            
         }
         
         
@@ -107,12 +114,20 @@ class MainpageController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "ListUpRecordsViewController")
         self.navigationController!.pushViewController(vc, animated: true)
     }
+//    
+//    func goNextInput() {
+//        let storyboard = UIStoryboard(name: "InputPage", bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "inputPage")
+//        self.navigationController!.pushViewController(vc, animated: true)
+//    }
     
-    func goNextInput() {
+
+    func tapFunction(sender:UITapGestureRecognizer) {
         let storyboard = UIStoryboard(name: "InputPage", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "inputPage")
         self.navigationController!.pushViewController(vc, animated: true)
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

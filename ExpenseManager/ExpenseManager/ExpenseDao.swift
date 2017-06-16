@@ -92,4 +92,8 @@ class ExpenseDao {
     func getTotalAmount() -> Double {
         return realm.objects(Expense.self).sum(ofProperty: "amount")
     }
+    
+    func getTotalAmount(_ date: Date) -> Double {
+        return findForMonth(date: date).sum(ofProperty: "amount")
+    }
 }
