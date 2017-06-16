@@ -4,7 +4,7 @@ class ListUpRecordsCell: UITableViewCell {
     
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
-    @IBOutlet weak var categoryColor: UIButton!
+    @IBOutlet weak var categoryColor: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -12,8 +12,22 @@ class ListUpRecordsCell: UITableViewCell {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
+        let color = categoryColor.backgroundColor
         super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
+        
+        if (selected) {
+            categoryColor.backgroundColor = color
+            self.backgroundColor = 
+        }
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        let color = categoryColor.backgroundColor
+        super.setHighlighted(highlighted, animated: animated)
+        
+        if (highlighted) {
+            categoryColor.backgroundColor = color
+        }
     }
 
     func setExpense(_ expense: Expense) {
