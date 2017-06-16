@@ -23,5 +23,5 @@ class Expense: Object {
     }
     
     fileprivate let dateFormatter: DateFormatter = {
-        return DateFormatter().applyRet {$0.dateFormat = "yyyy/MM/dd"}}()
+        return DateFormatter().applyRet {$0.dateFormat = "dd MMM"}}()
 }

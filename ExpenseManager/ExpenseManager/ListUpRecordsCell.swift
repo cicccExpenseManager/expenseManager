@@ -18,8 +18,8 @@ class ListUpRecordsCell: UITableViewCell {
 
     func setExpense(_ expense: Expense) {
         self.categoryColor.backgroundColor = expense.type?.getColor() ?? UIColor.black
-//        self.detailLabel.text = expense.name
-//        self.amountLabel.text = formatCurrency(expense.amount)
+        self.detailLabel.text = "\(expense.formatDate()), \(expense.name)"
+        self.amountLabel.text = formatCurrency(expense.amount)
     }
 
     func formatCurrency(_ value: Double) -> String {

@@ -128,9 +128,6 @@ extension ListUpRecordsViewController {
             $0.setBackgroundImage(UIImage(), for: .default)
             $0.shadowImage = UIImage()
         }
-        
-        // set table recycle identifer
-        self.tableView.register(ListUpRecordsCell.self, forCellReuseIdentifier: cellIdentifer)
 
         // set calendar height if the device is iPad
         if UIDevice.current.model.hasPrefix("iPad") {
@@ -266,13 +263,9 @@ extension ListUpRecordsViewController {
 extension ListUpRecordsViewController {
     // getView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "ListUpRecordsCell") as! ListUpRecordsCell
-        let cell: ListUpRecordsCell = tableView.dequeueReusableCell(
+        return (tableView.dequeueReusableCell(
             withIdentifier: cellIdentifer,
-            for: indexPath) as! ListUpRecordsCell
-        cell.setExpense(expenses[indexPath.row])
-        return cell
-//            $0.textLabel?.text = "\(indexPath.row) / \(expense.id) / \(expense.formatDate()) / \(expense.type?.name ?? "none")"
+            for: indexPath) as! ListUpRecordsCell).applyRet { $0.setExpense(expenses[indexPath.row]) }
     }
     
     // getCount
