@@ -25,8 +25,13 @@
 		F51315A61EDCE8F400EA9767 /* ExpenseDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51315A51EDCE8F400EA9767 /* ExpenseDao.swift */; };
 		F5A5F1C31EE64A760074CF37 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A5F1C21EE64A760074CF37 /* Option.swift */; };
 		F5A5F1C51EE64C620074CF37 /* CategoryDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A5F1C41EE64C620074CF37 /* CategoryDao.swift */; };
+		F5AA3FE31EF356B900FA0C7D /* ListUpRecordsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AA3FE21EF356B900FA0C7D /* ListUpRecordsCell.swift */; };
+		F5AA3FE51EF387CA00FA0C7D /* ListUpDailyReports.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5AA3FE41EF387CA00FA0C7D /* ListUpDailyReports.storyboard */; };
+		F5AA3FE71EF4793900FA0C7D /* ListUpDailyReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AA3FE61EF4793900FA0C7D /* ListUpDailyReportsViewController.swift */; };
 		F5D1BC381EED390B005511E0 /* ListUpRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D1BC371EED390B005511E0 /* ListUpRecordsViewController.swift */; };
 		F5D1BC3A1EED392D005511E0 /* ListUpRecords.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5D1BC391EED392D005511E0 /* ListUpRecords.storyboard */; };
+		F5DCC1FC1EF0B45A00E8068B /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DCC1FB1EF0B45A00E8068B /* Extension.swift */; };
+		F5DCC1FE1EF0CCDC00E8068B /* SwiftDate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5DCC1FD1EF0CCDC00E8068B /* SwiftDate.framework */; };
 		F5F4C45D1EEB8A9300B7878E /* FSCalendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5F4C45C1EEB8A9300B7878E /* FSCalendar.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,8 +77,13 @@
 		F51315A51EDCE8F400EA9767 /* ExpenseDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpenseDao.swift; sourceTree = "<group>"; };
 		F5A5F1C21EE64A760074CF37 /* Option.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		F5A5F1C41EE64C620074CF37 /* CategoryDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryDao.swift; sourceTree = "<group>"; };
+		F5AA3FE21EF356B900FA0C7D /* ListUpRecordsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListUpRecordsCell.swift; sourceTree = "<group>"; };
+		F5AA3FE41EF387CA00FA0C7D /* ListUpDailyReports.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ListUpDailyReports.storyboard; path = ../ListUpDailyReports.storyboard; sourceTree = "<group>"; };
+		F5AA3FE61EF4793900FA0C7D /* ListUpDailyReportsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListUpDailyReportsViewController.swift; sourceTree = "<group>"; };
 		F5D1BC371EED390B005511E0 /* ListUpRecordsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListUpRecordsViewController.swift; sourceTree = "<group>"; };
 		F5D1BC391EED392D005511E0 /* ListUpRecords.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ListUpRecords.storyboard; path = ../ListUpRecords.storyboard; sourceTree = "<group>"; };
+		F5DCC1FB1EF0B45A00E8068B /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		F5DCC1FD1EF0CCDC00E8068B /* SwiftDate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftDate.framework; path = Carthage/Build/iOS/SwiftDate.framework; sourceTree = "<group>"; };
 		F5F4C45C1EEB8A9300B7878E /* FSCalendar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FSCalendar.framework; path = Carthage/Build/iOS/FSCalendar.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5DCC1FE1EF0CCDC00E8068B /* SwiftDate.framework in Frameworks */,
 				F5F4C45D1EEB8A9300B7878E /* FSCalendar.framework in Frameworks */,
 				F513159D1EDCD11100EA9767 /* Realm.framework in Frameworks */,
 				F513159E1EDCD11100EA9767 /* RealmSwift.framework in Frameworks */,
@@ -143,7 +154,10 @@
 				6800C2631EE770CC00D55DA6 /* Mainpage.storyboard */,
 				6800C2651EE7720B00D55DA6 /* MainpageController.swift */,
 				F5D1BC371EED390B005511E0 /* ListUpRecordsViewController.swift */,
+				F5AA3FE21EF356B900FA0C7D /* ListUpRecordsCell.swift */,
 				F5D1BC391EED392D005511E0 /* ListUpRecords.storyboard */,
+				F5AA3FE61EF4793900FA0C7D /* ListUpDailyReportsViewController.swift */,
+				F5AA3FE41EF387CA00FA0C7D /* ListUpDailyReports.storyboard */,
 			);
 			path = ExpenseManager;
 			sourceTree = "<group>";
@@ -169,6 +183,7 @@
 		F513159A1EDCD11100EA9767 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F5DCC1FD1EF0CCDC00E8068B /* SwiftDate.framework */,
 				F5F4C45C1EEB8A9300B7878E /* FSCalendar.framework */,
 				F513159B1EDCD11100EA9767 /* Realm.framework */,
 				F513159C1EDCD11100EA9767 /* RealmSwift.framework */,
@@ -198,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				F5A5F1C21EE64A760074CF37 /* Option.swift */,
+				F5DCC1FB1EF0B45A00E8068B /* Extension.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -315,6 +331,7 @@
 				F51315761EDCC3A700EA9767 /* LaunchScreen.storyboard in Resources */,
 				68F830D81EF240F600A86863 /* Assets.xcassets in Resources */,
 				F5D1BC3A1EED392D005511E0 /* ListUpRecords.storyboard in Resources */,
+				F5AA3FE51EF387CA00FA0C7D /* ListUpDailyReports.storyboard in Resources */,
 				F51315711EDCC3A700EA9767 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,6 +362,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FSCalendar.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftDate.framework",
 			);
 			outputPaths = (
 			);
@@ -359,6 +377,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5DCC1FC1EF0B45A00E8068B /* Extension.swift in Sources */,
+				F5AA3FE31EF356B900FA0C7D /* ListUpRecordsCell.swift in Sources */,
+				F5AA3FE71EF4793900FA0C7D /* ListUpDailyReportsViewController.swift in Sources */,
 				F513156E1EDCC3A700EA9767 /* ViewController.swift in Sources */,
 				6800C2661EE7720B00D55DA6 /* MainpageController.swift in Sources */,
 				F51315A61EDCE8F400EA9767 /* ExpenseDao.swift in Sources */,
