@@ -17,7 +17,6 @@ class ListUpRecordsCell: UITableViewCell {
         
         if (selected) {
             categoryColor.backgroundColor = color
-            self.backgroundColor = 
         }
     }
     
