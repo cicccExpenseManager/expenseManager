@@ -23,6 +23,8 @@
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
+	<string>InputPage</string>
+	<string>Mainpage</string>
 	<string>ListUpRecords</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

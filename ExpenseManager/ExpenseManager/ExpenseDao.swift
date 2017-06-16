@@ -88,4 +88,8 @@ class ExpenseDao {
             DateInRegion(components: dataComponents)?.startOfDay.absoluteDate,
             DateInRegion(components: dataComponents)?.endOfDay.absoluteDate])
     }
+
+    func getTotalAmount() -> Double {
+        return realm.objects(Expense.self).sum(ofProperty: "amount")
+    }
 }
