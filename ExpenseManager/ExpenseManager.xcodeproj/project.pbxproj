@@ -26,6 +26,7 @@
 		F5AA3FE31EF356B900FA0C7D /* ListUpRecordsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AA3FE21EF356B900FA0C7D /* ListUpRecordsCell.swift */; };
 		F5AA3FE51EF387CA00FA0C7D /* ListUpDailyReports.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5AA3FE41EF387CA00FA0C7D /* ListUpDailyReports.storyboard */; };
 		F5AA3FE71EF4793900FA0C7D /* ListUpDailyReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AA3FE61EF4793900FA0C7D /* ListUpDailyReportsViewController.swift */; };
+		F5B6431D1EF4A854000DF735 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B6431C1EF4A854000DF735 /* CardView.swift */; };
 		F5D1BC381EED390B005511E0 /* ListUpRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D1BC371EED390B005511E0 /* ListUpRecordsViewController.swift */; };
 		F5D1BC3A1EED392D005511E0 /* ListUpRecords.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5D1BC391EED392D005511E0 /* ListUpRecords.storyboard */; };
 		F5DCC1FC1EF0B45A00E8068B /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DCC1FB1EF0B45A00E8068B /* Extension.swift */; };
@@ -76,6 +77,7 @@
 		F5AA3FE21EF356B900FA0C7D /* ListUpRecordsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListUpRecordsCell.swift; sourceTree = "<group>"; };
 		F5AA3FE41EF387CA00FA0C7D /* ListUpDailyReports.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ListUpDailyReports.storyboard; path = ../ListUpDailyReports.storyboard; sourceTree = "<group>"; };
 		F5AA3FE61EF4793900FA0C7D /* ListUpDailyReportsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListUpDailyReportsViewController.swift; sourceTree = "<group>"; };
+		F5B6431C1EF4A854000DF735 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		F5D1BC371EED390B005511E0 /* ListUpRecordsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListUpRecordsViewController.swift; sourceTree = "<group>"; };
 		F5D1BC391EED392D005511E0 /* ListUpRecords.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ListUpRecords.storyboard; path = ../ListUpRecords.storyboard; sourceTree = "<group>"; };
 		F5DCC1FB1EF0B45A00E8068B /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 			children = (
 				F5A5F1C21EE64A760074CF37 /* Option.swift */,
 				F5DCC1FB1EF0B45A00E8068B /* Extension.swift */,
+				F5B6431C1EF4A854000DF735 /* CardView.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				F51315A61EDCE8F400EA9767 /* ExpenseDao.swift in Sources */,
 				F5D1BC381EED390B005511E0 /* ListUpRecordsViewController.swift in Sources */,
 				F51315A11EDCDFD200EA9767 /* Expense.swift in Sources */,
+				F5B6431D1EF4A854000DF735 /* CardView.swift in Sources */,
 				F5A5F1C31EE64A760074CF37 /* Option.swift in Sources */,
 				F5A5F1C51EE64C620074CF37 /* CategoryDao.swift in Sources */,
 				F513156C1EDCC3A700EA9767 /* AppDelegate.swift in Sources */,

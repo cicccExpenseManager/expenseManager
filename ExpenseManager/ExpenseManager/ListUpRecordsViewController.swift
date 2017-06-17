@@ -95,6 +95,7 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
     
     // for others
     fileprivate var lastScope: UInt = 0
+    fileprivate var lastSelected: Date = Date()
 }
 
 /**---------------------------------------------------------------
@@ -227,15 +228,25 @@ extension ListUpRecordsViewController {
 
     // onClick event when the user touched
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        if (calendar.scope == .month) {
-            if (calendar.currentPage.month == date.month) {
-                tableScrollTo(date)
-            } else {
-                calendar.select(date)
-            }
+        if (date == lastSelected) {
+            let storyboard = UIStoryboard(name: "ListUpDailyReports", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "ListUpDailyReportsViewController") as! ListUpDailyReportsViewController
+            vc.initialize(date: date)
+            self.navigationController!.pushViewController(vc, animated: true)
+
         } else {
-            tableScrollTo(date)
+            if (calendar.scope == .month) {
+                if (calendar.currentPage.month == date.month) {
+                    tableScrollTo(date)
+                } else {
+                    calendar.select(date)
+                }
+            } else {
+                tableScrollTo(date)
+            }
         }
+        
+        lastSelected = date
     }
 
     // onChanged event when the user change week or month by swipe
