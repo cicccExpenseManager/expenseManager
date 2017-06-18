@@ -8,16 +8,14 @@ class ListUpDailyReportsViewController: UIViewController, UITableViewDataSource,
     internal var expenses: Array<Expense> = []
     fileprivate let cellIdentifer = "ListUpDailyRecordsCell"
     fileprivate let dateFormatter: DateFormatter = {
-        return DateFormatter().applyRet {$0.dateFormat = "MMM dd EEEE"}}()
+        return DateFormatter().applyRet {$0.dateFormat = "MMMM dd EEE"}}()
     
     // For header
     @IBOutlet weak var dateLabel: UILabel!
     @IBAction func prevDayAction(_ sender: UIButton) {
-        print("Prev")
         moveTo(.Prev)
     }
     @IBAction func nextDayAction(_ sender: UIButton) {
-        print("Next")
         moveTo(.Next)
     }
     
@@ -71,7 +69,7 @@ extension ListUpDailyReportsViewController {
     
     fileprivate func initializeView() {
         // set header date text
-        dateLabel.text = dateFormatter.string(from: date).capitalized
+        dateLabel.text = dateFormatter.string(from: date).uppercased()
         
         // set total amount
         let expenseDao = ExpenseDao()
