@@ -92,4 +92,19 @@ class ExpenseDao {
     func getTotalAmount() -> Double {
         return realm.objects(Expense.self).sum(ofProperty: "amount")
     }
+    
+    func addExpense(detail :String, amount: Double, category: Category, date: Date) {
+        try! realm.write {
+            Expense().apply {
+                $0.id = ExpenseDao().generateId()
+                $0.name = detail
+                $0.amount = amount
+                $0.setType(category: category)
+                $0.date = date as NSDate
+//                let tmpDate = DateInRegion(components: generateDataComponents(year: 2017, month: 6, day: 2))?.absoluteDate
+//                $0.date = tmpDate
+                realm.add($0)
+            }
+        }
+    }
 }

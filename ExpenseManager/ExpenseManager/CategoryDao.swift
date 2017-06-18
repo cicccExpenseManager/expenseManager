@@ -9,6 +9,10 @@ class CategoryDao {
     func findAllCategories() -> Results<Category> {
         return realm.objects(Category.self)
     }
+    
+    func findByName(name: String) -> Results<Category> {
+        return findAllCategories().filter("name = %@", [name])
+    }
 
     /**
      * Put default categories if the Category Table does not have any record.

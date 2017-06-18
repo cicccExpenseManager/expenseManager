@@ -11,10 +11,15 @@ import UIKit
 class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var dateTextField: UITextField!
+    @IBOutlet weak var categoryTextField: UITextField!
     @IBOutlet weak var segementedChange: UISegmentedControl!
     @IBOutlet weak var labPluAndMin: UILabel!
+    @IBOutlet weak var detailTextField: UITextField!
+    @IBOutlet weak var priceTextField: UITextField!
+    @IBOutlet weak var submitButton: UIButton!
     
     let categoryList = ["Salary","Food", "Social", "Utility", "House Rent","Transportation", "Cell Phone"]
+    var selectedDate: Date? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,9 +48,34 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
         
         toolBar.setItems([todayBtn,flexSpace,textBtn,flexSpace,okBarBtn], animated: true)
         dateTextField.inputAccessoryView = toolBar
+        
+        
+        let pickerView: UIPickerView = UIPickerView()
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        pickerView.showsSelectionIndicator = true
+        
+        let toolbarCategory = UIToolbar(frame: CGRect(x: 0, y: 0, width: 0, height: 35))
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        toolbarCategory.setItems([cancelItem, doneItem], animated: true)
+        
+        categoryTextField.inputView = pickerView
+        categoryTextField.inputAccessoryView = toolbarCategory
+    
     }
     
+    
+    //set the method of changing the label(Plu and Min)
+    @IBAction func changeSeg(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            labPluAndMin.text = "(-)"
+        } else {
+            labPluAndMin.text = "(+)"
+        }
+    }
 
+    
     @IBAction func textFieldEditing(_ sender: UITextField) {
         let datePickerView: UIDatePicker = UIDatePicker()
         
@@ -83,21 +113,11 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
         
         dateFormatter.dateStyle = DateFormatter.Style.medium
         dateFormatter.timeStyle = DateFormatter.Style.none
-        dateTextField.text = dateFormatter.string(from: sender.date)
         
+        selectedDate = sender.date
+        dateTextField.text = dateFormatter.string(from: selectedDate!)
     }
     
-    
-    
-    
-    //set the function of changing the label(Plu and Min)
-    @IBAction func changeSeg(_ sender: UISegmentedControl) {
-        if sender.selectedSegmentIndex == 0 {
-            labPluAndMin.text = "(+)"
-        } else {
-            labPluAndMin.text = "(-)"
-        }
-    }
     
     //the method which return the number of components
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -114,9 +134,46 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
         return categoryList[row] as String
     }
     
-    //the method is called when selecting the components
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print("¥(categoryList[row])")
+    
+    func cancel() {
+        categoryTextField.text = ""
+        categoryTextField.endEditing(true)
     }
     
+    func done() {
+        categoryTextField.endEditing(true)
+    }
+    
+    //the method which set the chosen category to the text field
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.categoryTextField.text = categoryList[row]
+    }
+    
+    
+    
+    //the method which input the expense of users
+    @IBAction func inputSubmit(_ sender: UIButton) {
+        
+        //check all of the user input
+        if dateTextField.text != nil && categoryTextField.text != nil && detailTextField.text != nil && priceTextField.text != nil {
+            
+            if let category = CategoryDao().findByName(name: categoryTextField.text!).first {
+                let expenseDao = ExpenseDao()
+                expenseDao.addExpense(
+                    detail: detailTextField.text!,
+                    amount: Double(priceTextField.text!)!,
+                    category: category,
+                    date: selectedDate ?? Date())
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                //if letのelseの場合を考える（notification etc）
+            }
+        }
+        else {
+            print("Please fill all of them!")
+        }
+    }
+    
+    
+
 }
