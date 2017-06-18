@@ -42,6 +42,9 @@
                                         <state key="normal" title="&lt;">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="prevDayAction:" destination="Fqt-Fg-NHG" eventType="touchUpInside" id="JZz-5K-kbj"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mRD-6K-cfA">
                                         <rect key="frame" x="305" y="66" width="70" height="60"/>
@@ -54,6 +57,9 @@
                                         <state key="normal" title="&gt;">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="nextDayAction:" destination="Fqt-Fg-NHG" eventType="touchUpInside" id="pL0-BY-tJJ"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.46796089410000002" green="0.15759190919999999" blue="0.47574329380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -104,7 +110,7 @@
                                 <rect key="frame" x="46" y="347" width="283" height="260"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="glP-2C-D8Y">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListUpDailyRecordsCell" id="glP-2C-D8Y" customClass="ListUpDailyReportsCell" customModule="ExpenseManager" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="283" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="glP-2C-D8Y" id="j9Z-V8-2Qs">
@@ -138,8 +144,17 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="amountLabel" destination="9L3-nc-k7A" id="aag-0C-9fK"/>
+                                            <outlet property="categoryColor" destination="veM-00-ijW" id="WXA-UK-zCf"/>
+                                            <outlet property="detailLabel" destination="NMI-tN-5aB" id="nxH-Uy-w2c"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Fqt-Fg-NHG" id="h3z-6v-Wdo"/>
+                                    <outlet property="delegate" destination="Fqt-Fg-NHG" id="ggi-Jy-bps"/>
+                                </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rtw-Yf-6w3" customClass="CardView" customModule="ExpenseManager" customModuleProvider="target">
                                 <rect key="frame" x="46" y="160" width="283" height="156.5"/>
@@ -220,6 +235,13 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="NmT-QU-cRx"/>
+                    <connections>
+                        <outlet property="dateLabel" destination="rMe-8Q-p9U" id="7wX-U5-iBA"/>
+                        <outlet property="tableView" destination="Ryn-ET-yoA" id="5mS-aY-3zj"/>
+                        <outlet property="totalAmountLabel" destination="1an-kI-a8x" id="drV-qS-UEH"/>
+                        <outlet property="totalExpenditureLabel" destination="PbH-IT-ilX" id="EYh-Gm-atb"/>
+                        <outlet property="totalRevenueLabel" destination="c02-bW-Ezz" id="h5O-m2-heI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f8v-tF-gxu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

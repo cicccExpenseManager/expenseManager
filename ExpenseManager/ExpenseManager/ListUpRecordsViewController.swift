@@ -30,10 +30,6 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var tableView: UITableView!
     fileprivate var expenses: Array<Expense> = []
     fileprivate let cellIdentifer = "ListUpRecordsCell"
-    fileprivate let dateFormatter: DateFormatter = {
-        return DateFormatter().applyRet {$0.dateFormat = "yyyy/MM/dd"}}()
-    fileprivate let dateFormatter2: DateFormatter = {
-        return DateFormatter().applyRet {$0.dateFormat = "yyyy-MM-dd"}}()
 
     // for gesture event
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {

@@ -27,6 +27,7 @@
 		F5AA3FE51EF387CA00FA0C7D /* ListUpDailyReports.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5AA3FE41EF387CA00FA0C7D /* ListUpDailyReports.storyboard */; };
 		F5AA3FE71EF4793900FA0C7D /* ListUpDailyReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AA3FE61EF4793900FA0C7D /* ListUpDailyReportsViewController.swift */; };
 		F5B6431D1EF4A854000DF735 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B6431C1EF4A854000DF735 /* CardView.swift */; };
+		F5B6431F1EF5F825000DF735 /* ListUpDailyReportsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B6431E1EF5F825000DF735 /* ListUpDailyReportsCell.swift */; };
 		F5D1BC381EED390B005511E0 /* ListUpRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D1BC371EED390B005511E0 /* ListUpRecordsViewController.swift */; };
 		F5D1BC3A1EED392D005511E0 /* ListUpRecords.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5D1BC391EED392D005511E0 /* ListUpRecords.storyboard */; };
 		F5DCC1FC1EF0B45A00E8068B /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DCC1FB1EF0B45A00E8068B /* Extension.swift */; };
@@ -78,6 +79,7 @@
 		F5AA3FE41EF387CA00FA0C7D /* ListUpDailyReports.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ListUpDailyReports.storyboard; path = ../ListUpDailyReports.storyboard; sourceTree = "<group>"; };
 		F5AA3FE61EF4793900FA0C7D /* ListUpDailyReportsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListUpDailyReportsViewController.swift; sourceTree = "<group>"; };
 		F5B6431C1EF4A854000DF735 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		F5B6431E1EF5F825000DF735 /* ListUpDailyReportsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListUpDailyReportsCell.swift; sourceTree = "<group>"; };
 		F5D1BC371EED390B005511E0 /* ListUpRecordsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListUpRecordsViewController.swift; sourceTree = "<group>"; };
 		F5D1BC391EED392D005511E0 /* ListUpRecords.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ListUpRecords.storyboard; path = ../ListUpRecords.storyboard; sourceTree = "<group>"; };
 		F5DCC1FB1EF0B45A00E8068B /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				F5AA3FE21EF356B900FA0C7D /* ListUpRecordsCell.swift */,
 				F5D1BC391EED392D005511E0 /* ListUpRecords.storyboard */,
 				F5AA3FE61EF4793900FA0C7D /* ListUpDailyReportsViewController.swift */,
+				F5B6431E1EF5F825000DF735 /* ListUpDailyReportsCell.swift */,
 				F5AA3FE41EF387CA00FA0C7D /* ListUpDailyReports.storyboard */,
 			);
 			path = ExpenseManager;
@@ -385,6 +388,7 @@
 				F5A5F1C51EE64C620074CF37 /* CategoryDao.swift in Sources */,
 				F513156C1EDCC3A700EA9767 /* AppDelegate.swift in Sources */,
 				F51315A31EDCE07200EA9767 /* Category.swift in Sources */,
+				F5B6431F1EF5F825000DF735 /* ListUpDailyReportsCell.swift in Sources */,
 				3796C75C1EF0E97800576C6A /* InputPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
