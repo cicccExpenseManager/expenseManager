@@ -117,17 +117,19 @@
                                             <rect key="frame" x="0.0" y="0.0" width="283" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMI-tN-5aB">
-                                                    <rect key="frame" x="34" y="8" width="89" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMI-tN-5aB">
+                                                    <rect key="frame" x="44" y="11" width="44" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="veM-00-ijW">
-                                                    <rect key="frame" x="8" y="8" width="16" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="veM-00-ijW">
+                                                    <rect key="frame" x="18" y="13" width="16" height="16"/>
                                                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="WHT-DH-tXE"/>
+                                                        <constraint firstAttribute="width" constant="16" id="v9G-gA-LQA"/>
+                                                    </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -135,14 +137,21 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$ 60.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9L3-nc-k7A">
-                                                    <rect key="frame" x="207" y="11" width="68" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ 60.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9L3-nc-k7A">
+                                                    <rect key="frame" x="205" y="11" width="60" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.38862194039999998" green="0.65819321070000003" blue="0.28894181050000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="NMI-tN-5aB" firstAttribute="leading" secondItem="veM-00-ijW" secondAttribute="trailing" constant="10" id="JEj-ea-kNb"/>
+                                                <constraint firstItem="9L3-nc-k7A" firstAttribute="centerY" secondItem="j9Z-V8-2Qs" secondAttribute="centerY" id="S3Z-tt-jvn"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="9L3-nc-k7A" secondAttribute="trailing" constant="10" id="UAr-aS-OK6"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="veM-00-ijW" secondAttribute="leading" constant="-10" id="c6p-Zy-Wb3"/>
+                                                <constraint firstItem="NMI-tN-5aB" firstAttribute="centerY" secondItem="j9Z-V8-2Qs" secondAttribute="centerY" id="iMO-Dq-lv9"/>
+                                                <constraint firstItem="veM-00-ijW" firstAttribute="centerY" secondItem="j9Z-V8-2Qs" secondAttribute="centerY" id="mpP-gl-QUd"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="amountLabel" destination="9L3-nc-k7A" id="aag-0C-9fK"/>
