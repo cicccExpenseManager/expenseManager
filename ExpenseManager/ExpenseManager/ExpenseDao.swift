@@ -20,14 +20,14 @@ class ExpenseDao {
             if (Option.DEBUG) {
                 // Put some expenses for debug
                 try! realm.write {
-                    for i in 0...60 {
+                    for i in 0...200 {
                         Expense().apply {
                             $0.id = generateId()
-                            $0.amount = 50.00 + Double(arc4random_uniform(500))
+                            $0.amount = -Double(arc4random_uniform(500)) - 50.0
                             let randomCategoryIndex =
                                 Int(arc4random_uniform(UInt32(categoryCounts)))
                             $0.setType(category: categoryArray[randomCategoryIndex])
-                            let dayDifference = Int(arc4random_uniform(UInt32(15))).day
+                            let dayDifference = Int(arc4random_uniform(UInt32(100))).day
                             if (arc4random_uniform(2) == 0) {
                                 $0.date = (Date() + dayDifference) as NSDate
                             } else {
@@ -38,6 +38,29 @@ class ExpenseDao {
                             realm.add($0)
                         }
                     }
+                    
+                    // salary day!
+                    
+                    for i in 0...5 {
+                        var component = DateComponents()
+                        component.year = 2017
+                        component.month = 6 - i
+                        
+                        let targetMonth = DateInRegion(components: component)?.startOf(component: .month).absoluteDate
+                        Expense().apply {
+                            $0.id = generateId()
+                            $0.amount = 30000
+                            let randomCategoryIndex =
+                                Int(arc4random_uniform(UInt32(categoryCounts)))
+                            $0.setType(category: categoryArray[randomCategoryIndex])
+                            $0.date = targetMonth! as NSDate
+                            $0.name = "Salary Day!! \(i + 1)"
+                            
+                            realm.add($0)
+                        }
+                        
+                        
+                    }
                 }
             }
         }
@@ -45,6 +68,12 @@ class ExpenseDao {
 
     func generateId() -> Int {
         return (findAllExpenses().sorted(byKeyPath: "id").last?.id).map{ $0 + 1 } ?? 1
+    }
+    
+    func delete(expense: Expense) {
+        try! realm.write {
+            realm.delete(expense)
+        }
     }
 
     func findAllExpenses() -> Results<Expense> {
@@ -91,5 +120,17 @@ class ExpenseDao {
 
     func getTotalAmount() -> Double {
         return realm.objects(Expense.self).sum(ofProperty: "amount")
+    }
+    
+    func getTotalAmountForDay(date: Date) -> Double {
+        return findForDay(date: date).sum(ofProperty: "amount")
+    }
+
+    func getTotalExpenditureLabelForDay(date: Date) -> Double {
+        return findForDay(date: date).filter("amount < %@", 0).sum(ofProperty: "amount")
+    }
+
+    func getTotalRevenueForDay(date: Date) -> Double {
+        return findForDay(date: date).filter("amount > %@", 0).sum(ofProperty: "amount")
     }
 }
