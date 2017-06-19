@@ -1,6 +1,7 @@
 import UIKit
 import SwiftDate
 
+
 class ListUpDailyReportsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     // For data table
@@ -41,6 +42,9 @@ class ListUpDailyReportsViewController: UIViewController, UITableViewDataSource,
 
     // For table
     @IBOutlet weak var tableView: UITableView!
+    
+    // For other
+    var selectUpdateDelegate: SelectedUpdateDelegate?
 }
 
 /**---------------------------------------------------------------
@@ -63,6 +67,7 @@ extension ListUpDailyReportsViewController {
     }
     
     fileprivate func innerInitialize(date: Date) {
+        selectUpdateDelegate?.requestChanged(date)
         initialize(date: date)
         tableView.reloadData()
     }
