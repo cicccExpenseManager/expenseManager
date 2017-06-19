@@ -294,7 +294,7 @@ extension ListUpRecordsViewController {
         if (date == lastSelected) {
             let storyboard = UIStoryboard(name: "ListUpDailyReports", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "ListUpDailyReportsViewController") as! ListUpDailyReportsViewController
-            vc.initialize(date: date)
+            vc.initializeData(date: date)
             vc.selectUpdateDelegate = self
             self.navigationController!.pushViewController(vc, animated: true)
             

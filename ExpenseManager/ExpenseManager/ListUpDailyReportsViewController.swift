@@ -32,7 +32,6 @@ class ListUpDailyReportsViewController: UIViewController, UITableViewDataSource,
         dateConmonents.day = dayTo == .Prev ? (date - 1.day).day : (date + 1.day).day
 
         innerInitialize(date: (DateInRegion(components: dateConmonents)?.absoluteDate)!)
-        initializeView()
     }
 
     // For summary
@@ -55,20 +54,28 @@ extension ListUpDailyReportsViewController {
         super.viewDidLoad()
         initializeView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let recordCount = ExpenseDao().findForDay(date: date).count
+        if (expenses.count != recordCount) {
+            innerInitialize(date: date)
+        }
+    }
 }
 
 /**---------------------------------------------------------------
  * Initializer
  * --------------------------------------------------------------- */
 extension ListUpDailyReportsViewController {
-    func initialize(date: Date) {
+    func initializeData(date: Date) {
         self.date = date
         expenses = Array(ExpenseDao().findForDay(date: date))
     }
     
     fileprivate func innerInitialize(date: Date) {
         selectUpdateDelegate?.requestChanged(date)
-        initialize(date: date)
+        initializeData(date: date)
+        initializeView()
         tableView.reloadData()
     }
     
@@ -114,6 +121,9 @@ extension ListUpDailyReportsViewController {
             expenses.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             print(indexPath.row)
+            
+            // initialize view
+            initializeView()
         }
     }
 }
