@@ -171,6 +171,7 @@ extension ListUpRecordsViewController {
             
             // select today to calendar
             $0.select(Date())
+            lastSelected = Date()
             
             // set calendar mode for default
             $0.scope = .month
@@ -266,26 +267,7 @@ extension ListUpRecordsViewController {
 
     // onClick event when the user touched
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        if (date == lastSelected) {
-            let storyboard = UIStoryboard(name: "ListUpDailyReports", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "ListUpDailyReportsViewController") as! ListUpDailyReportsViewController
-            vc.initialize(date: date)
-            vc.selectUpdateDelegate = self
-            self.navigationController!.pushViewController(vc, animated: true)
-
-        } else {
-            if (calendar.scope == .month) {
-                if (calendar.currentPage.month == date.month) {
-                    tableScrollTo(date)
-                } else {
-                    calendar.select(date)
-                    tableScrollTo(date)
-                }
-            } else {
-                tableScrollTo(date)
-            }
-        }
-        
+        goToDailyPageIfNeeded(date: date)
         lastSelected = date
         requestDate = date
     }
@@ -305,6 +287,28 @@ extension ListUpRecordsViewController {
         if (calendar.scope.rawValue != lastScope) {
             updateSegment()
             updateTable()
+        }
+    }
+    
+    func goToDailyPageIfNeeded(date: Date) {
+        if (date == lastSelected) {
+            let storyboard = UIStoryboard(name: "ListUpDailyReports", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "ListUpDailyReportsViewController") as! ListUpDailyReportsViewController
+            vc.initialize(date: date)
+            vc.selectUpdateDelegate = self
+            self.navigationController!.pushViewController(vc, animated: true)
+            
+        } else {
+            if (calendar.scope == .month) {
+                if (calendar.currentPage.month == date.month) {
+                    tableScrollTo(date)
+                } else {
+                    calendar.select(date)
+                    tableScrollTo(date)
+                }
+            } else {
+                tableScrollTo(date)
+            }
         }
     }
 }
@@ -327,7 +331,10 @@ extension ListUpRecordsViewController {
     
     // when you tap the cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        calendar.select(expenses[indexPath.row].date as Date)
+        let selectedDate = expenses[indexPath.row].date as Date
+        goToDailyPageIfNeeded(date: selectedDate)
+        lastSelected = selectedDate
+        requestDate = selectedDate
     }
     
     fileprivate func updateTable() {
