@@ -23,7 +23,7 @@ class ExpenseDao {
                     for i in 0...200 {
                         Expense().apply {
                             $0.id = generateId()
-                            $0.amount = -100.00 + Double(arc4random_uniform(500))
+                            $0.amount = -Double(arc4random_uniform(500)) - 50.0
                             let randomCategoryIndex =
                                 Int(arc4random_uniform(UInt32(categoryCounts)))
                             $0.setType(category: categoryArray[randomCategoryIndex])
@@ -38,6 +38,29 @@ class ExpenseDao {
                             realm.add($0)
                         }
                     }
+                    
+                    // salary day!
+                    
+                    for i in 0...5 {
+                        var component = DateComponents()
+                        component.year = 2017
+                        component.month = 6 - i
+                        
+                        let targetMonth = DateInRegion(components: component)?.startOf(component: .month).absoluteDate
+                        Expense().apply {
+                            $0.id = generateId()
+                            $0.amount = 30000
+                            let randomCategoryIndex =
+                                Int(arc4random_uniform(UInt32(categoryCounts)))
+                            $0.setType(category: categoryArray[randomCategoryIndex])
+                            $0.date = targetMonth! as NSDate
+                            $0.name = "Salary Day!! \(i + 1)"
+                            
+                            realm.add($0)
+                        }
+                        
+                        
+                    }
                 }
             }
         }
@@ -45,6 +68,12 @@ class ExpenseDao {
 
     func generateId() -> Int {
         return (findAllExpenses().sorted(byKeyPath: "id").last?.id).map{ $0 + 1 } ?? 1
+    }
+    
+    func delete(expense: Expense) {
+        try! realm.write {
+            realm.delete(expense)
+        }
     }
 
     func findAllExpenses() -> Results<Expense> {
