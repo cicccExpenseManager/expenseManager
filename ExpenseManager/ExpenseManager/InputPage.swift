@@ -15,14 +15,11 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var dateTextField: UITextField!
     
-    
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var categoryTextField: UITextField!
     
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var detailTextField: UITextField!
-    
-    
     
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var priceTextField: UITextField!
@@ -34,7 +31,7 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     
     @IBOutlet weak var submitButton: UIButton!
     
-    let categoryList = ["Salary","Food", "Social", "Utility", "House Rent","Transportation", "Cell Phone"]
+    let categoryList = Array(CategoryDao().findAllCategories())
     var selectedDate: Date? = nil
     
     //set the method of changing the label(Plu and Min)
@@ -45,12 +42,17 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
             pluAndMinLabel.text = "(+)"
         }
     }
-
     
     @IBAction func textFieldEditing(_ sender: UITextField) {
         let datePickerView: UIDatePicker = UIDatePicker()
         
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = DateFormatter.Style.medium
+        dateformatter.timeStyle = DateFormatter.Style.none
+        let displayDate = dateformatter.date(from: dateTextField.text!)
+        
         datePickerView.datePickerMode = UIDatePickerMode.date
+        datePickerView.date = displayDate!
         sender.inputView = datePickerView
         datePickerView.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: UIControlEvents.valueChanged)
     }
@@ -60,7 +62,6 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     }
     
     func donePressed(_ sender: UIBarButtonItem) {
-        
         dateTextField.resignFirstResponder()
     }
     
@@ -102,9 +103,9 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     
     //the method which return the data as String
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return categoryList[row] as String
+        categoryTextField.text = categoryList[0].name
+        return categoryList[row].name
     }
-    
     
     func cancel() {
         categoryTextField.text = ""
@@ -117,14 +118,12 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     
     //the method which set the chosen category to the text field
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.categoryTextField.text = categoryList[row]
+        self.categoryTextField.text = categoryList[row].name
     }
-    
-    
     
     //the method which input the expense of users
     @IBAction func inputSubmit(_ sender: UIButton) {
-        print("test")
+
         //check all of the user input
         if dateTextField.text != nil && categoryTextField.text != nil && detailTextField.text != nil && priceTextField.text != nil {
             
@@ -135,7 +134,21 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
                     amount: Double(priceTextField.text!)!,
                     category: category,
                     date: selectedDate ?? Date())
-                self.navigationController?.popViewController(animated: true)
+                
+                let alert = UIAlertController(title: "Confirmation", message: "Do you want to add this item?", preferredStyle: UIAlertControllerStyle.alert)
+                
+                
+                
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
+                    if action.style == UIAlertActionStyle.default {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                
+                }))
+                
+                alert.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
                 
             } else {
                 //if letのelseの場合を考える（notification etc）
@@ -146,7 +159,7 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
             }
         }
         else {
-            print("Please fill all of them!")
+            
         }
     }
 
@@ -156,8 +169,18 @@ extension InputPage {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Note : All delegates are set in view controller
+        self.navigationController!.navigationBar.apply {
+            // Status bar white font
+            $0.barStyle = UIBarStyle.black
+            $0.tintColor = UIColor.white
+            
+            // Navigation bar to alpha zero
+            $0.setBackgroundImage(UIImage(), for: .default)
+            $0.shadowImage = UIImage()
+        }
         
-        
+        //make the date picker
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
         
         toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
@@ -183,15 +206,24 @@ extension InputPage {
         dateTextField.inputAccessoryView = toolBar
         
         
+        //make the category picker
         let pickerView: UIPickerView = UIPickerView()
         pickerView.delegate = self
         pickerView.dataSource = self
         pickerView.showsSelectionIndicator = true
         
-        let toolbarCategory = UIToolbar(frame: CGRect(x: 0, y: 0, width: 0, height: 35))
+        let toolbarCategory = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
         let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
-        toolbarCategory.setItems([cancelItem, doneItem], animated: true)
+        let flexSpace2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        
+        toolbarCategory.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
+        toolbarCategory.barStyle = UIBarStyle.blackTranslucent
+        toolbarCategory.tintColor = UIColor.white
+        toolbarCategory.backgroundColor = UIColor.black
+
+        toolbarCategory.setItems([cancelItem, flexSpace2, doneItem], animated: true)
+        toolbarCategory.backgroundColor = UIColor.black
         
         categoryTextField.inputView = pickerView
         categoryTextField.inputAccessoryView = toolbarCategory
@@ -200,7 +232,7 @@ extension InputPage {
         
         //set the under line of dateLabel and dateTextField
         let borderDateTextField = CALayer()
-        let widthDateTextField = CGFloat(1.5)
+        let widthDateTextField = CGFloat(1.0)
         borderDateTextField.borderColor = UIColor.lightGray.cgColor
         borderDateTextField.frame = CGRect(x: 0, y: dateTextField.frame.size.height - widthDateTextField, width:  dateTextField.frame.size.width, height: dateTextField.frame.size.height)
         
@@ -209,7 +241,7 @@ extension InputPage {
         dateTextField.layer.masksToBounds = true
         
         let borderDateLabel = CALayer()
-        let widthDateLabel = CGFloat(1.5)
+        let widthDateLabel = CGFloat(1.0)
         borderDateLabel.borderColor = UIColor.lightGray.cgColor
         borderDateLabel.frame = CGRect(x: 0, y: dateLabel.frame.size.height - widthDateLabel, width:  dateLabel.frame.size.width, height: dateLabel.frame.size.height)
         
@@ -220,7 +252,7 @@ extension InputPage {
         
         //set the under line of categoryLabel and categoryTextField
         let borderCategoryTextField = CALayer()
-        let widthCategoryTextField = CGFloat(1.5)
+        let widthCategoryTextField = CGFloat(1.0)
         borderCategoryTextField.borderColor = UIColor.lightGray.cgColor
         borderCategoryTextField.frame = CGRect(x: 0, y: categoryTextField.frame.size.height - widthCategoryTextField, width:  categoryTextField.frame.size.width, height: dateTextField.frame.size.height)
         
@@ -229,7 +261,7 @@ extension InputPage {
         categoryTextField.layer.masksToBounds = true
         
         let borderCategoryLabel = CALayer()
-        let widthCategoryLabel = CGFloat(1.5)
+        let widthCategoryLabel = CGFloat(1.0)
         borderCategoryLabel.borderColor = UIColor.lightGray.cgColor
         borderCategoryLabel.frame = CGRect(x: 0, y: categoryLabel.frame.size.height - widthCategoryLabel, width:  categoryLabel.frame.size.width, height: categoryLabel.frame.size.height)
         
@@ -241,7 +273,7 @@ extension InputPage {
         
         //set the under line of detailLabel and detailTextField
         let borderDetailTextField = CALayer()
-        let widthDetailTextField = CGFloat(1.5)
+        let widthDetailTextField = CGFloat(1.0)
         borderDetailTextField.borderColor = UIColor.lightGray.cgColor
         borderDetailTextField.frame = CGRect(x: 0, y: detailTextField.frame.size.height - widthDetailTextField, width:  detailTextField.frame.size.width, height: detailTextField.frame.size.height)
         
@@ -250,7 +282,7 @@ extension InputPage {
         detailTextField.layer.masksToBounds = true
         
         let borderDetailLabel = CALayer()
-        let widthDetailLabel = CGFloat(1.5)
+        let widthDetailLabel = CGFloat(1.0)
         borderDetailLabel.borderColor = UIColor.lightGray.cgColor
         borderDetailLabel.frame = CGRect(x: 0, y: detailLabel.frame.size.height - widthDetailLabel, width:  detailLabel.frame.size.width, height: detailLabel.frame.size.height)
         
@@ -261,7 +293,7 @@ extension InputPage {
         
         //set the under line of priceLAbel, priceTextField
         let borderPriceTextField = CALayer()
-        let widthPriceTextField = CGFloat(1.5)
+        let widthPriceTextField = CGFloat(1.0)
         borderPriceTextField.borderColor = UIColor.lightGray.cgColor
         borderPriceTextField.frame = CGRect(x: 0, y: priceTextField.frame.size.height - widthPriceTextField, width:  priceTextField.frame.size.width, height: priceTextField.frame.size.height)
         
@@ -270,7 +302,7 @@ extension InputPage {
         priceTextField.layer.masksToBounds = true
         
         let borderPriceLabel = CALayer()
-        let widthPriceLabel = CGFloat(1.5)
+        let widthPriceLabel = CGFloat(1.0)
         borderPriceLabel.borderColor = UIColor.lightGray.cgColor
         borderPriceLabel.frame = CGRect(x: 0, y: priceLabel.frame.size.height - widthPriceLabel, width:  priceLabel.frame.size.width, height: priceLabel.frame.size.height)
         
@@ -279,7 +311,7 @@ extension InputPage {
         priceLabel.layer.masksToBounds = true
         
         let borderPluAndMinLabel = CALayer()
-        let widthPluAndMinLabel = CGFloat(1.5)
+        let widthPluAndMinLabel = CGFloat(1.0)
         borderPluAndMinLabel.borderColor = UIColor.lightGray.cgColor
         borderPluAndMinLabel.frame = CGRect(x: 0, y: pluAndMinLabel.frame.size.height - widthPluAndMinLabel, width:  pluAndMinLabel.frame.size.width, height: pluAndMinLabel.frame.size.height)
         
@@ -289,7 +321,7 @@ extension InputPage {
         
         
         let borderDollerLabel = CALayer()
-        let widthDollerLabel = CGFloat(1.5)
+        let widthDollerLabel = CGFloat(1.0)
         borderDollerLabel.borderColor = UIColor.lightGray.cgColor
         borderDollerLabel.frame = CGRect(x: 0, y: dollerLabel.frame.size.height - widthDollerLabel, width:  dollerLabel.frame.size.width, height: pluAndMinLabel.frame.size.height)
         
@@ -299,25 +331,41 @@ extension InputPage {
         
         
         //set the under line of commentLabel and commentTextView
+        self.commentTextView.layer.borderWidth = 1.0;
+        self.commentTextView.layer.borderColor = UIColor.lightGray.cgColor
         
-//        let borderCommentTextView = CALayer()
-//        let widthCommentTextView = CGFloat(1.5)
-//        borderCommentTextView.borderColor = UIColor.lightGray.cgColor
-//        borderCommentTextView.frame = CGRect(x: 0, y: commentTextView.frame.size.height - widthCommentTextView, width:  commentTextView.frame.size.width, height: commentTextView.frame.size.height)
-//        
-//        borderCommentTextView.borderWidth = widthCommentTextView
-//        commentTextView.layer.addSublayer(borderCommentTextView)
-//        commentTextView.layer.masksToBounds = true
+        // initialize views
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = DateFormatter.Style.medium
+        dateformatter.timeStyle = DateFormatter.Style.none
+        dateTextField.text = dateformatter.string(from: Date())
         
-        let borderCommentLabel = CALayer()
-        let widthCommentLabel = CGFloat(1.5)
-        borderCommentLabel.borderColor = UIColor.lightGray.cgColor
-        borderCommentLabel.frame = CGRect(x: 0, y: commentLabel.frame.size.height - widthCommentLabel, width:  commentLabel.frame.size.width, height: commentLabel.frame.size.height)
-        
-        borderCommentLabel.borderWidth = widthCommentLabel
-        commentLabel.layer.addSublayer(borderCommentLabel)
-        commentLabel.layer.masksToBounds = true
-        
+        let firstCategory = categoryList[0]
+        categoryTextField.text = firstCategory.name
+        categoryTextField.backgroundColor = firstCategory.getColor()
+        //categoryColorView.backgroundColor = firstCategory.getColor()
     }
-    
+
+//    func showToast(message : String) {
+//        
+//        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
+//        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+//        toastLabel.textColor = UIColor.white
+//        toastLabel.textAlignment = .center;
+//        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
+//        toastLabel.text = message
+//        toastLabel.alpha = 1.0
+//        toastLabel.layer.cornerRadius = 10;
+//        toastLabel.clipsToBounds  =  true
+//        self.view.addSubview(toastLabel)
+//        
+//        
+//        UIView.animate(withDuration: 2.0, delay: 0.1, options: .curveEaseOut, animations: {
+//            toastLabel.alpha = 0.0
+//        }, completion: {(isCompleted) in
+//            toastLabel.removeFromSuperview()
+//        })
+//        
+//    }
+
 }

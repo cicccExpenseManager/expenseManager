@@ -27,25 +27,25 @@ class CategoryDao {
                         let colorName: String
                         switch i {
                         case 1:
-                            colorName = "Salary"
+                            colorName = "Food"
                             $0.setColor(color: UIColor.darkGray)
                         case 2:
-                            colorName = "Food"
+                            colorName = "Social"
                             $0.setColor(color: UIColor.blue)
                         case 3:
-                            colorName = "Social"
+                            colorName = "Utility"
                             $0.setColor(color: UIColor.brown)
                         case 4:
-                            colorName = "Utility"
+                            colorName = "House Rent"
                             $0.setColor(color: UIColor.cyan)
                         case 5:
-                            colorName = "House Rent"
+                            colorName = "Transportation"
                             $0.setColor(color: UIColor.gray)
                         case 6:
-                            colorName = "Transportation"
+                            colorName = "Cell Phone"
                             $0.setColor(color: UIColor.green)
                         case 7:
-                            colorName = "Cell Phone"
+                            colorName = ""
                             $0.setColor(color: UIColor.red)
                         case 8:
                             colorName = "Purple"
