@@ -35,6 +35,7 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     let categoryList = Array(CategoryDao().findAllCategories())
     var selectedDate: Date? = nil
     
+    
     //set the method of changing the label(Plu and Min)
     @IBAction func changeSeg(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
@@ -44,7 +45,10 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
         }
     }
     
+    
+    //show the datePickerView when clicking the dateTextField
     @IBAction func textFieldEditing(_ sender: UITextField) {
+        
         let datePickerView: UIDatePicker = UIDatePicker()
         let dateformatter = DateFormatter()
         dateformatter.dateStyle = DateFormatter.Style.medium
@@ -55,6 +59,31 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
         datePickerView.date = displayDate!
         sender.inputView = datePickerView
         datePickerView.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: UIControlEvents.valueChanged)
+        
+        //make a toolBar in the datePickerView
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
+        
+        toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
+        toolBar.barStyle = UIBarStyle.blackTranslucent
+        toolBar.tintColor = UIColor.white
+        toolBar.backgroundColor = UIColor.black
+        
+        //make two buttons of 'Today' and 'Done' in the toolBar
+        let todayBtn = UIBarButtonItem(title: "Today", style: UIBarButtonItemStyle.plain, target: self, action: #selector(tappedToolBarBtn(_:)))
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(donePressed(_:)))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width / 3, height: self.view.frame.size.height))
+        
+        label.font = UIFont(name: "Helvetica", size: 12)
+        label.backgroundColor = UIColor.clear
+        label.textColor = UIColor.white
+        label.text = "Select a due date"
+        label.textAlignment = NSTextAlignment.center
+        
+        let textBtn = UIBarButtonItem(customView: label)
+        
+        toolBar.setItems([todayBtn,flexSpace,textBtn,flexSpace,doneBtn], animated: true)
+        dateTextField.inputAccessoryView = toolBar
     }
     
     override func didReceiveMemoryWarning() {
@@ -107,10 +136,12 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
         return categoryList[row].name
     }
     
+    //the method of 'CANCEL' button in the pickerView
     func cancel() {
         categoryTextField.endEditing(true)
     }
     
+    //the method of 'OK' button in the pickerView
     func done() {
         categoryTextField.endEditing(true)
     }
@@ -122,34 +153,6 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     }
     
     
-    func toast(message: String, callback: @escaping () -> Void) {
-        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.textAlignment = .center;
-        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
-        toastLabel.text = message
-        toastLabel.alpha = 1.0
-        toastLabel.layer.cornerRadius = 10;
-        toastLabel.clipsToBounds  =  true
-        self.view.addSubview(toastLabel)
-        
-        UIView.animate(withDuration: 2.0, delay: 0.1, options: .curveEaseOut, animations: {
-            toastLabel.alpha = 0.0
-        }, completion: {(isCompleted) in
-            toastLabel.removeFromSuperview()
-        })
-
-        
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        self.present(alert, animated: true, completion: {
-            // アラートを閉じる
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                alert.dismiss(animated: true, completion: nil)
-                callback()
-            })
-        })
-    }
     
     //the method which input the expense of users
     @IBAction func inputSubmit(_ sender: UIButton) {
@@ -168,21 +171,23 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
                 let alert = UIAlertController(title: "Confirmation", message: "Do you want to add this item?", preferredStyle: UIAlertControllerStyle.alert)
                 
                 
-                
+                //set the button of 'OK' in the Alert
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
                     if action.style == UIAlertActionStyle.default {
-                        self.toast(message: "Sucsees!!"){
+                        self.showToast(message: "successfully added!!"){
                             self.navigationController?.popViewController(animated: true)
                         }
                     }
-                
                 }))
                 
+                //set the button of 'CANCEL' in the Alert
                 alert.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: nil))
                 
                 self.present(alert, animated: true, completion: nil)
                 
-            } else {
+            }
+            
+            else {
                 //if letのelseの場合を考える（notification etc）
                 print("can not find category name \(categoryTextField.text!)")
                 for cat in CategoryDao().findAllCategories() {
@@ -201,6 +206,7 @@ extension InputPage {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Note : All delegates are set in view controller
+        
         self.navigationController!.navigationBar.apply {
             // Status bar white font
             $0.barStyle = UIBarStyle.black
@@ -211,31 +217,6 @@ extension InputPage {
             $0.shadowImage = UIImage()
         }
         
-        //make the date picker
-        let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
-        
-        toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
-        toolBar.barStyle = UIBarStyle.blackTranslucent
-        toolBar.tintColor = UIColor.white
-        toolBar.backgroundColor = UIColor.black
-        
-        
-        let todayBtn = UIBarButtonItem(title: "Today", style: UIBarButtonItemStyle.plain, target: self, action: #selector(tappedToolBarBtn(_:)))
-        let okBarBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(donePressed(_:)))
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width / 3, height: self.view.frame.size.height))
-        
-        label.font = UIFont(name: "Helvetica", size: 12)
-        label.backgroundColor = UIColor.clear
-        label.textColor = UIColor.white
-        label.text = "Select a due date"
-        label.textAlignment = NSTextAlignment.center
-        
-        let textBtn = UIBarButtonItem(customView: label)
-        
-        toolBar.setItems([todayBtn,flexSpace,textBtn,flexSpace,okBarBtn], animated: true)
-        dateTextField.inputAccessoryView = toolBar
-        
         
         //make the category picker
         let pickerView: UIPickerView = UIPickerView()
@@ -244,8 +225,9 @@ extension InputPage {
         pickerView.showsSelectionIndicator = true
         
         let toolbarCategory = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
-        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-        let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        let cancelBtn = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
         let label2 = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width / 3, height: self.view.frame.size.height))
         
         label2.font = UIFont(name: "Helvetica", size: 12)
@@ -262,12 +244,11 @@ extension InputPage {
         toolbarCategory.tintColor = UIColor.white
         toolbarCategory.backgroundColor = UIColor.black
 
-        toolbarCategory.setItems([cancelItem, flexSpace, textBtn2, flexSpace, doneItem], animated: true)
+        toolbarCategory.setItems([cancelBtn, flexSpace, textBtn2, flexSpace, doneBtn], animated: true)
         toolbarCategory.backgroundColor = UIColor.black
         
         categoryTextField.inputView = pickerView
         categoryTextField.inputAccessoryView = toolbarCategory
-        
         
         
         //set the under line of dateLabel and dateTextField
@@ -368,26 +349,27 @@ extension InputPage {
 
     }
 
-//    func showToast(message : String) {
-//        
-//        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
-//        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-//        toastLabel.textColor = UIColor.white
-//        toastLabel.textAlignment = .center;
-//        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
-//        toastLabel.text = message
-//        toastLabel.alpha = 1.0
-//        toastLabel.layer.cornerRadius = 10;
-//        toastLabel.clipsToBounds  =  true
-//        self.view.addSubview(toastLabel)
-//        
-//        
-//        UIView.animate(withDuration: 2.0, delay: 0.1, options: .curveEaseOut, animations: {
-//            toastLabel.alpha = 0.0
-//        }, completion: {(isCompleted) in
-//            toastLabel.removeFromSuperview()
-//        })
-//        
-//    }
+    func showToast(message : String, callback: @escaping () -> Void) {
+        
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center;
+        toastLabel.font = UIFont(name: "Helvetica", size: 12.0)
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds  =  true
+        self.view.addSubview(toastLabel)
+        
+        
+        UIView.animate(withDuration: 1.5, delay: 0.1, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+            callback()
+        })
+        
+    }
 
 }
