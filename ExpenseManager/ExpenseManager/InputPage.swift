@@ -17,6 +17,7 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var categoryTextField: UITextField!
+    @IBOutlet weak var categoryColor: UIView!
     
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var detailTextField: UITextField!
@@ -45,7 +46,6 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     
     @IBAction func textFieldEditing(_ sender: UITextField) {
         let datePickerView: UIDatePicker = UIDatePicker()
-        
         let dateformatter = DateFormatter()
         dateformatter.dateStyle = DateFormatter.Style.medium
         dateformatter.timeStyle = DateFormatter.Style.none
@@ -103,12 +103,11 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     
     //the method which return the data as String
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        categoryTextField.text = categoryList[0].name
+        categoryTextField.text = categoryList[row].name
         return categoryList[row].name
     }
     
     func cancel() {
-        categoryTextField.text = ""
         categoryTextField.endEditing(true)
     }
     
@@ -119,6 +118,37 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     //the method which set the chosen category to the text field
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.categoryTextField.text = categoryList[row].name
+        self.categoryColor.backgroundColor = categoryList[row].getColor()
+    }
+    
+    
+    func toast(message: String, callback: @escaping () -> Void) {
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center;
+        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds  =  true
+        self.view.addSubview(toastLabel)
+        
+        UIView.animate(withDuration: 2.0, delay: 0.1, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
+
+        
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        self.present(alert, animated: true, completion: {
+            // アラートを閉じる
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                alert.dismiss(animated: true, completion: nil)
+                callback()
+            })
+        })
     }
     
     //the method which input the expense of users
@@ -141,7 +171,9 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
                 
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
                     if action.style == UIAlertActionStyle.default {
-                        self.navigationController?.popViewController(animated: true)
+                        self.toast(message: "Sucsees!!"){
+                            self.navigationController?.popViewController(animated: true)
+                        }
                     }
                 
                 }))
@@ -162,7 +194,6 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
             
         }
     }
-
 }
 
 extension InputPage {
@@ -215,14 +246,23 @@ extension InputPage {
         let toolbarCategory = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
         let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
-        let flexSpace2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        let label2 = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width / 3, height: self.view.frame.size.height))
         
+        label2.font = UIFont(name: "Helvetica", size: 12)
+        label2.backgroundColor = UIColor.clear
+        label2.textColor = UIColor.white
+        label2.text = "Select a category"
+        
+        let textBtn2 = UIBarButtonItem(customView: label2)
+
+        
+        label2.textAlignment = NSTextAlignment.center
         toolbarCategory.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
         toolbarCategory.barStyle = UIBarStyle.blackTranslucent
         toolbarCategory.tintColor = UIColor.white
         toolbarCategory.backgroundColor = UIColor.black
 
-        toolbarCategory.setItems([cancelItem, flexSpace2, doneItem], animated: true)
+        toolbarCategory.setItems([cancelItem, flexSpace, textBtn2, flexSpace, doneItem], animated: true)
         toolbarCategory.backgroundColor = UIColor.black
         
         categoryTextField.inputView = pickerView
@@ -310,25 +350,6 @@ extension InputPage {
         priceLabel.layer.addSublayer(borderPriceLabel)
         priceLabel.layer.masksToBounds = true
         
-        let borderPluAndMinLabel = CALayer()
-        let widthPluAndMinLabel = CGFloat(1.0)
-        borderPluAndMinLabel.borderColor = UIColor.lightGray.cgColor
-        borderPluAndMinLabel.frame = CGRect(x: 0, y: pluAndMinLabel.frame.size.height - widthPluAndMinLabel, width:  pluAndMinLabel.frame.size.width, height: pluAndMinLabel.frame.size.height)
-        
-        borderPluAndMinLabel.borderWidth = widthPluAndMinLabel
-        pluAndMinLabel.layer.addSublayer(borderPluAndMinLabel)
-        pluAndMinLabel.layer.masksToBounds = true
-        
-        
-        let borderDollerLabel = CALayer()
-        let widthDollerLabel = CGFloat(1.0)
-        borderDollerLabel.borderColor = UIColor.lightGray.cgColor
-        borderDollerLabel.frame = CGRect(x: 0, y: dollerLabel.frame.size.height - widthDollerLabel, width:  dollerLabel.frame.size.width, height: pluAndMinLabel.frame.size.height)
-        
-        borderDollerLabel.borderWidth = widthDollerLabel
-        dollerLabel.layer.addSublayer(borderDollerLabel)
-        dollerLabel.layer.masksToBounds = true
-        
         
         //set the under line of commentLabel and commentTextView
         self.commentTextView.layer.borderWidth = 1.0;
@@ -342,8 +363,9 @@ extension InputPage {
         
         let firstCategory = categoryList[0]
         categoryTextField.text = firstCategory.name
-        categoryTextField.backgroundColor = firstCategory.getColor()
-        //categoryColorView.backgroundColor = firstCategory.getColor()
+        categoryColor.backgroundColor = firstCategory.getColor()
+        categoryColor.layer.cornerRadius = categoryColor.bounds.width / 2.0
+
     }
 
 //    func showToast(message : String) {
