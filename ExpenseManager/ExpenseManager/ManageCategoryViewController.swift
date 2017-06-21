@@ -8,15 +8,45 @@ class ManageCategoryViewController: UIViewController {
 
     // Definitions of views
     @IBOutlet weak var addCategoryColor: UIView!
-    @IBAction func addCategoryColorAction(_ sender: Any) {
-        showColorPicker()
-    }
+    @IBAction func addCategoryColorAction(_ sender: Any) { showColorPicker() }
 
     @IBOutlet weak var addCategoryName: UITextField!
-    @IBAction func addCategoryAction(_ sender: Any) { showColorPicker() }
+    @IBAction func addCategoryAction(_ sender: Any) { addCategory() }
     @IBOutlet weak var tableView: UITableView!
     
-    fileprivate func showColorPicker() {
+    private func addCategory() {
+        if !(addCategoryName.text?.isEmpty)! {
+            Category().apply {
+                // get values
+                $0.name = addCategoryName.text!
+                $0.setColor(color: addCategoryColor.backgroundColor!)
+                
+                // add record to database
+                CategoryDao().add($0)
+                
+                // reset category name
+                addCategoryName.text = ""
+                
+                // add record to current data
+                categories.append($0)
+            }
+            
+            // insert row to the table
+            tableView.apply {
+                $0.beginUpdates()
+                $0.insertRows(at: [IndexPath(row: categories.count - 1, section: 0)], with: .automatic)
+                $0.endUpdates()
+            }
+
+        } else {
+            UIAlertController(title: "WARNING", message: "Fill out the new category name", preferredStyle: .alert).apply {
+                $0.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present($0, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    private func showColorPicker() {
         // TODO grade up using color pick library
         UIAlertController(title: "SELECT COLOR", message: nil, preferredStyle: .alert).apply {
             $0.addAction(UIAlertAction(title: "Yellow", style: .default) {

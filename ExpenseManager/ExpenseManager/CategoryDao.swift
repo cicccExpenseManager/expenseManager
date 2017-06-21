@@ -78,6 +78,13 @@ class CategoryDao {
         }
     }
     
+    func add(_ category: Category) {
+        try! realm.write {
+            category.id = generateId()
+            realm.add(category)
+        }
+    }
+    
     func delete(category: Category) {
         try! realm.write {
             realm.delete(category)
