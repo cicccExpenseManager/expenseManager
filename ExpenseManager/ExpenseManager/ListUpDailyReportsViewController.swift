@@ -13,6 +13,14 @@ class ListUpDailyReportsViewController: UIViewController, UITableViewDataSource,
     
     // For header
     @IBOutlet weak var dateLabel: UILabel!
+    
+    @IBAction func addExpenseAction(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "InputPage", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "inputPage") as! InputPage
+        vc.selectedDate = date
+        self.navigationController!.pushViewController(vc, animated: true)
+    }
+    
     @IBAction func prevDayAction(_ sender: UIButton) {
         moveTo(.Prev)
     }
