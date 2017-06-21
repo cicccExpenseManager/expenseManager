@@ -45,7 +45,7 @@ class CategoryDao {
                             colorName = "Cell Phone"
                             $0.setColor(color: UIColor.green)
                         case 7:
-                            colorName = ""
+                            colorName = "Salary"
                             $0.setColor(color: UIColor.red)
                         case 8:
                             colorName = "Purple"

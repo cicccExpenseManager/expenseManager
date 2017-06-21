@@ -158,45 +158,54 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     @IBAction func inputSubmit(_ sender: UIButton) {
 
         //check all of the user input
-        if dateTextField.text != nil && categoryTextField.text != nil && detailTextField.text != nil && priceTextField.text != nil {
+        if dateTextField.text != "" && categoryTextField.text != "" && detailTextField.text != "" && priceTextField.text != "" {
             
             if let category = CategoryDao().findByName(name: categoryTextField.text!).first {
-                let expenseDao = ExpenseDao()
-                expenseDao.addExpense(
-                    detail: detailTextField.text!,
-                    amount: Double(priceTextField.text!)!,
-                    category: category,
-                    date: selectedDate ?? Date())
+                
+                
+                
+                
                 
                 let alert = UIAlertController(title: "Confirmation", message: "Do you want to add this item?", preferredStyle: UIAlertControllerStyle.alert)
                 
-                
                 //set the button of 'OK' in the Alert
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
-                    if action.style == UIAlertActionStyle.default {
-                        self.showToast(message: "successfully added!!"){
-                            self.navigationController?.popViewController(animated: true)
-                        }
+                    // OK button action
+                    // insert data to database
+                    if let price = self.priceTextField.text, let doublePrice = Double(price) {
+                        let expenseDao = ExpenseDao()
+                        expenseDao.addExpense(
+                            detail: self.detailTextField.text!,
+                            amount: doublePrice,
+                            category: category,
+                            date: self.selectedDate ?? Date())
                     }
+                    
+                    // show toast message
+                    self.showToast(message: "successfully added!!"){}
+                    
+                    // move back to previous page
+                    //self.navigationController?.popViewController(animated: true)
                 }))
                 
                 //set the button of 'CANCEL' in the Alert
                 alert.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: nil))
-                
                 self.present(alert, animated: true, completion: nil)
-                
             }
-            
             else {
                 //if letのelseの場合を考える（notification etc）
-                print("can not find category name \(categoryTextField.text!)")
-                for cat in CategoryDao().findAllCategories() {
-                    print("\(cat.id) / \(cat.name)")
-                }
+                let alert1 = UIAlertController(title: "Error...", message: "can not find category name \(categoryTextField.text!)", preferredStyle: UIAlertControllerStyle.alert)
+                alert1.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+//                print("can not find category name \(categoryTextField.text!)")
+//                for cat in CategoryDao().findAllCategories() {
+//                    print("\(cat.id) / \(cat.name)")
+//                }
             }
         }
         else {
-            
+            let alert2 = UIAlertController(title: "Error...", message: "Please fill all of the information!", preferredStyle: UIAlertControllerStyle.alert)
+            alert2.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert2, animated: true, completion: nil)
         }
     }
 }
@@ -336,12 +345,15 @@ extension InputPage {
         self.commentTextView.layer.borderWidth = 1.0;
         self.commentTextView.layer.borderColor = UIColor.lightGray.cgColor
         
+        
         // initialize views
+        //for datePickerView
         let dateformatter = DateFormatter()
         dateformatter.dateStyle = DateFormatter.Style.medium
         dateformatter.timeStyle = DateFormatter.Style.none
         dateTextField.text = dateformatter.string(from: Date())
         
+        //for categoryPickerView
         let firstCategory = categoryList[0]
         categoryTextField.text = firstCategory.name
         categoryColor.backgroundColor = firstCategory.getColor()
@@ -349,6 +361,8 @@ extension InputPage {
 
     }
 
+
+    //make a toast when the user input is completly added
     func showToast(message : String, callback: @escaping () -> Void) {
         
         let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
@@ -361,7 +375,6 @@ extension InputPage {
         toastLabel.layer.cornerRadius = 10;
         toastLabel.clipsToBounds  =  true
         self.view.addSubview(toastLabel)
-        
         
         UIView.animate(withDuration: 1.5, delay: 0.1, options: .curveEaseOut, animations: {
             toastLabel.alpha = 0.0
