@@ -7,6 +7,17 @@ extension UIColor {
     var alphaValue: CGFloat{ return CIColor(color: self).alpha }
 }
 
+extension Double {
+    func formatCurrency() -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = 2
+        formatter.locale = Locale(identifier: Locale.current.identifier)
+        let result = formatter.string(from: self as NSNumber)
+        return result!
+    }
+}
+
 protocol ApplyProtocol {}
 
 extension ApplyProtocol {

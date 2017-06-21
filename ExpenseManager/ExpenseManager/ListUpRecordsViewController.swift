@@ -2,11 +2,17 @@ import UIKit
 import FSCalendar
 import SwiftDate
 
-class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance, UIGestureRecognizerDelegate {
+protocol SelectedUpdateDelegate {
+    func requestChanged(_ date: Date)
+}
+
+class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance, UIGestureRecognizerDelegate, SelectedUpdateDelegate {
     
     // for Navigation Bar
     @IBAction func todayButtonAction(_ sender: UIBarButtonItem) {
-        calendar.select(Date())
+        lastSelected = Date()
+        calendar.select(lastSelected)
+        tableScrollTo(lastSelected)
     }
     
     // for FSCalendar view
@@ -30,10 +36,6 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var tableView: UITableView!
     fileprivate var expenses: Array<Expense> = []
     fileprivate let cellIdentifer = "ListUpRecordsCell"
-    fileprivate let dateFormatter: DateFormatter = {
-        return DateFormatter().applyRet {$0.dateFormat = "yyyy/MM/dd"}}()
-    fileprivate let dateFormatter2: DateFormatter = {
-        return DateFormatter().applyRet {$0.dateFormat = "yyyy-MM-dd"}}()
 
     // for gesture event
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
@@ -92,9 +94,10 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
         calendar.select(moveTo)
     }
     
-    
     // for others
     fileprivate var lastScope: UInt = 0
+    fileprivate var lastSelected: Date = Date()
+    fileprivate var requestDate: Date = Date()
 }
 
 /**---------------------------------------------------------------
@@ -106,6 +109,34 @@ extension ListUpRecordsViewController {
         initializeData()
         initializeView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let scopeChanged: Bool
+        switch calendar.scope {
+        case .month: scopeChanged = lastSelected.month != requestDate.month
+        case .week: scopeChanged = lastSelected.weekOfYear != requestDate.weekOfYear
+        }
+
+        calendar.select(requestDate)
+        if scopeChanged {
+            // update all on requestDate
+            updateTable()
+
+        } else {
+            let recordCount = ExpenseDao().findForMonth(date: calendar.currentPage).count
+            if (expenses.count != recordCount) {
+                updateTable()
+                calendar.reloadData()
+            }
+        }
+        
+        if (lastSelected.year != requestDate.year
+            || lastSelected.month != requestDate.month
+            || lastSelected.day != requestDate.day) {
+            tableScrollTo(requestDate)
+        }
+        lastSelected = requestDate
+    }
 }
 
 /**---------------------------------------------------------------
@@ -113,8 +144,7 @@ extension ListUpRecordsViewController {
  * --------------------------------------------------------------- */
 extension ListUpRecordsViewController {
     fileprivate func initializeData() {
-        let expenseDao = ExpenseDao()
-        expenses = Array(expenseDao.findForMonth(date: Date()))
+        expenses = Array(ExpenseDao().findForMonth(date: lastSelected))
     }
     
     fileprivate func initializeView() {
@@ -141,6 +171,7 @@ extension ListUpRecordsViewController {
             
             // select today to calendar
             $0.select(Date())
+            lastSelected = Date()
             
             // set calendar mode for default
             $0.scope = .month
@@ -148,6 +179,15 @@ extension ListUpRecordsViewController {
             // disable border of top and bottom
             $0.clipsToBounds = true
         }
+    }
+}
+
+/**---------------------------------------------------------------
+ * Implementation methods for Protocol
+ * --------------------------------------------------------------- */
+extension ListUpRecordsViewController {
+    func requestChanged(_ date: Date) {
+        requestDate = date
     }
 }
 
@@ -193,7 +233,7 @@ extension ListUpRecordsViewController {
         return retColor
     }
     
-    private func tableScrollTo(_ date: Date) {
+    fileprivate func tableScrollTo(_ date: Date) {
         // ignore if the date is out of month in calendar
         if (date.month != calendar.currentPage.month) {
             return
@@ -227,15 +267,9 @@ extension ListUpRecordsViewController {
 
     // onClick event when the user touched
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        if (calendar.scope == .month) {
-            if (calendar.currentPage.month == date.month) {
-                tableScrollTo(date)
-            } else {
-                calendar.select(date)
-            }
-        } else {
-            tableScrollTo(date)
-        }
+        goToDailyPageIfNeeded(date: date)
+        lastSelected = date
+        requestDate = date
     }
 
     // onChanged event when the user change week or month by swipe
@@ -253,6 +287,28 @@ extension ListUpRecordsViewController {
         if (calendar.scope.rawValue != lastScope) {
             updateSegment()
             updateTable()
+        }
+    }
+    
+    func goToDailyPageIfNeeded(date: Date) {
+        if (date == lastSelected) {
+            let storyboard = UIStoryboard(name: "ListUpDailyReports", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "ListUpDailyReportsViewController") as! ListUpDailyReportsViewController
+            vc.initializeData(date: date)
+            vc.selectUpdateDelegate = self
+            self.navigationController!.pushViewController(vc, animated: true)
+            
+        } else {
+            if (calendar.scope == .month) {
+                if (calendar.currentPage.month == date.month) {
+                    tableScrollTo(date)
+                } else {
+                    calendar.select(date)
+                    tableScrollTo(date)
+                }
+            } else {
+                tableScrollTo(date)
+            }
         }
     }
 }
@@ -275,7 +331,10 @@ extension ListUpRecordsViewController {
     
     // when you tap the cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        calendar.select(expenses[indexPath.row].date as Date)
+        let selectedDate = expenses[indexPath.row].date as Date
+        goToDailyPageIfNeeded(date: selectedDate)
+        lastSelected = selectedDate
+        requestDate = selectedDate
     }
     
     fileprivate func updateTable() {
