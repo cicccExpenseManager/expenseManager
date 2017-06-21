@@ -31,9 +31,14 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     @IBOutlet weak var commentTextView: UITextView!
     
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var sc: UIScrollView!
     
     let categoryList = Array(CategoryDao().findAllCategories())
     var selectedDate: Date? = nil
+//    let sc = UIScrollView()
+    var txtActiveField = UITextView()
+    
+    
     
     
     //set the method of changing the label(Plu and Min)
@@ -68,7 +73,7 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
         toolBar.tintColor = UIColor.white
         toolBar.backgroundColor = UIColor.black
         
-        //make two buttons of 'Today' and 'Done' in the toolBar
+        //make two buttons of 'Today' and 'Done' in the toolBar of datePickerView
         let todayBtn = UIBarButtonItem(title: "Today", style: UIBarButtonItemStyle.plain, target: self, action: #selector(tappedToolBarBtn(_:)))
         let doneBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(donePressed(_:)))
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
@@ -153,6 +158,53 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
     }
     
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        
+//        super.viewWillAppear(animated)
+//        self.configureObserver()
+//        
+//    }
+    
+//    //改行ボタンが押された際に呼ばれる.
+//    func textFieldShouldReturn(_ textView: UITextView) -> Bool {
+//        textView.resignFirstResponder()
+//        
+//        return true
+//    }
+//    
+//    //UITextFieldが編集された直後に呼ばれる.
+//    func textFieldShouldBeginEditing(_ textView: UITextView) -> Bool {
+//        txtActiveField = textView
+//        return true
+//    }
+//    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        
+//        let notificationCenter = NotificationCenter.default
+//        notificationCenter.addObserver(self, selector: #selector(handleKeyboardWillShowNotification(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+//        notificationCenter.addObserver(self, selector: #selector(handleKeyboardWillHideNotification(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+//    }
+//    
+//    func handleKeyboardWillShowNotification(_ notification: Notification) {
+//        
+//        let userInfo = notification.userInfo!
+//        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+//        let myBoundSize: CGSize = UIScreen.main.bounds.size
+//        let txtLimit = txtActiveField.frame.origin.y + txtActiveField.frame.height + 8.0
+//        let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
+//        
+//        print("テキストフィールドの下辺：(\(txtLimit))")
+//        print("キーボードの上辺：(\(kbdLimit))")
+//        
+//        if txtLimit >= kbdLimit {
+//            sc.contentOffset.y = txtLimit - kbdLimit
+//        }
+//    }
+//    
+//    func handleKeyboardWillHideNotification(_ notification: Notification) {
+//        sc.contentOffset.y = 0
+//    }
     
     //the method which input the expense of users
     @IBAction func inputSubmit(_ sender: UIButton) {
@@ -161,10 +213,6 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
         if dateTextField.text != "" && categoryTextField.text != "" && detailTextField.text != "" && priceTextField.text != "" {
             
             if let category = CategoryDao().findByName(name: categoryTextField.text!).first {
-                
-                
-                
-                
                 
                 let alert = UIAlertController(title: "Confirmation", message: "Do you want to add this item?", preferredStyle: UIAlertControllerStyle.alert)
                 
@@ -183,7 +231,7 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
                     }
                     
                     // show toast message
-                    // self.showToast(message: "successfully added!!"){}
+                    // self.showToast(message: "successfully added!!")
                     
                     NotificationCenter.default.post(name: Notification.Name("Toast"), object: nil)
                     
@@ -325,7 +373,7 @@ extension InputPage {
         detailLabel.layer.masksToBounds = true
         
         
-        //set the under line of priceLAbel, priceTextField
+        //set the under line of priceLAbel, priceTextField and limit the textField only writing a number
         let borderPriceTextField = CALayer()
         let widthPriceTextField = CGFloat(1.0)
         borderPriceTextField.borderColor = UIColor.lightGray.cgColor
@@ -343,6 +391,10 @@ extension InputPage {
         borderPriceLabel.borderWidth = widthPriceLabel
         priceLabel.layer.addSublayer(borderPriceLabel)
         priceLabel.layer.masksToBounds = true
+        
+        self.priceTextField.keyboardType = UIKeyboardType.numberPad
+        priceTextField.resignFirstResponder()
+
         
         
         //set the under line of commentLabel and commentTextView
@@ -362,33 +414,6 @@ extension InputPage {
         categoryTextField.text = firstCategory.name
         categoryColor.backgroundColor = firstCategory.getColor()
         categoryColor.layer.cornerRadius = categoryColor.bounds.width / 2.0
-
+        
     }
-
-
-    //make a toast when the user input is completly added
-//    func showToast(message : String, callback: @escaping () -> Void) {
-//        
-//        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
-//        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-//        toastLabel.textColor = UIColor.white
-//        toastLabel.textAlignment = .center;
-//        toastLabel.font = UIFont(name: "Helvetica", size: 12.0)
-//        toastLabel.text = message
-//        toastLabel.alpha = 1.0
-//        toastLabel.layer.cornerRadius = 10;
-//        toastLabel.clipsToBounds  =  true
-////        self.view.addSubview(toastLabel)
-//        
-//        
-//        
-//        UIView.animate(withDuration: 1.5, delay: 0.1, options: .curveEaseOut, animations: {
-//            toastLabel.alpha = 0.0
-//        }, completion: {(isCompleted) in
-//            toastLabel.removeFromSuperview()
-//            callback()
-//        })
-//        
-//    }
-
 }
