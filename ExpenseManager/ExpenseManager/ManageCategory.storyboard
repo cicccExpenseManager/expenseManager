@@ -53,7 +53,7 @@
                                 <rect key="frame" x="46" y="141" width="283" height="526"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="gem-gq-5pF" customClass="ManageCategoryCell" customModule="ExpenseManager" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ManageCategoryCell" id="gem-gq-5pF" customClass="ManageCategoryCell" customModule="ExpenseManager" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="283" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gem-gq-5pF" id="o9n-CK-f2M">

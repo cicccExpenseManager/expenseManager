@@ -71,4 +71,10 @@ class CategoryDao {
     func generateId() -> Int {
         return (findAllCategories().sorted(byKeyPath: "id").last?.id).map{ $0 + 1 } ?? 1
     }
+    
+    func delete(category: Category) {
+        try! realm.write {
+            realm.delete(category)
+        }
+    }
 }

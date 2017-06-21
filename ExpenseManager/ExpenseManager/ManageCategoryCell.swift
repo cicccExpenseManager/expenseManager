@@ -9,11 +9,28 @@ class ManageCategoryCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        if (categoryColor != nil) {
+            let color = categoryColor.backgroundColor
+            super.setSelected(selected, animated: animated)
+            
+            if (selected) {
+                categoryColor.backgroundColor = color
+            }
+            
+        } else {
+            super.setSelected(selected, animated: animated)
+        }
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        let color = categoryColor.backgroundColor
+        super.setHighlighted(highlighted, animated: animated)
+        
+        if (highlighted) {
+            categoryColor.backgroundColor = color
+        }
     }
     
     func setCategory(_ category: Category) {
