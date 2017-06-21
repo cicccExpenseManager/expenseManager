@@ -1,3 +1,4 @@
 github "WenchaoD/FSCalendar" "2.7.8"
 github "malcommac/SwiftDate" "4.1.2"
-github "realm/realm-cocoa" "v2.8.1"
+github "realm/realm-cocoa" "v2.8.2"
+github "scalessec/Toast-Swift" "2.0.0"

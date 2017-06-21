@@ -9,6 +9,10 @@ class CategoryDao {
     func findAllCategories() -> Results<Category> {
         return realm.objects(Category.self)
     }
+    
+    func findByName(name: String) -> Results<Category> {
+        return findAllCategories().filter("name == %@", name)
+    }
 
     /**
      * Put default categories if the Category Table does not have any record.
@@ -23,25 +27,25 @@ class CategoryDao {
                         let colorName: String
                         switch i {
                         case 1:
-                            colorName = "DarkGray"
+                            colorName = "Food"
                             $0.setColor(color: UIColor.darkGray)
                         case 2:
-                            colorName = "Blue"
+                            colorName = "Social"
                             $0.setColor(color: UIColor.blue)
                         case 3:
-                            colorName = "Brown"
+                            colorName = "Utility"
                             $0.setColor(color: UIColor.brown)
                         case 4:
-                            colorName = "Cyan"
+                            colorName = "House Rent"
                             $0.setColor(color: UIColor.cyan)
                         case 5:
-                            colorName = "Gray"
+                            colorName = "Transportation"
                             $0.setColor(color: UIColor.gray)
                         case 6:
-                            colorName = "Green"
+                            colorName = "Cell Phone"
                             $0.setColor(color: UIColor.green)
                         case 7:
-                            colorName = "Red"
+                            colorName = "Salary"
                             $0.setColor(color: UIColor.red)
                         case 8:
                             colorName = "Purple"
@@ -56,7 +60,7 @@ class CategoryDao {
                             colorName = "Black"
                             $0.setColor(color: UIColor.black)
                         }
-                        $0.name = "Category \(colorName)"
+                        $0.name = colorName
                         realm.add($0)
                     }
                 }
