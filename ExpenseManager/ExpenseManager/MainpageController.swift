@@ -19,7 +19,14 @@ class MainpageController: UIViewController {
     var targetListButton: UIButton!
     var settingButton: UIButton!
     
+    
+    
     @IBOutlet weak var progressBar: UIProgressView!
+    
+    var calendarLable: UILabel!
+    var expextedExpenseLabel: UILabel!
+    var wishListLable: UILabel!
+    var settingLabel: UILabel!
 
     
 
@@ -102,6 +109,19 @@ class MainpageController: UIViewController {
         let menuButtons = [calendarButton,expectedBalanceButton, targetListButton, settingButton]
         for button in menuButtons {
             menuImageView.addSubview(button!)
+            
+            
+            
+            
+//        calendarLable = UILabel(frame:CGRect(x:0, y:0, width:100, height:30))
+//        expextedExpenseLabel = UILabel(frame:CGRect(x:0, y:0, width:100, height:30))
+//        wishListLable = UILabel(frame:CGRect(x:0, y:0, width:100, height:30))
+//        settingLabel = UILabel(frame:CGRect(x:0, y:0, width:100, height:30))
+//            
+//        calendarLable.text = "CALENDAR"
+//        menuImageView.addSubview(calendarLable)
+//            
+//            
         }
         
         /* Progress Bar */
@@ -121,6 +141,8 @@ class MainpageController: UIViewController {
         if i <= max {
             let ratio = Float(i) / Float(max)
             progressBar.progress = Float(ratio)
+        } else {
+            progressBar.progress = Float(1.0)
         }
     }
 

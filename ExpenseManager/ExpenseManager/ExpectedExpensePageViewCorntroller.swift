@@ -28,7 +28,6 @@ class ExpectedExpensePageViewControler: UIViewController, UITableViewDataSource,
         tableView.dataSource = self
         tableView.delegate = self
     
-        
         setupTextField()
         
     }
@@ -108,6 +107,8 @@ class ExpectedExpensePageViewControler: UIViewController, UITableViewDataSource,
         amountTextField.text = ""
         tableView.reloadData()
         // add data to the db
+        
+        setupTextField()
     
     }
     
@@ -158,6 +159,8 @@ class ExpectedExpensePageViewControler: UIViewController, UITableViewDataSource,
             
             // delete from the db as well
             ExpectedAmountDao().delete(expectedAmount: deleteData)
+            
+            setupTextField()
         }
     }
     

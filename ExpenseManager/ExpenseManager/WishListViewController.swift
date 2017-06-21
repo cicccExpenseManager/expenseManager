@@ -97,6 +97,7 @@ class WishListViewController: UIViewController, UITableViewDataSource, UITableVi
         let totalFromExpectedAmount = ExpectedExpensePageViewControler().getExpectedAmount()
         let forCurrentValue = totalLabel / 100
         let percentage = totalFromExpectedAmount / forCurrentValue
+        print("\(totalFromExpectedAmount) / \(forCurrentValue) ... \(totalLabel)")
         return percentage
         
     }
@@ -106,9 +107,13 @@ class WishListViewController: UIViewController, UITableViewDataSource, UITableVi
         let i = getCurrentValue()
         let max = 100.0
         
+        print("\(i)")
+        
         if i <= max {
             let ratio = Float(i) / Float(max)
             progressBar.progress = Float(ratio)
+        } else {
+            progressBar.progress = Float(1.0)
         }
     }
     
@@ -117,6 +122,7 @@ class WishListViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func doneAction() {
+        // put data to database
         let putValue = WishList()
         if let title = wishListTitle.text {
             if let amount = wishListAmount.text, let doubleAmount = Double(amount) {
@@ -132,6 +138,9 @@ class WishListViewController: UIViewController, UITableViewDataSource, UITableVi
         wishListAmount.text = ""
         wishListTableView.reloadData()
         
+        // reload data and show total amount again
+        setupTextField()
+        moveProgressBar(sender: progressBar)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -166,6 +175,10 @@ class WishListViewController: UIViewController, UITableViewDataSource, UITableVi
             moveProgressBar(sender: progressBar)
             // delete from the db as well
             WishListDao().delete(wishListAmount: deleteData)
+            
+            // reload data and show total amount again
+            setupTextField()
+            moveProgressBar(sender: progressBar)
         }
     }
     
