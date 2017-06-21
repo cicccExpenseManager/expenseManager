@@ -28,6 +28,8 @@
 		F51315A11EDCDFD200EA9767 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51315A01EDCDFD200EA9767 /* Expense.swift */; };
 		F51315A31EDCE07200EA9767 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51315A21EDCE07200EA9767 /* Category.swift */; };
 		F51315A61EDCE8F400EA9767 /* ExpenseDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51315A51EDCE8F400EA9767 /* ExpenseDao.swift */; };
+		F54CD68B1EFA04F500F0310C /* ManageCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54CD68A1EFA04F500F0310C /* ManageCategoryViewController.swift */; };
+		F54CD68D1EFA054100F0310C /* ManageCategory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F54CD68C1EFA054100F0310C /* ManageCategory.storyboard */; };
 		F5A5F1C31EE64A760074CF37 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A5F1C21EE64A760074CF37 /* Option.swift */; };
 		F5A5F1C51EE64C620074CF37 /* CategoryDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A5F1C41EE64C620074CF37 /* CategoryDao.swift */; };
 		F5AA3FE31EF356B900FA0C7D /* ListUpRecordsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AA3FE21EF356B900FA0C7D /* ListUpRecordsCell.swift */; };
@@ -87,6 +89,8 @@
 		F51315A01EDCDFD200EA9767 /* Expense.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		F51315A21EDCE07200EA9767 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		F51315A51EDCE8F400EA9767 /* ExpenseDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpenseDao.swift; sourceTree = "<group>"; };
+		F54CD68A1EFA04F500F0310C /* ManageCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCategoryViewController.swift; sourceTree = "<group>"; };
+		F54CD68C1EFA054100F0310C /* ManageCategory.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ManageCategory.storyboard; sourceTree = "<group>"; };
 		F5A5F1C21EE64A760074CF37 /* Option.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		F5A5F1C41EE64C620074CF37 /* CategoryDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryDao.swift; sourceTree = "<group>"; };
 		F5AA3FE21EF356B900FA0C7D /* ListUpRecordsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListUpRecordsCell.swift; sourceTree = "<group>"; };
@@ -229,6 +233,7 @@
 			children = (
 				F54CD6871EFA046800F0310C /* ListUpRecord */,
 				F54CD6881EFA048100F0310C /* ListUpDailyRecord */,
+				F54CD6891EFA04CA00F0310C /* ManageCategory */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -251,6 +256,15 @@
 				F5AA3FE41EF387CA00FA0C7D /* ListUpDailyReports.storyboard */,
 			);
 			name = ListUpDailyRecord;
+			sourceTree = "<group>";
+		};
+		F54CD6891EFA04CA00F0310C /* ManageCategory */ = {
+			isa = PBXGroup;
+			children = (
+				F54CD68A1EFA04F500F0310C /* ManageCategoryViewController.swift */,
+				F54CD68C1EFA054100F0310C /* ManageCategory.storyboard */,
+			);
+			name = ManageCategory;
 			sourceTree = "<group>";
 		};
 		F5A5F1C11EE64A5D0074CF37 /* Util */ = {
@@ -375,6 +389,7 @@
 				68E59D961EF5E233002526D8 /* WishList.storyboard in Resources */,
 				6800C2641EE770CC00D55DA6 /* Mainpage.storyboard in Resources */,
 				F51315761EDCC3A700EA9767 /* LaunchScreen.storyboard in Resources */,
+				F54CD68D1EFA054100F0310C /* ManageCategory.storyboard in Resources */,
 				68F830D81EF240F600A86863 /* Assets.xcassets in Resources */,
 				F5D1BC3A1EED392D005511E0 /* ListUpRecords.storyboard in Resources */,
 				68E59D921EF5DD9E002526D8 /* ExpectedExpensePage.storyboard in Resources */,
@@ -438,6 +453,7 @@
 				F5A5F1C31EE64A760074CF37 /* Option.swift in Sources */,
 				F5A5F1C51EE64C620074CF37 /* CategoryDao.swift in Sources */,
 				F513156C1EDCC3A700EA9767 /* AppDelegate.swift in Sources */,
+				F54CD68B1EFA04F500F0310C /* ManageCategoryViewController.swift in Sources */,
 				68E59D901EF5DD75002526D8 /* ExpectedExpensePageViewCorntroller.swift in Sources */,
 				F51315A31EDCE07200EA9767 /* Category.swift in Sources */,
 				F5B6431F1EF5F825000DF735 /* ListUpDailyReportsCell.swift in Sources */,

@@ -87,6 +87,7 @@ class MainpageController: UIViewController {
         calendarButton.addTarget(self, action: #selector(goToNextCalendarPage), for: .touchUpInside)
         expectedBalanceButton.addTarget(self, action: #selector(goToNextExpectedPage), for: .touchUpInside)
         targetListButton.addTarget(self, action: #selector(goToNextTargetPage), for: .touchUpInside)
+        settingButton.addTarget(self, action: #selector(goToNextManageCategoryPage), for: .touchUpInside)
         
         /* Make UIlabel clickable */
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapFunction))
@@ -130,6 +131,12 @@ class MainpageController: UIViewController {
     func goToNextTargetPage() {
         let storyboard = UIStoryboard(name: "WishList", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "wishListStoryboard")
+        self.navigationController!.pushViewController(vc, animated: true)
+    }
+    
+    func goToNextManageCategoryPage() {
+        let storyboard = UIStoryboard(name: "ManageCategory", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ManageCategoryViewController")
         self.navigationController!.pushViewController(vc, animated: true)
     }
     
