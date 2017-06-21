@@ -71,4 +71,23 @@ class CategoryDao {
     func generateId() -> Int {
         return (findAllCategories().sorted(byKeyPath: "id").last?.id).map{ $0 + 1 } ?? 1
     }
+    
+    func updateColor(_ category: Category, _ color: UIColor) {
+        try! realm.write {
+            category.setColor(color: color)
+        }
+    }
+    
+    func add(_ category: Category) {
+        try! realm.write {
+            category.id = generateId()
+            realm.add(category)
+        }
+    }
+    
+    func delete(category: Category) {
+        try! realm.write {
+            realm.delete(category)
+        }
+    }
 }

@@ -229,7 +229,7 @@ extension ListUpRecordsViewController {
         
         var retColor: Array<UIColor> = []
         for expense in result {
-            retColor.append((expense.type?.getColor())!)
+            retColor.append((expense.type?.getColor()) ?? UIColor.black)
         }
         return retColor
     }
