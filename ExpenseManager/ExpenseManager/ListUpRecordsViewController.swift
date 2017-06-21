@@ -104,8 +104,10 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
  * Override methods
  * --------------------------------------------------------------- */
 extension ListUpRecordsViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         initializeData()
         initializeView()
     }

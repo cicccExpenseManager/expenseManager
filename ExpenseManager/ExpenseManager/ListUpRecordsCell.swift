@@ -12,11 +12,16 @@ class ListUpRecordsCell: UITableViewCell {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
-        let color = categoryColor.backgroundColor
-        super.setSelected(selected, animated: animated)
-        
-        if (selected) {
-            categoryColor.backgroundColor = color
+        if (categoryColor != nil) {
+            let color = categoryColor.backgroundColor
+            super.setSelected(selected, animated: animated)
+            
+            if (categoryColor != nil && selected) {
+                categoryColor.backgroundColor = color
+            }
+
+        } else {
+            super.setSelected(selected, animated: animated)
         }
     }
     
