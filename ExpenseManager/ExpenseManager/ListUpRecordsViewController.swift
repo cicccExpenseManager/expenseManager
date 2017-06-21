@@ -98,6 +98,7 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
     fileprivate var lastScope: UInt = 0
     fileprivate var lastSelected: Date = Date()
     fileprivate var requestDate: Date = Date()
+    fileprivate var selectedRow: Int = -1
 }
 
 /**---------------------------------------------------------------
@@ -132,9 +133,7 @@ extension ListUpRecordsViewController {
             }
         }
         
-        if (lastSelected.year != requestDate.year
-            || lastSelected.month != requestDate.month
-            || lastSelected.day != requestDate.day) {
+        if isSameDate(lastSelected, requestDate) {
             tableScrollTo(requestDate)
         }
         lastSelected = requestDate
@@ -293,7 +292,7 @@ extension ListUpRecordsViewController {
     }
     
     func goToDailyPageIfNeeded(date: Date) {
-        if (date == lastSelected) {
+        if isSameDate(date, lastSelected) {
             let storyboard = UIStoryboard(name: "ListUpDailyReports", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "ListUpDailyReportsViewController") as! ListUpDailyReportsViewController
             vc.initializeData(date: date)
@@ -312,6 +311,12 @@ extension ListUpRecordsViewController {
                 tableScrollTo(date)
             }
         }
+    }
+    
+    func isSameDate(_ date1: Date, _ date2: Date) -> Bool {
+        return date1.year == date2.year
+            && date1.month == date2.month
+            && date1.day == date2.day
     }
 }
 
@@ -334,9 +339,13 @@ extension ListUpRecordsViewController {
     // when you tap the cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedDate = expenses[indexPath.row].date as Date
-        goToDailyPageIfNeeded(date: selectedDate)
+        if indexPath.row == selectedRow {
+            goToDailyPageIfNeeded(date: selectedDate)
+        }
+        calendar.select(selectedDate)
         lastSelected = selectedDate
         requestDate = selectedDate
+        selectedRow = indexPath.row
     }
     
     fileprivate func updateTable() {
