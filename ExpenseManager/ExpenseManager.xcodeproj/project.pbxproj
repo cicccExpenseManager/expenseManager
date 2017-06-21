@@ -157,6 +157,7 @@
 				F5A5F1C11EE64A5D0074CF37 /* Util */,
 				F51315A41EDCE8DE00EA9767 /* Dao */,
 				F513159F1EDCDFAA00EA9767 /* Model */,
+				F54CD6861EFA044000F0310C /* View */,
 				F513156B1EDCC3A700EA9767 /* AppDelegate.swift */,
 				3796C75B1EF0E97800576C6A /* InputPage.swift */,
 				3720D7F31EE8C46900A33A71 /* InputPage.storyboard */,
@@ -170,12 +171,6 @@
 				68E59D911EF5DD9E002526D8 /* ExpectedExpensePage.storyboard */,
 				68E59D931EF5E214002526D8 /* WishListViewController.swift */,
 				68E59D951EF5E233002526D8 /* WishList.storyboard */,
-				F5D1BC371EED390B005511E0 /* ListUpRecordsViewController.swift */,
-				F5AA3FE21EF356B900FA0C7D /* ListUpRecordsCell.swift */,
-				F5D1BC391EED392D005511E0 /* ListUpRecords.storyboard */,
-				F5AA3FE61EF4793900FA0C7D /* ListUpDailyReportsViewController.swift */,
-				F5B6431E1EF5F825000DF735 /* ListUpDailyReportsCell.swift */,
-				F5AA3FE41EF387CA00FA0C7D /* ListUpDailyReports.storyboard */,
 			);
 			path = ExpenseManager;
 			sourceTree = "<group>";
@@ -227,6 +222,35 @@
 				68E59D9B1EF8979D002526D8 /* ExpectedAcountDao.swift */,
 			);
 			name = Dao;
+			sourceTree = "<group>";
+		};
+		F54CD6861EFA044000F0310C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F54CD6871EFA046800F0310C /* ListUpRecord */,
+				F54CD6881EFA048100F0310C /* ListUpDailyRecord */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		F54CD6871EFA046800F0310C /* ListUpRecord */ = {
+			isa = PBXGroup;
+			children = (
+				F5D1BC371EED390B005511E0 /* ListUpRecordsViewController.swift */,
+				F5AA3FE21EF356B900FA0C7D /* ListUpRecordsCell.swift */,
+				F5D1BC391EED392D005511E0 /* ListUpRecords.storyboard */,
+			);
+			name = ListUpRecord;
+			sourceTree = "<group>";
+		};
+		F54CD6881EFA048100F0310C /* ListUpDailyRecord */ = {
+			isa = PBXGroup;
+			children = (
+				F5AA3FE61EF4793900FA0C7D /* ListUpDailyReportsViewController.swift */,
+				F5B6431E1EF5F825000DF735 /* ListUpDailyReportsCell.swift */,
+				F5AA3FE41EF387CA00FA0C7D /* ListUpDailyReports.storyboard */,
+			);
+			name = ListUpDailyRecord;
 			sourceTree = "<group>";
 		};
 		F5A5F1C11EE64A5D0074CF37 /* Util */ = {
