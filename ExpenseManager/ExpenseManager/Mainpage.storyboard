@@ -31,28 +31,37 @@
                                 <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sv4-d8-Mej">
-                                <rect key="frame" x="16" y="198" width="343" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sv4-d8-Mej">
+                                <rect key="frame" x="72.5" y="188" width="230" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="343" id="Ll4-Da-As1"/>
+                                    <constraint firstAttribute="width" constant="230" id="Ll4-Da-As1"/>
                                     <constraint firstAttribute="height" constant="21" id="x4y-OR-4ew"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2Es-og-gsz">
+                                <rect key="frame" x="77" y="242" width="220" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="BHB-mD-yog"/>
+                                </constraints>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="2Es-og-gsz" firstAttribute="top" secondItem="sv4-d8-Mej" secondAttribute="bottom" constant="33" id="1ft-EL-zIa"/>
                             <constraint firstItem="sv4-d8-Mej" firstAttribute="centerX" secondItem="Bk6-eh-UcV" secondAttribute="centerX" id="cwk-Kb-BwA"/>
-                            <constraint firstItem="sv4-d8-Mej" firstAttribute="top" secondItem="I2L-VY-uhx" secondAttribute="bottom" constant="15" id="ehP-rW-kgA"/>
+                            <constraint firstItem="sv4-d8-Mej" firstAttribute="top" secondItem="I2L-VY-uhx" secondAttribute="bottom" constant="5" id="ehP-rW-kgA"/>
                             <constraint firstItem="I2L-VY-uhx" firstAttribute="top" secondItem="pax-3v-KwN" secondAttribute="bottom" constant="71" id="k1R-c3-leZ"/>
                             <constraint firstItem="I2L-VY-uhx" firstAttribute="centerX" secondItem="Bk6-eh-UcV" secondAttribute="centerX" id="pkE-EZ-QNV"/>
+                            <constraint firstItem="2Es-og-gsz" firstAttribute="centerX" secondItem="Bk6-eh-UcV" secondAttribute="centerX" id="xmT-SR-z7N"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="q7f-YF-Mx8"/>
                     <connections>
                         <outlet property="expectedBalance" destination="sv4-d8-Mej" id="rD3-AY-DKN"/>
+                        <outlet property="progressBar" destination="2Es-og-gsz" id="7Vi-vD-q2K"/>
                         <outlet property="totalBalance" destination="I2L-VY-uhx" id="QCH-ei-ICK"/>
                     </connections>
                 </viewController>

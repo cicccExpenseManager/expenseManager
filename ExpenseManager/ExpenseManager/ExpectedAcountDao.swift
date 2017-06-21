@@ -13,20 +13,20 @@ class ExpectedAmountDao {
     private let realm = try! Realm()
     
     
-    init() {
-        if Option.DEBUG {
-            if findAllExpectedAcounts().isEmpty {
-                for i in 0...4 {
-                    ExpectedAmount().apply {
-                        $0.amount = 100.00
-                        $0.name = "test \(i)"
-                        insert(expectedAmount: $0)
-                    }
-                }
-            }
-        }
-    }
-    
+//    init() {
+//        if Option.DEBUG {
+//            if findAllExpectedAcounts().isEmpty {
+//                for i in 0...4 {
+//                    ExpectedAmount().apply {
+//                        $0.amount = 100.00
+//                        $0.name = "test \(i)"
+//                        insert(expectedAmount: $0)
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    
 
     
     func findAllExpectedAcounts() -> Results<ExpectedAmount> {
