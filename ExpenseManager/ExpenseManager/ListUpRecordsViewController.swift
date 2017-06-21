@@ -51,7 +51,10 @@ class ListUpRecordsViewController: UIViewController, UITableViewDataSource, UITa
     
     // for fotter controller
     @IBAction func addExpenseAction(_ sender: Any) {
-        //TODO going to add expense
+        let storyboard = UIStoryboard(name: "InputPage", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "inputPage") as! InputPage
+        vc.selectedDate = lastSelected
+        self.navigationController!.pushViewController(vc, animated: true)
     }
     @IBAction func prevAction(_ sender: Any) {
         let currentDate = calendar.currentPage

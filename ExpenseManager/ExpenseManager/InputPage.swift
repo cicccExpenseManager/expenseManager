@@ -407,7 +407,7 @@ extension InputPage {
         let dateformatter = DateFormatter()
         dateformatter.dateStyle = DateFormatter.Style.medium
         dateformatter.timeStyle = DateFormatter.Style.none
-        dateTextField.text = dateformatter.string(from: Date())
+        dateTextField.text = dateformatter.string(from: selectedDate ?? Date())
         
         //for categoryPickerView
         let firstCategory = categoryList[0]
