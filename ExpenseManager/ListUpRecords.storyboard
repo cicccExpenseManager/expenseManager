@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="pDY-wl-XhV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="pDY-wl-XhV">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -105,24 +105,11 @@
                                             <action selector="addExpenseAction:" destination="RUB-KF-dda" eventType="touchUpInside" id="TZi-di-AJR"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Mn-gG-aSY">
-                                        <rect key="frame" x="354" y="9.6666666666666288" width="60" height="42"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="dhy-2Y-bF0"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="-6" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" title="&gt;">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="nextAction:" destination="RUB-KF-dda" eventType="touchUpInside" id="Mbd-UO-Rbd"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ose-S1-Iun">
-                                        <rect key="frame" x="0.0" y="9.6666666666666288" width="60" height="42"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="Dsw-2f-QmW"/>
+                                            <constraint firstAttribute="width" constant="60" id="gSf-zy-UbH"/>
+                                            <constraint firstAttribute="height" constant="60" id="x9o-yj-tEK"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="-6" maxX="0.0" maxY="0.0"/>
@@ -133,16 +120,31 @@
                                             <action selector="prevAction:" destination="RUB-KF-dda" eventType="touchUpInside" id="IBG-b5-TWO"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Mn-gG-aSY">
+                                        <rect key="frame" x="354" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="aVt-DE-Tb9"/>
+                                            <constraint firstAttribute="height" constant="60" id="aZk-jR-lUC"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="-6" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="&gt;">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="nextAction:" destination="RUB-KF-dda" eventType="touchUpInside" id="Mbd-UO-Rbd"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <constraints>
                                     <constraint firstItem="9Sg-2I-lr6" firstAttribute="centerY" secondItem="vEY-NL-yau" secondAttribute="centerY" id="5s5-P9-PJF"/>
                                     <constraint firstItem="9Sg-2I-lr6" firstAttribute="centerX" secondItem="vEY-NL-yau" secondAttribute="centerX" id="BXN-Yg-UvU"/>
-                                    <constraint firstAttribute="trailing" secondItem="6Mn-gG-aSY" secondAttribute="trailing" id="CzZ-qf-c0x"/>
+                                    <constraint firstItem="ose-S1-Iun" firstAttribute="leading" secondItem="vEY-NL-yau" secondAttribute="leading" id="NS6-Ae-6vp"/>
+                                    <constraint firstAttribute="bottom" secondItem="6Mn-gG-aSY" secondAttribute="bottom" id="SpO-xA-rKa"/>
                                     <constraint firstAttribute="height" constant="60" id="VTL-ur-c4R"/>
-                                    <constraint firstItem="ose-S1-Iun" firstAttribute="centerY" secondItem="vEY-NL-yau" secondAttribute="centerY" id="dj7-B6-vi3"/>
-                                    <constraint firstItem="6Mn-gG-aSY" firstAttribute="centerY" secondItem="vEY-NL-yau" secondAttribute="centerY" id="qdW-Ke-roh"/>
-                                    <constraint firstItem="ose-S1-Iun" firstAttribute="leading" secondItem="vEY-NL-yau" secondAttribute="leading" id="rPa-Lu-jgF"/>
+                                    <constraint firstAttribute="bottom" secondItem="ose-S1-Iun" secondAttribute="bottom" id="X3G-gB-jTZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="6Mn-gG-aSY" secondAttribute="trailing" id="gwd-Ee-afV"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PHK-yH-aVI" customClass="FSCalendar">
