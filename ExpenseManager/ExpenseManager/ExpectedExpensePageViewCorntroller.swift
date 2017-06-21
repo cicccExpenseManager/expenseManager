@@ -17,19 +17,17 @@ class ExpectedExpensePageViewControler: UIViewController, UITableViewDataSource,
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var totalAmount: UILabel!
+
+ 
     
     var ArrayList = Array(ExpectedAmountDao().findAllExpectedAcounts())
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addButton.addTarget(self, action: #selector(doneAction), for: .touchUpInside)
         tableView.dataSource = self
         tableView.delegate = self
-        
-        
-        //print("\(ExpectedAmountDao().getTotalAmount())")
-        //ExpenseDao().getTotalAmount()
+    
         
         setupTextField()
         
@@ -40,6 +38,13 @@ class ExpectedExpensePageViewControler: UIViewController, UITableViewDataSource,
         titleTextField.becomeFirstResponder()
     }
     
+
+    func getExpectedAmount() -> Double {
+        let totalLabel = ExpectedAmountDao().getTotalAmount()
+        let totalFromExpense = ExpenseDao().getTotalAmount()
+        let getAmount = totalFromExpense - totalLabel
+        return getAmount
+    }
     
     func setupTextField(){
         
@@ -50,16 +55,39 @@ class ExpectedExpensePageViewControler: UIViewController, UITableViewDataSource,
         view.addSubview(amountTextField)
        
         /* Total of Expected Amount */
+        let totalString = "Expected Expense "
         let totalLabel = ExpectedAmountDao().getTotalAmount()
-        self.totalAmount.text = String(totalLabel)
+        self.totalAmount.text = totalString + String(totalLabel)
+        totalAmount.font = UIFont.boldSystemFont(ofSize: 17)
+        
+        expectedAmount.text = String("$\(getExpectedAmount())")
+//        expectedAmount.text = String("$ \( GetExpectedAmount())")
+        expectedAmount.font = UIFont.boldSystemFont(ofSize: 40)
         
         
-        let totalFromExpense = ExpenseDao().getTotalAmount()
-        expectedAmount.text = String("$ \(totalFromExpense - totalLabel)")
-            expectedAmount.font = UIFont.boldSystemFont(ofSize: 40)
-        //expectedAmount.font = expectedAmount.font.withSize(40)
         
-
+        /* TextField Underline */
+        
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColor.gray.cgColor
+        border.frame = CGRect(x: 0, y: titleTextField.frame.size.height - width, width:  titleTextField.frame.size.width, height: titleTextField.frame.size.height)
+        
+        border.borderWidth = width
+        titleTextField.layer.addSublayer(border)
+        titleTextField.layer.masksToBounds = true
+        
+        
+        let borderAmount = CALayer()
+        let widthAmout = CGFloat(2.0)
+        borderAmount.borderColor = UIColor.gray.cgColor
+        borderAmount.frame = CGRect(x: 0, y: amountTextField.frame.size.height - width, width:  amountTextField.frame.size.width, height: amountTextField.frame.size.height)
+        
+        
+        borderAmount.borderWidth = widthAmout
+        amountTextField.layer.addSublayer(borderAmount)
+        amountTextField.layer.masksToBounds = true
+        
         
     }
     
@@ -99,20 +127,23 @@ class ExpectedExpensePageViewControler: UIViewController, UITableViewDataSource,
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifer = "cell"
         let expectedAmount = ArrayList[indexPath.row].amount
-        let expectedName = ArrayList[indexPath.row].name
+        var expectedName = ArrayList[indexPath.row].name
+        
+        /* Make title to uppercase */
+        expectedName = expectedName.uppercased()
         
         let cell = tableView.dequeueReusableCell(
             withIdentifier: cellIdentifer,
             for: indexPath) as! ExpectedExpenseCell
         
-        cell.amountLabel.text = String(expectedAmount)
+        cell.amountLabel.text = String("$\(expectedAmount)")
         cell.titleLabel.text = expectedName
-        cell.titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
-
-        
+        cell.titleLabel.font = UIFont.boldSystemFont(ofSize: 14)
+   
         return cell
-
     }
+    
+    
     
     /* Deleting cells - delete it on array and cell */
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -131,7 +162,7 @@ class ExpectedExpensePageViewControler: UIViewController, UITableViewDataSource,
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 40
     }
     
     

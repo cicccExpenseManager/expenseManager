@@ -19,6 +19,10 @@ class MainpageController: UIViewController {
     var targetListButton: UIButton!
     var settingButton: UIButton!
     
+    @IBOutlet weak var progressBar: UIProgressView!
+
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,8 +62,8 @@ class MainpageController: UIViewController {
         self.expectedBalance.text = currency2
 
         //totalBalance.font = UIFont(name: totalBalance.font.fontName, size: 40)
-        totalBalance.font = totalBalance.font.withSize(40)
-        expectedBalance.font = expectedBalance.font.withSize(20)
+        totalBalance.font = UIFont.boldSystemFont(ofSize: 40)
+        expectedBalance.font = UIFont.boldSystemFont(ofSize: 20)
         
         view.addSubview(totalBalance)
         totalBalance.addSubview(expectedBalance)
@@ -98,8 +102,26 @@ class MainpageController: UIViewController {
         for button in menuButtons {
             menuImageView.addSubview(button!)
         }
+        
+        /* Progress Bar */
+        moveProgressBar(sender: progressBar)
     }
     
+    
+    /* Progress Bar Function */
+    func moveProgressBar(sender:AnyObject) {
+        
+        let current = WishListViewController().getCurrentValue()
+        print("Current ------ > \(current)")
+        
+        let i = current 
+        let max = 100.0
+        
+        if i <= max {
+            let ratio = Float(i) / Float(max)
+            progressBar.progress = Float(ratio)
+        }
+    }
 
     var added = false
     
@@ -108,12 +130,15 @@ class MainpageController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        moveProgressBar(sender: progressBar)
         if added {
             showToast(message: "Successfully added!!")
             added = false
         }
     }
 
+
+    
     /* Functions for moving next pages */
     func goToNextCalendarPage() {
         let storyboard = UIStoryboard(name: "ListUpRecords", bundle: nil)

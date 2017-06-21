@@ -18,6 +18,9 @@
 		68E59D981EF87D75002526D8 /* ExpectedExpenseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E59D971EF87D75002526D8 /* ExpectedExpenseCell.swift */; };
 		68E59D9A1EF88CC8002526D8 /* ExpectedAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E59D991EF88CC8002526D8 /* ExpectedAmount.swift */; };
 		68E59D9C1EF8979D002526D8 /* ExpectedAcountDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E59D9B1EF8979D002526D8 /* ExpectedAcountDao.swift */; };
+		68E59DA01EFA04CE002526D8 /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E59D9F1EFA04CE002526D8 /* WishList.swift */; };
+		68E59DA21EFA0528002526D8 /* WishListDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E59DA11EFA0528002526D8 /* WishListDao.swift */; };
+		68E59DA41EFA4DA2002526D8 /* WishListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E59DA31EFA4DA2002526D8 /* WishListCell.swift */; };
 		68F830D81EF240F600A86863 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68F830D71EF240F600A86863 /* Assets.xcassets */; };
 		F513156C1EDCC3A700EA9767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F513156B1EDCC3A700EA9767 /* AppDelegate.swift */; };
 		F51315761EDCC3A700EA9767 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F51315741EDCC3A700EA9767 /* LaunchScreen.storyboard */; };
@@ -71,6 +74,9 @@
 		68E59D971EF87D75002526D8 /* ExpectedExpenseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpectedExpenseCell.swift; sourceTree = "<group>"; };
 		68E59D991EF88CC8002526D8 /* ExpectedAmount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpectedAmount.swift; sourceTree = "<group>"; };
 		68E59D9B1EF8979D002526D8 /* ExpectedAcountDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpectedAcountDao.swift; sourceTree = "<group>"; };
+		68E59D9F1EFA04CE002526D8 /* WishList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishList.swift; sourceTree = "<group>"; };
+		68E59DA11EFA0528002526D8 /* WishListDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListDao.swift; sourceTree = "<group>"; };
+		68E59DA31EFA4DA2002526D8 /* WishListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListCell.swift; sourceTree = "<group>"; };
 		68F830D71EF240F600A86863 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F51315681EDCC3A700EA9767 /* ExpenseManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExpenseManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F513156B1EDCC3A700EA9767 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -170,6 +176,7 @@
 				68E59D911EF5DD9E002526D8 /* ExpectedExpensePage.storyboard */,
 				68E59D931EF5E214002526D8 /* WishListViewController.swift */,
 				68E59D951EF5E233002526D8 /* WishList.storyboard */,
+				68E59DA31EFA4DA2002526D8 /* WishListCell.swift */,
 				F5D1BC371EED390B005511E0 /* ListUpRecordsViewController.swift */,
 				F5AA3FE21EF356B900FA0C7D /* ListUpRecordsCell.swift */,
 				F5D1BC391EED392D005511E0 /* ListUpRecords.storyboard */,
@@ -215,6 +222,7 @@
 				F51315A01EDCDFD200EA9767 /* Expense.swift */,
 				F51315A21EDCE07200EA9767 /* Category.swift */,
 				68E59D991EF88CC8002526D8 /* ExpectedAmount.swift */,
+				68E59D9F1EFA04CE002526D8 /* WishList.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -225,6 +233,7 @@
 				F51315A51EDCE8F400EA9767 /* ExpenseDao.swift */,
 				F5A5F1C41EE64C620074CF37 /* CategoryDao.swift */,
 				68E59D9B1EF8979D002526D8 /* ExpectedAcountDao.swift */,
+				68E59DA11EFA0528002526D8 /* WishListDao.swift */,
 			);
 			name = Dao;
 			sourceTree = "<group>";
@@ -407,6 +416,8 @@
 				F51315A61EDCE8F400EA9767 /* ExpenseDao.swift in Sources */,
 				68E59D9A1EF88CC8002526D8 /* ExpectedAmount.swift in Sources */,
 				68E59D981EF87D75002526D8 /* ExpectedExpenseCell.swift in Sources */,
+				68E59DA01EFA04CE002526D8 /* WishList.swift in Sources */,
+				68E59DA21EFA0528002526D8 /* WishListDao.swift in Sources */,
 				F5D1BC381EED390B005511E0 /* ListUpRecordsViewController.swift in Sources */,
 				68E59D941EF5E214002526D8 /* WishListViewController.swift in Sources */,
 				F51315A11EDCDFD200EA9767 /* Expense.swift in Sources */,
@@ -415,6 +426,7 @@
 				F5A5F1C51EE64C620074CF37 /* CategoryDao.swift in Sources */,
 				F513156C1EDCC3A700EA9767 /* AppDelegate.swift in Sources */,
 				68E59D901EF5DD75002526D8 /* ExpectedExpensePageViewCorntroller.swift in Sources */,
+				68E59DA41EFA4DA2002526D8 /* WishListCell.swift in Sources */,
 				F51315A31EDCE07200EA9767 /* Category.swift in Sources */,
 				F5B6431F1EF5F825000DF735 /* ListUpDailyReportsCell.swift in Sources */,
 				3796C75C1EF0E97800576C6A /* InputPage.swift in Sources */,
