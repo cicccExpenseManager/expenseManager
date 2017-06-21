@@ -176,16 +176,20 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
                         let expenseDao = ExpenseDao()
                         expenseDao.addExpense(
                             detail: self.detailTextField.text!,
-                            amount: doublePrice,
+                            amount: self.segementedChange.selectedSegmentIndex == 0
+                                ? -doublePrice : doublePrice,
                             category: category,
                             date: self.selectedDate ?? Date())
                     }
                     
                     // show toast message
-                    self.showToast(message: "successfully added!!"){}
+                    // self.showToast(message: "successfully added!!"){}
+                    
+                    NotificationCenter.default.post(name: Notification.Name("Toast"), object: nil)
+                    
                     
                     // move back to previous page
-                    //self.navigationController?.popViewController(animated: true)
+                    self.navigationController?.popViewController(animated: true)
                 }))
                 
                 //set the button of 'CANCEL' in the Alert
@@ -194,7 +198,7 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
             }
             else {
                 //if letのelseの場合を考える（notification etc）
-                let alert1 = UIAlertController(title: "Error...", message: "can not find category name \(categoryTextField.text!)", preferredStyle: UIAlertControllerStyle.alert)
+                let alert1 = UIAlertController(title: "Warning...", message: "can not find category name \(categoryTextField.text!)", preferredStyle: UIAlertControllerStyle.alert)
                 alert1.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
 //                print("can not find category name \(categoryTextField.text!)")
 //                for cat in CategoryDao().findAllCategories() {
@@ -203,7 +207,7 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
             }
         }
         else {
-            let alert2 = UIAlertController(title: "Error...", message: "Please fill all of the information!", preferredStyle: UIAlertControllerStyle.alert)
+            let alert2 = UIAlertController(title: "Warning...", message: "Please fill all of the information!", preferredStyle: UIAlertControllerStyle.alert)
             alert2.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert2, animated: true, completion: nil)
         }
@@ -363,26 +367,28 @@ extension InputPage {
 
 
     //make a toast when the user input is completly added
-    func showToast(message : String, callback: @escaping () -> Void) {
-        
-        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.textAlignment = .center;
-        toastLabel.font = UIFont(name: "Helvetica", size: 12.0)
-        toastLabel.text = message
-        toastLabel.alpha = 1.0
-        toastLabel.layer.cornerRadius = 10;
-        toastLabel.clipsToBounds  =  true
-        self.view.addSubview(toastLabel)
-        
-        UIView.animate(withDuration: 1.5, delay: 0.1, options: .curveEaseOut, animations: {
-            toastLabel.alpha = 0.0
-        }, completion: {(isCompleted) in
-            toastLabel.removeFromSuperview()
-            callback()
-        })
-        
-    }
+//    func showToast(message : String, callback: @escaping () -> Void) {
+//        
+//        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
+//        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+//        toastLabel.textColor = UIColor.white
+//        toastLabel.textAlignment = .center;
+//        toastLabel.font = UIFont(name: "Helvetica", size: 12.0)
+//        toastLabel.text = message
+//        toastLabel.alpha = 1.0
+//        toastLabel.layer.cornerRadius = 10;
+//        toastLabel.clipsToBounds  =  true
+////        self.view.addSubview(toastLabel)
+//        
+//        
+//        
+//        UIView.animate(withDuration: 1.5, delay: 0.1, options: .curveEaseOut, animations: {
+//            toastLabel.alpha = 0.0
+//        }, completion: {(isCompleted) in
+//            toastLabel.removeFromSuperview()
+//            callback()
+//        })
+//        
+//    }
 
 }
