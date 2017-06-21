@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ExpectedExpensePageViewControler: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -14,27 +15,79 @@ class ExpectedExpensePageViewControler: UIViewController, UITableViewDataSource,
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var addButton: UIButton!
-    
-    
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var totalAmount: UILabel!
     
-    var ArrayList = ["Rent","Food","Utility","Monthly pass","Phone bill"]
+    var ArrayList = Array(ExpectedAmountDao().findAllExpectedAcounts())
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        titleTextField.placeholder = "Title"
-        amountTextField.placeholder = "Amount"
-        
-        addButton.setImage(UIImage(named:"addButton"), for: .normal)
-        view.addSubview(addButton)
-        
+        addButton.addTarget(self, action: #selector(doneAction), for: .touchUpInside)
         tableView.dataSource = self
         tableView.delegate = self
         
+        
+        //print("\(ExpectedAmountDao().getTotalAmount())")
+        //ExpenseDao().getTotalAmount()
+        
+        setupTextField()
+        
     }
 
-    @IBAction func AddValues(_ sender: Any) {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        titleTextField.becomeFirstResponder()
+    }
+    
+    
+    func setupTextField(){
+        
+        titleTextField.placeholder = "TITLE"
+        amountTextField.placeholder = "AMOUNT"
+        
+        view.addSubview(titleTextField)
+        view.addSubview(amountTextField)
+       
+        /* Total of Expected Amount */
+        let totalLabel = ExpectedAmountDao().getTotalAmount()
+        self.totalAmount.text = String(totalLabel)
+        
+        
+        let totalFromExpense = ExpenseDao().getTotalAmount()
+        expectedAmount.text = String("$ \(totalFromExpense - totalLabel)")
+            expectedAmount.font = UIFont.boldSystemFont(ofSize: 40)
+        //expectedAmount.font = expectedAmount.font.withSize(40)
+        
+
+        
+    }
+    
+    func doneAction()  {
+        
+        let putValue = ExpectedAmount()
+        if let title = titleTextField.text {
+            if let amount = amountTextField.text, let doubleAmount = Double(amount) {
+                // put to table
+                putValue.setAmount(newAmount: doubleAmount, newName: title)
+                ArrayList.append(putValue)
+                
+                // put data to database
+                ExpectedAmountDao().insert(expectedAmount: putValue)
+            }
+        }
+        titleTextField.text = ""
+        amountTextField.text = ""
+        tableView.reloadData()
+        // add data to the db
+    
+    }
+    
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        doneAction()
+        textField.resignFirstResponder()
+        return true
         
     }
     
@@ -45,24 +98,42 @@ class ExpectedExpensePageViewControler: UIViewController, UITableViewDataSource,
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifer = "cell"
+        let expectedAmount = ArrayList[indexPath.row].amount
+        let expectedName = ArrayList[indexPath.row].name
+        
         let cell = tableView.dequeueReusableCell(
             withIdentifier: cellIdentifer,
             for: indexPath) as! ExpectedExpenseCell
-        cell.putValue(row: indexPath.row)
-        return cell
         
-//        let cell = UITableViewCell()
-//        cell.textLabel?.text = ArrayList[indexPath.row]  //Store array values to the cell
-//        return cell
+        cell.amountLabel.text = String(expectedAmount)
+        cell.titleLabel.text = expectedName
+        cell.titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+
+        
+        return cell
+
     }
     
     /* Deleting cells - delete it on array and cell */
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            let deleteData = ArrayList[indexPath.row]
+            
+            // remove data from current data
             ArrayList.remove(at: indexPath.row)
+            
+            // remove row view from table view
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            // delete from the db as well
+            ExpectedAmountDao().delete(expectedAmount: deleteData)
         }
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -70,14 +141,8 @@ class ExpectedExpensePageViewControler: UIViewController, UITableViewDataSource,
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
-    */
 
 }

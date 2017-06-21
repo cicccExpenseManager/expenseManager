@@ -17,9 +17,17 @@ class ExpectedExpenseCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func putValue(row: Int) {
-        titleLabel.text = "a \(row)"
-        amountLabel.text = "$3.00"
+
+    func formatCurrency(_ value: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = 2
+        formatter.locale = Locale(identifier: Locale.current.identifier)
+        let result = formatter.string(from: value as NSNumber)
+        return result!
     }
+
+
+
 
 }

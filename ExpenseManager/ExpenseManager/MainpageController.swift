@@ -14,7 +14,6 @@ class MainpageController: UIViewController {
     @IBOutlet weak var expectedBalance: UILabel!
     
     var menuImageView: UIView!
-    
     var calendarButton: UIButton!
     var expectedBalanceButton: UIButton!
     var targetListButton: UIButton!
@@ -61,7 +60,7 @@ class MainpageController: UIViewController {
         let currency2 = numberFormatter.string(from: expectedBalanceValue)
         
         self.totalBalance.text = currency1
-        self.expectedBalance.text = "Expected Balance " + currency2!
+        self.expectedBalance.text = currency2
         
         
         
