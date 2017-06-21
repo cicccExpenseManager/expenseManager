@@ -14,7 +14,6 @@ class MainpageController: UIViewController {
     @IBOutlet weak var expectedBalance: UILabel!
     
     var menuImageView: UIView!
-    
     var calendarButton: UIButton!
     var expectedBalanceButton: UIButton!
     var targetListButton: UIButton!
@@ -25,6 +24,19 @@ class MainpageController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /* Hide navigation bar */
+        self.navigationController!.navigationBar.apply {
+            // Status bar white font
+            $0.barStyle = UIBarStyle.black
+            $0.tintColor = UIColor.white
+            
+            // Navigation bar to alpha zero
+            $0.setBackgroundImage(UIImage(), for: .default)
+            $0.shadowImage = UIImage()
+        }
+        
+        
         
         let array = Array(ExpenseDao().findAllExpenses())
         for ex in array {
@@ -47,10 +59,8 @@ class MainpageController: UIViewController {
         let currency1 = numberFormatter.string(from: userInput)
         let currency2 = numberFormatter.string(from: expectedBalanceValue)
         
-        
-        
         self.totalBalance.text = currency1
-        self.expectedBalance.text = "Expected Balance " + currency2!
+        self.expectedBalance.text = currency2
         
         
         
@@ -63,11 +73,9 @@ class MainpageController: UIViewController {
         totalBalance.addSubview(expectedBalance)
         
         
+        /* Put the menuImage to center of the View */
         let midX = self.view.bounds.midX
         let midY = self.view.bounds.midY
-        
-        
-        
         
         menuImageView = UIView(frame: CGRect(x: midX - 150.0, y: midY - 80.0, width: 300, height: 300))
         //menuImageView.backgroundColor = UIColor.gray
@@ -85,34 +93,67 @@ class MainpageController: UIViewController {
         targetListButton.setImage(UIImage(named: "TargetIcon"), for: .normal)
         settingButton.setImage(UIImage(named: "settingIcon"), for: .normal)
         
-        calendarButton.addTarget(self, action: #selector(goNextPage), for: .touchUpInside)
-        expectedBalanceButton.addTarget(self, action: #selector(goNextInput), for: .touchUpInside)
         
+        /* Add functions to each buttons to move to next page */
+        calendarButton.addTarget(self, action: #selector(goToNextCalendarPage), for: .touchUpInside)
+        expectedBalanceButton.addTarget(self, action: #selector(goToNextExpectedPage), for: .touchUpInside)
+        targetListButton.addTarget(self, action: #selector(goToNextTargetPage), for: .touchUpInside)
+//        settingButton.addTarget(self, action: #selector(goToSettingPage), for: .touchUpInside)
+        
+        
+        /* Make UIlabel clickable */
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapFunction))
+        totalBalance.isUserInteractionEnabled = true
+        totalBalance.addGestureRecognizer(tap)
+        
+        
+        /* Adding buttons to menuImageView */
         let menuButtons = [calendarButton,expectedBalanceButton, targetListButton, settingButton]
-        
         for button in menuButtons {
-            
             menuImageView.addSubview(button!)
-            
         }
         
         
         
         
-        // Do any additional setup after loading the view.
+        
     }
+    
+    
 
-    func goNextPage() {
+    /* Functions for moving next pages */
+    func goToNextCalendarPage() {
         let storyboard = UIStoryboard(name: "ListUpRecords", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ListUpRecordsViewController")
         self.navigationController!.pushViewController(vc, animated: true)
     }
     
-    func goNextInput() {
+    func goToNextExpectedPage() {
+        let storyboard = UIStoryboard(name: "ExpectedExpensePage", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "expectedExpensePage")
+        self.navigationController!.pushViewController(vc, animated: true)
+    }
+    
+    func goToNextTargetPage() {
+        let storyboard = UIStoryboard(name: "WishList", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "wishListStoryboard")
+        self.navigationController!.pushViewController(vc, animated: true)
+    }
+    
+    
+//    func goToSettingPage() {
+//        let storyboard = UIStoryboard(name: "NAME OF STORYBOARD FILE", bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "NAME OF STROYBOARD'S ID")
+//        self.navigationController!.pushViewController(vc, animated: true)
+//    }
+
+    
+    func tapFunction(sender:UITapGestureRecognizer) {
         let storyboard = UIStoryboard(name: "InputPage", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "inputPage")
         self.navigationController!.pushViewController(vc, animated: true)
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
