@@ -30,6 +30,7 @@
 		F51315A61EDCE8F400EA9767 /* ExpenseDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51315A51EDCE8F400EA9767 /* ExpenseDao.swift */; };
 		F54CD68B1EFA04F500F0310C /* ManageCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54CD68A1EFA04F500F0310C /* ManageCategoryViewController.swift */; };
 		F54CD68D1EFA054100F0310C /* ManageCategory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F54CD68C1EFA054100F0310C /* ManageCategory.storyboard */; };
+		F54CD68F1EFA1D8900F0310C /* ManageCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54CD68E1EFA1D8900F0310C /* ManageCategoryCell.swift */; };
 		F5A5F1C31EE64A760074CF37 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A5F1C21EE64A760074CF37 /* Option.swift */; };
 		F5A5F1C51EE64C620074CF37 /* CategoryDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A5F1C41EE64C620074CF37 /* CategoryDao.swift */; };
 		F5AA3FE31EF356B900FA0C7D /* ListUpRecordsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AA3FE21EF356B900FA0C7D /* ListUpRecordsCell.swift */; };
@@ -91,6 +92,7 @@
 		F51315A51EDCE8F400EA9767 /* ExpenseDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpenseDao.swift; sourceTree = "<group>"; };
 		F54CD68A1EFA04F500F0310C /* ManageCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCategoryViewController.swift; sourceTree = "<group>"; };
 		F54CD68C1EFA054100F0310C /* ManageCategory.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ManageCategory.storyboard; sourceTree = "<group>"; };
+		F54CD68E1EFA1D8900F0310C /* ManageCategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCategoryCell.swift; sourceTree = "<group>"; };
 		F5A5F1C21EE64A760074CF37 /* Option.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		F5A5F1C41EE64C620074CF37 /* CategoryDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryDao.swift; sourceTree = "<group>"; };
 		F5AA3FE21EF356B900FA0C7D /* ListUpRecordsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListUpRecordsCell.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				F54CD68A1EFA04F500F0310C /* ManageCategoryViewController.swift */,
+				F54CD68E1EFA1D8900F0310C /* ManageCategoryCell.swift */,
 				F54CD68C1EFA054100F0310C /* ManageCategory.storyboard */,
 			);
 			name = ManageCategory;
@@ -443,6 +446,7 @@
 				F5AA3FE71EF4793900FA0C7D /* ListUpDailyReportsViewController.swift in Sources */,
 				6800C2661EE7720B00D55DA6 /* MainpageController.swift in Sources */,
 				68E59D9C1EF8979D002526D8 /* ExpectedAcountDao.swift in Sources */,
+				F54CD68F1EFA1D8900F0310C /* ManageCategoryCell.swift in Sources */,
 				F51315A61EDCE8F400EA9767 /* ExpenseDao.swift in Sources */,
 				68E59D9A1EF88CC8002526D8 /* ExpectedAmount.swift in Sources */,
 				68E59D981EF87D75002526D8 /* ExpectedExpenseCell.swift in Sources */,

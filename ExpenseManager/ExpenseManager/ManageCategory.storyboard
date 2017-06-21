@@ -45,16 +45,19 @@
                                 </constraints>
                                 <state key="normal" title="Button" image="addButton"/>
                                 <state key="highlighted" image="addButton"/>
+                                <connections>
+                                    <action selector="addCategoryAction:" destination="mDi-3P-bhf" eventType="touchUpInside" id="YVh-9K-GtE"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LmS-iE-WBJ">
                                 <rect key="frame" x="46" y="141" width="283" height="526"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="gem-gq-5pF">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="gem-gq-5pF" customClass="ManageCategoryCell" customModule="ExpenseManager" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="283" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gem-gq-5pF" id="o9n-CK-f2M">
-                                            <rect key="frame" x="0.0" y="0.0" width="283" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="283" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32Q-mw-ozw">
@@ -80,8 +83,16 @@
                                                 <constraint firstItem="Q8W-7L-ANM" firstAttribute="centerY" secondItem="o9n-CK-f2M" secondAttribute="centerY" id="x5D-Un-aUC"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="categoryColor" destination="32Q-mw-ozw" id="CVq-pe-HWv"/>
+                                            <outlet property="categoryName" destination="Q8W-7L-ANM" id="2vc-Dr-dKG"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="mDi-3P-bhf" id="01B-fU-XsR"/>
+                                    <outlet property="delegate" destination="mDi-3P-bhf" id="kG7-qb-8bY"/>
+                                </connections>
                             </tableView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Category Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GFJ-tf-Vca">
                                 <rect key="frame" x="126" y="94" width="153" height="17"/>
@@ -109,6 +120,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PyT-Hj-Mx9"/>
+                    <connections>
+                        <outlet property="addCategoryColor" destination="eBO-cE-uwO" id="xFA-aY-bre"/>
+                        <outlet property="addCategoryName" destination="GFJ-tf-Vca" id="UJD-9j-MYc"/>
+                        <outlet property="tableView" destination="LmS-iE-WBJ" id="Pja-lj-TB2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y8D-00-jqO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
