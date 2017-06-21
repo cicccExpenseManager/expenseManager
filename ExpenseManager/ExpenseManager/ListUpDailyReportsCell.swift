@@ -1,11 +1,11 @@
 import UIKit
 
-class ListUpRecordsCell: UITableViewCell {
+class ListUpDailyReportsCell: UITableViewCell {
     
-    @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var categoryColor: UIView!
-    
+    @IBOutlet weak var amountLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,7 +19,7 @@ class ListUpRecordsCell: UITableViewCell {
             categoryColor.backgroundColor = color
         }
     }
-    
+
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         let color = categoryColor.backgroundColor
         super.setHighlighted(highlighted, animated: animated)
@@ -31,8 +31,8 @@ class ListUpRecordsCell: UITableViewCell {
 
     func setExpense(_ expense: Expense) {
         expense.apply {
-            self.categoryColor.backgroundColor = $0.type?.getColor() ?? UIColor.black
-            self.detailLabel.text = "\($0.formatDate()), \($0.name)"
+            detailLabel.text = $0.name
+            categoryColor.backgroundColor = $0.type?.getColor() ?? UIColor.black
             self.amountLabel.text = $0.amount.formatCurrency()
         }
     }
