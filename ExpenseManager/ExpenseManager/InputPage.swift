@@ -161,50 +161,50 @@ class InputPage: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource 
 //    override func viewWillAppear(_ animated: Bool) {
 //        
 //        super.viewWillAppear(animated)
-//        self.configureObserver()
+////        self.configureObserver()
 //        
 //    }
+//    
+    //改行ボタンが押された際に呼ばれる.
+    func textFieldShouldReturn(_ textView: UITextView) -> Bool {
+        textView.resignFirstResponder()
+        
+        return true
+    }
     
-//    //改行ボタンが押された際に呼ばれる.
-//    func textFieldShouldReturn(_ textView: UITextView) -> Bool {
-//        textView.resignFirstResponder()
-//        
-//        return true
-//    }
-//    
-//    //UITextFieldが編集された直後に呼ばれる.
-//    func textFieldShouldBeginEditing(_ textView: UITextView) -> Bool {
-//        txtActiveField = textView
-//        return true
-//    }
-//    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        
-//        let notificationCenter = NotificationCenter.default
-//        notificationCenter.addObserver(self, selector: #selector(handleKeyboardWillShowNotification(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-//        notificationCenter.addObserver(self, selector: #selector(handleKeyboardWillHideNotification(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-//    }
-//    
-//    func handleKeyboardWillShowNotification(_ notification: Notification) {
-//        
-//        let userInfo = notification.userInfo!
-//        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-//        let myBoundSize: CGSize = UIScreen.main.bounds.size
-//        let txtLimit = txtActiveField.frame.origin.y + txtActiveField.frame.height + 8.0
-//        let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
-//        
-//        print("テキストフィールドの下辺：(\(txtLimit))")
-//        print("キーボードの上辺：(\(kbdLimit))")
-//        
-//        if txtLimit >= kbdLimit {
-//            sc.contentOffset.y = txtLimit - kbdLimit
-//        }
-//    }
-//    
-//    func handleKeyboardWillHideNotification(_ notification: Notification) {
-//        sc.contentOffset.y = 0
-//    }
+    //UITextFieldが編集された直後に呼ばれる.
+    func textFieldShouldBeginEditing(_ textView: UITextView) -> Bool {
+        txtActiveField = textView
+        return true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(handleKeyboardWillShowNotification(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(handleKeyboardWillHideNotification(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func handleKeyboardWillShowNotification(_ notification: Notification) {
+        
+        let userInfo = notification.userInfo!
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let myBoundSize: CGSize = UIScreen.main.bounds.size
+        let txtLimit = txtActiveField.frame.origin.y + txtActiveField.frame.height + 8.0
+        let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
+        
+        print("テキストフィールドの下辺：(\(txtLimit))")
+        print("キーボードの上辺：(\(kbdLimit))")
+        
+        if txtLimit >= kbdLimit {
+            sc.contentOffset.y = txtLimit - kbdLimit
+        }
+    }
+    
+    func handleKeyboardWillHideNotification(_ notification: Notification) {
+        sc.contentOffset.y = 0
+    }
     
     //the method which input the expense of users
     @IBAction func inputSubmit(_ sender: UIButton) {
@@ -314,7 +314,7 @@ extension InputPage {
         
         //set the under line of dateLabel and dateTextField
         let borderDateTextField = CALayer()
-        let widthDateTextField = CGFloat(1.0)
+        let widthDateTextField = CGFloat(0.5)
         borderDateTextField.borderColor = UIColor.lightGray.cgColor
         borderDateTextField.frame = CGRect(x: 0, y: dateTextField.frame.size.height - widthDateTextField, width:  dateTextField.frame.size.width, height: dateTextField.frame.size.height)
         
@@ -323,7 +323,7 @@ extension InputPage {
         dateTextField.layer.masksToBounds = true
         
         let borderDateLabel = CALayer()
-        let widthDateLabel = CGFloat(1.0)
+        let widthDateLabel = CGFloat(0.5)
         borderDateLabel.borderColor = UIColor.lightGray.cgColor
         borderDateLabel.frame = CGRect(x: 0, y: dateLabel.frame.size.height - widthDateLabel, width:  dateLabel.frame.size.width, height: dateLabel.frame.size.height)
         
@@ -334,7 +334,7 @@ extension InputPage {
         
         //set the under line of categoryLabel and categoryTextField
         let borderCategoryTextField = CALayer()
-        let widthCategoryTextField = CGFloat(1.0)
+        let widthCategoryTextField = CGFloat(0.5)
         borderCategoryTextField.borderColor = UIColor.lightGray.cgColor
         borderCategoryTextField.frame = CGRect(x: 0, y: categoryTextField.frame.size.height - widthCategoryTextField, width:  categoryTextField.frame.size.width, height: dateTextField.frame.size.height)
         
@@ -343,7 +343,7 @@ extension InputPage {
         categoryTextField.layer.masksToBounds = true
         
         let borderCategoryLabel = CALayer()
-        let widthCategoryLabel = CGFloat(1.0)
+        let widthCategoryLabel = CGFloat(0.5)
         borderCategoryLabel.borderColor = UIColor.lightGray.cgColor
         borderCategoryLabel.frame = CGRect(x: 0, y: categoryLabel.frame.size.height - widthCategoryLabel, width:  categoryLabel.frame.size.width, height: categoryLabel.frame.size.height)
         
@@ -355,7 +355,7 @@ extension InputPage {
         
         //set the under line of detailLabel and detailTextField
         let borderDetailTextField = CALayer()
-        let widthDetailTextField = CGFloat(1.0)
+        let widthDetailTextField = CGFloat(0.5)
         borderDetailTextField.borderColor = UIColor.lightGray.cgColor
         borderDetailTextField.frame = CGRect(x: 0, y: detailTextField.frame.size.height - widthDetailTextField, width:  detailTextField.frame.size.width, height: detailTextField.frame.size.height)
         
@@ -364,7 +364,7 @@ extension InputPage {
         detailTextField.layer.masksToBounds = true
         
         let borderDetailLabel = CALayer()
-        let widthDetailLabel = CGFloat(1.0)
+        let widthDetailLabel = CGFloat(0.5)
         borderDetailLabel.borderColor = UIColor.lightGray.cgColor
         borderDetailLabel.frame = CGRect(x: 0, y: detailLabel.frame.size.height - widthDetailLabel, width:  detailLabel.frame.size.width, height: detailLabel.frame.size.height)
         
@@ -375,7 +375,7 @@ extension InputPage {
         
         //set the under line of priceLAbel, priceTextField and limit the textField only writing a number
         let borderPriceTextField = CALayer()
-        let widthPriceTextField = CGFloat(1.0)
+        let widthPriceTextField = CGFloat(0.5)
         borderPriceTextField.borderColor = UIColor.lightGray.cgColor
         borderPriceTextField.frame = CGRect(x: 0, y: priceTextField.frame.size.height - widthPriceTextField, width:  priceTextField.frame.size.width, height: priceTextField.frame.size.height)
         
@@ -384,7 +384,7 @@ extension InputPage {
         priceTextField.layer.masksToBounds = true
         
         let borderPriceLabel = CALayer()
-        let widthPriceLabel = CGFloat(1.0)
+        let widthPriceLabel = CGFloat(0.5)
         borderPriceLabel.borderColor = UIColor.lightGray.cgColor
         borderPriceLabel.frame = CGRect(x: 0, y: priceLabel.frame.size.height - widthPriceLabel, width:  priceLabel.frame.size.width, height: priceLabel.frame.size.height)
         
@@ -398,7 +398,7 @@ extension InputPage {
         
         
         //set the under line of commentLabel and commentTextView
-        self.commentTextView.layer.borderWidth = 1.0;
+        self.commentTextView.layer.borderWidth = 0.5;
         self.commentTextView.layer.borderColor = UIColor.lightGray.cgColor
         
         

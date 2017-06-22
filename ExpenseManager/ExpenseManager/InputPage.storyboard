@@ -25,10 +25,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kVc-ST-f6v">
                                 <rect key="frame" x="0.0" y="607" width="375" height="60"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aIt-HG-0LA">
-                                        <rect key="frame" x="137" y="0.0" width="100" height="60"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aIt-HG-0LA">
+                                        <rect key="frame" x="108" y="0.0" width="159" height="60"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="TFi-K3-sN0"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                         <state key="normal" title="DONE"/>
                                         <connections>
@@ -39,6 +41,9 @@
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="Dgi-CV-Xix"/>
+                                    <constraint firstAttribute="trailing" secondItem="aIt-HG-0LA" secondAttribute="trailing" constant="108" id="abs-Nc-GN6"/>
+                                    <constraint firstItem="aIt-HG-0LA" firstAttribute="leading" secondItem="kVc-ST-f6v" secondAttribute="leading" constant="108" id="j7Q-kv-k5m"/>
+                                    <constraint firstAttribute="bottom" secondItem="aIt-HG-0LA" secondAttribute="bottom" id="tSv-QN-erT"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eHb-gQ-Jz9">
@@ -254,24 +259,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZSK-ZR-YB6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="940" y="317.99100449775113"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="hbi-J2-EyR">
-            <objects>
-                <viewController id="cMT-oq-ZZ6" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Lib-qi-f47"/>
-                        <viewControllerLayoutGuide type="bottom" id="K6H-R3-YDV"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Set-4s-OZ3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CqM-aS-DmU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1685" y="319"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lJ7-3d-34I">
